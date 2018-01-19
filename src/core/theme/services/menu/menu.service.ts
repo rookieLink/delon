@@ -4,8 +4,10 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { share } from 'rxjs/operators';
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
 import { ACLService } from '@delon/acl';
+import { LinkType } from '@delon/theme';
 
 export interface Menu {
+    id?: string;
     /** 文本 */
     text: string;
     /** i18n主键 */
@@ -66,6 +68,8 @@ export interface Menu {
      */
     _depth?: number;
 
+    _accessible?: boolean;
+
     [key: string]: any;
 }
 
@@ -76,10 +80,9 @@ export class MenuService implements OnDestroy {
 
     private data: Menu[] = [];
 
-    constructor(
-        @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nService: AlainI18NService,
-        @Optional() private aclService: ACLService
-    ) { }
+    constructor(@Optional() @Inject(ALAIN_I18N_TOKEN) private i18nService: AlainI18NService,
+                @Optional() private aclService: ACLService) {
+    }
 
     get change(): Observable<Menu[]> {
         return this._change$.pipe(share());
@@ -103,6 +106,7 @@ export class MenuService implements OnDestroy {
     add(items: Menu[]) {
         this.data.push(...items);
         this.resume();
+        this._convertTreeToList();
     }
 
     /**
@@ -130,9 +134,9 @@ export class MenuService implements OnDestroy {
                 }
             }
 
-            item._type = item.externalLink ? 2 : 1;
+            item._type = item.externalLink ? LinkType.externalLink : LinkType.link;
             if (item.children && item.children.length > 0) {
-                item._type = 3;
+                item._type = LinkType.directory;
             }
 
             // shortcut
@@ -167,6 +171,7 @@ export class MenuService implements OnDestroy {
     private loadShortcut(shortcuts: Menu[]) {
         if (shortcuts.length === 0 || this.data.length === 0) return;
 
+        // 菜单树第一项是主导航项
         const ls = this.data[0].children || [];
         let pos = ls.findIndex(w => w.shortcut_root === true);
         if (pos === -1) {
@@ -265,5 +270,32 @@ export class MenuService implements OnDestroy {
 
     ngOnDestroy(): void {
         if (this._change$) this._change$.unsubscribe();
+    }
+
+    currentMenu: string = null;
+    private _list: Array<Menu> = [];
+
+    private _convertTreeToList() {
+        const list = this._list = [];
+        this.visit((item: Menu, parentMenu: Menu, depth?: number) => {
+            list.push(item);
+        });
+    }
+
+    /**
+     * 根据菜单id判断tile是否可见
+     * */
+    hasPermission(id: string) {
+        const item = this._list.find((menu: Menu) => {
+            if (menu.id === id) return true;
+        });
+        return item ? item._accessible : false;
+    }
+
+    getLink(id: string) {
+        const result = this._list.find((item: Menu) => {
+            return id === item.id;
+        });
+        return result ? result.link : '';
     }
 }

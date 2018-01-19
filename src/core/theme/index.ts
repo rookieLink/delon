@@ -31,7 +31,7 @@ const PIPES = [ MomentDatePipe, CNCurrencyPipe, KeysPipe, YNPipe ];
 // endregion
 
 // region: export
-
+export { LinkType } from './enum/LinkType';
 export { AlainThemeOptions, ALAIN_THEME_OPTIONS } from './theme.options';
 export { preloaderFinished } from './services/preloader/preloader';
 export { MenuService, Menu } from './services/menu/menu.service';
