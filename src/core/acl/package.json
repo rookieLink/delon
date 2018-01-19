@@ -1,7 +1,7 @@
 {
-	"name": "@delon/acl",
-	"version": "0.6.1",
-	"description": "@delon/acl",
+	"name": "@microon/acl",
+	"version": "0.6.2",
+	"description": "@microon/acl",
 	"main": "./bundles/acl.umd.js",
 	"module": "./index.js",
 	"typings": "./index.d.ts",

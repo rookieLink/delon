@@ -1,7 +1,7 @@
 {
-	"name": "@delon/cache",
-	"version": "0.6.1",
-	"description": "@delon/cache",
+	"name": "@microon/cache",
+	"version": "0.6.2",
+	"description": "@microon/cache",
 	"main": "./bundles/cache.umd.js",
 	"module": "./index.js",
 	"typings": "./index.d.ts",

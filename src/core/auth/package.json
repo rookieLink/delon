@@ -1,7 +1,7 @@
 {
-	"name": "@delon/auth",
-	"version": "0.6.1",
-	"description": "@delon/auth",
+	"name": "@microon/auth",
+	"version": "0.6.2",
+	"description": "@microon/auth",
 	"main": "./bundles/auth.umd.js",
 	"module": "./index.js",
 	"typings": "./index.d.ts",

@@ -1,7 +1,7 @@
 {
-	"name": "@delon/abc",
-	"version": "0.6.1",
-	"description": "@delon/abc",
+	"name": "@microon/abc",
+	"version": "0.6.2",
+	"description": "@microon/abc",
 	"main": "./bundles/abc.umd.js",
 	"module": "./index.js",
 	"typings": "./index.d.ts",

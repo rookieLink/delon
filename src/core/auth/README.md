@@ -4,7 +4,7 @@
 
 ## Architecture
 
-![Architecture](https://github.com/cipchk/delon/blob/master/_screenshot/architecture.png)
+![Architecture](https://github.com/cipchk/delon/blob/master/_screenshot/architecture.png?raw=true)
 
 ## Troubleshooting
 
