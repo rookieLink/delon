@@ -34,9 +34,7 @@ task('bundle', <any>[
 task('bump', bumpVersions);
 task('bump:next', bumpNextVersions);
 // cli
-task('cli-sources', cliResources);
-task('cli-i18n', cliI18n);
-task('cli', <any>[ 'cli-sources', 'cli-i18n' ]);
+task('cli', cliResources);
 
 const versionPaths = [
     './package.json',
@@ -109,12 +107,12 @@ function cliResources() {
         `${paths.scaffoldSrc}hmr.ts`,
         `${paths.scaffoldSrc}main.ts`,
         `${paths.scaffoldSrc}test.ts`,
-        `${paths.scaffoldSrc}tsconfig.app.json`,
         `${paths.scaffoldSrc}tsconfig.spec.json`,
         `${paths.scaffoldSrc}typings.d.ts`
     ], { base: paths.scaffoldSrc }).pipe(dest('./src/core/cli/application/files/__sourcedir__/'));
     // app
     src([
+        `${paths.scaffoldApp}/core/i18n/**`,
         `${paths.scaffoldApp}/core/net/**`,
         `${paths.scaffoldApp}/core/module-import-guard.ts`,
         `${paths.scaffoldApp}/core/README.md`,
@@ -123,15 +121,6 @@ function cliResources() {
         `${paths.scaffoldApp}/routes/exception/**`,
         `${paths.scaffoldApp}/routes/passport/**`
     ], { base: paths.scaffoldApp }).pipe(dest('./src/core/cli/application/other-files/'));
-}
-
-function cliI18n() {
-    // file wrap
-    src([
-        `${paths.scaffoldApp}/core/i18n/**`
-    ], { base: paths.scaffoldApp })
-    .pipe(wrap('<%= "\\<% if (delonI18n) { %\\>" %><%= contents %><%= "\\<% } %\\>" %>'))
-    .pipe(dest('./src/core/cli/application/other-files/', { overwrite: true }));
 }
 
 function replaceLessWithCSS() {

@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, Optional, Injector } from '@angular/core';
-import { ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
+import { ActivatedRouteSnapshot, DetachedRouteHandle, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MenuService } from '@delon/theme';
@@ -122,6 +122,7 @@ export class ReuseTabService implements OnDestroy {
     /** 设置当前页标题 */
     set title(value: string) {
         if (!value) return;
+        if (!this.curUrl) this.curUrl = this.getUrl(this.injector.get(ActivatedRoute).snapshot);
         this._titleCached[this.curUrl] = value;
         this.di('update current tag title', value);
         this._cachedChange.next({ active: 'title', title: value });
@@ -138,7 +139,7 @@ export class ReuseTabService implements OnDestroy {
 
     // endregion
 
-    constructor(@Optional() private menuService: MenuService) { }
+    constructor(private injector: Injector, @Optional() private menuService: MenuService) { }
 
     /** @private */
     getTitle(url: string, route?: ActivatedRouteSnapshot): string {
@@ -291,12 +292,20 @@ export class ReuseTabService implements OnDestroy {
      * 决定是否应该进行复用路由处理
      */
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        const futureUrl = this.getUrl(future);
-        const currUrl = this.getUrl(curr);
-        const ret = futureUrl === currUrl;
-        this.curUrl = ret ? '' : futureUrl;
+        let ret = future.routeConfig === curr.routeConfig;
+        let url = '';
+        if (ret) {
+            const path = ((future.routeConfig && future.routeConfig.path) || '') as string;
+            if (path.length > 0 && ~path.indexOf(':')) {
+                const futureUrl = this.getUrl(future);
+                const currUrl = this.getUrl(curr);
+                url = futureUrl;
+                ret = futureUrl === currUrl;
+            }
+        }
+        this.curUrl = ret ? '' : (url || this.getUrl(future));
+        this.di('#shouldReuseRoute', future, curr, ret);
         return ret;
-        // return future.routeConfig === curr.routeConfig;
     }
 
     ngOnDestroy(): void {

@@ -7,7 +7,7 @@
 	"description": "Delon is a set of essential modules for ng-alain.",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/sincisco/delon.git"
+		"url": "git+https://github.com/cipchk/delon.git"
 	},
 	"keywords": [
 		"delon",
@@ -16,10 +16,10 @@
 		"antd",
 		"ng-zorro-antd"
 	],
-	"author": "adli <1158889685@qq.com>",
+	"author": "cipchk <cipchk@qq.com>",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/sincisco/delon/issues"
+		"url": "https://github.com/cipchk/delon/issues"
 	},
 	"homepage": "https://ng-alain.com",
 	"scripts": {
