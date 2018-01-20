@@ -1,6 +1,6 @@
 {
 	"name": "@microon/theme",
-	"version": "0.6.2",
+	"version": "0.6.3",
 	"description": "@microon/theme",
 	"main": "./bundles/theme.umd.js",
 	"module": "./index.js",
