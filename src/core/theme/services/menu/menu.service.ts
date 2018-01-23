@@ -8,6 +8,8 @@ import { LinkType } from '@delon/theme';
 
 export interface Menu {
     id?: string;
+
+    serverID?: string;
     /** 文本 */
     text: string;
     /** i18n主键 */
@@ -289,7 +291,7 @@ export class MenuService implements OnDestroy {
         const item = this._list.find((menu: Menu) => {
             if (menu.id === id) return true;
         });
-        return item ? item._accessible : false;
+        return item ? item._hidden : false;
     }
 
     getLink(id: string) {
@@ -297,5 +299,14 @@ export class MenuService implements OnDestroy {
             return id === item.id;
         });
         return result ? result.link : '';
+    }
+
+    updateACLFlag(serverIDArr: Array<string>) {
+        this.visit((menu: Menu) => {
+            menu._hidden = true;
+            if (serverIDArr.indexOf(menu.serverID || 'no id') >= 0) {
+                menu._hidden = false;
+            }
+        });
     }
 }

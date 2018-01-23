@@ -1,6 +1,6 @@
 {
 	"name": "@microon/auth",
-	"version": "0.6.3",
+	"version": "0.6.5",
 	"description": "@microon/auth",
 	"main": "./bundles/auth.umd.js",
 	"module": "./index.js",
