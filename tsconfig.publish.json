@@ -20,7 +20,8 @@
       "paths": {
         "@delon/theme": ["./.ng_build/theme"],
         "@delon/abc": ["./.ng_build/abc"],
-        "@delon/acl": ["./.ng_build/acl"]
+        "@delon/acl": ["./.ng_build/acl"],
+        "@delon/platform": ["./.ng_build/platform"]
       },
       "skipLibCheck": true,
       "typeRoots": [

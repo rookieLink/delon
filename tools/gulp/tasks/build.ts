@@ -27,10 +27,11 @@ task('bundle:umd:acl', bundleUmdACL);
 task('bundle:umd:auth', bundleUmdAuth);
 task('bundle:umd:mock', bundleUmdMock);
 task('bundle:umd:cache', bundleUmdCache);
+task('bundle:umd:platform', bundleUmdPlatform);
 // @ts-ignore
 task('bundle', <any>[
     'bundle:umd:theme', 'bundle:umd:abc', 'bundle:umd:acl', 'bundle:umd:auth', 'bundle:umd:mock',
-    'bundle:umd:cache' ]);
+    'bundle:umd:cache', 'bundle:umd:platform' ]);
 task('bump', bumpVersions);
 task('bump:next', bumpNextVersions);
 // cli
@@ -44,7 +45,8 @@ const versionPaths = [
     './src/core/acl/package.json',
     './src/core/auth/package.json',
     './src/core/mock/package.json',
-    './src/core/cache/package.json'
+    './src/core/cache/package.json',
+    './src/core/platform/package.json'
 ];
 
 function bumpVersions() {
@@ -175,6 +177,10 @@ function bundleUmdMock() {
 
 function bundleUmdCache() {
     bundle(`${paths.lib}/cache/`);
+}
+
+function bundleUmdPlatform() {
+    bundle(`${paths.lib}/platform/`);
 }
 
 function bundle(path: string) {
