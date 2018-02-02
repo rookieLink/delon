@@ -58,6 +58,7 @@ showTotal | 是否显示总数据量 | `boolean` | `false`
 isPageIndexReset | 数据变更后是否保留在数据变更前的页码 | `boolean` | `true`
 toTopInChange | 切换分页时返回顶部 | `boolean` | `true`
 pagePlacement | 分页方向 | `left,center,right` | `right`
+multiSort | 是否多排序，建议后端支持时使用 | `boolean` | `false`
 sortReName | 重命名排序值，`columns` 的重命名高于属性 | `{ ascend?: string, descend?: string }` | -
 preDataChange | 数据处理前回调，一般在使用 `url` 时很有用 | `(data: SimpleTableData[]) => SimpleTableData[]` | -
 body | 额外 `body` 内容，一般用于添加合计行 | `TemplateRef<any>` | -
@@ -98,13 +99,13 @@ disabled? | 选择框或单选框 `disabled` 值 | `boolean` | -
 ----|------|-----|------
 title | 表格标题 | `string` | -
 i18n? | 表格标题i18n | `string` | -
-type? | `checkbox` 多选； `radio` 单选；`img` 图像且居中；`currency` 货币且居右；`date` 日期格式且居中；`yn` 将`boolean`类型徽章化 [document](http://ng-alain.com/docs/data-render#yn) | `string` | -
+type? | `checkbox` 多选； `radio` 单选；`img` 图像且居中；`number` 数字且居右；`currency` 货币且居右；`date` 日期格式且居中；`yn` 将`boolean`类型徽章化 [document](http://ng-alain.com/docs/data-render#yn) | `string` | -
 index? | 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法 | `string, string[]` | -
 buttons? | 按钮组 | `SimpleTableButton[]` | -
 width? | 列宽，例如：`10%`、`100px` | `string` | -
 format? | 格式化列值 | `function(cell: any, row: any)` | -
 sort? | 排序的受控属性，`asc`、`desc` | `string` | -
-sorter? | 排序函数，本地排序使用一个函数(参考 [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) 的 compareFunction) | `Function` | -
+sorter? | 排序函数，本地排序使用一个函数(参考 [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) 的 compareFunction)；若需要后端排序直接返回 `true` | `Function` | -
 sortKey? | 排序的后端相对应的KEY，默认使用 `index` 属性 | `string` | -
 sortReName? | 排序的后端相对应的VALUE | `{ ascend?: string, descend?: string }` | -
 filters? | 表头的筛选菜单项，至少一项以上才会生效 | `SimpleTableFilter[]` | -
@@ -119,6 +120,7 @@ filterReName? | 过滤的后端相对应的VALUE；默认当 `filterMultiple` �
 selections? | 选择功能配置 | `SimpleTableSelection[]` | -
 className? | 列 `class` 属性值，例如：；`text-center` 居中； `text-right` 居右； `text-danger` 异常色 | `string` | -
 colSpan? | 合并列 | `number` | -
+numberDigits? | 数字格式，`type=number` 有效 | `string` | -
 dateFormat? | 日期格式，`type=date` 有效 | `string` | `YYYY-MM-DD HH:mm`
 ynTruth? | 真值条件，`type=yn` 有效，（默认：`true`） | `any` | -
 ynYes? | 徽章 `true` 时文本，`type=yn` 有效 | `string` | `是`

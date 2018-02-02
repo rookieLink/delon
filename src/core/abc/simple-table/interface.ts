@@ -28,11 +28,12 @@ export interface SimpleTableColumn {
      * - `checkbox` 多选
      * - `radio` 单选（待实现，跟踪 [#770](https://github.com/NG-ZORRO/ng-zorro-antd/issues/770)）
      * - `img` 图片且居中(若 `className` 存在则优先)
+     * - `number` 数字且居右(若 `className` 存在则优先)
      * - `currency` 货币且居右(若 `className` 存在则优先)
      * - `date` 日期格式且居中(若 `className` 存在则优先)
      * - `yn` 将`boolean`类型徽章化 [document](http://ng-alain.com/docs/data-render#yn)
      */
-    type?: 'checkbox' | 'radio' | 'img' | 'currency' | 'date' | 'yn';
+    type?: 'checkbox' | 'radio' | 'img' | 'currency' | 'number' | 'date' | 'yn';
     /**
      * 表格标题
      */
@@ -59,7 +60,7 @@ export interface SimpleTableColumn {
     width?: string;
     /**
      * 排序的默认受控属性
-     * - 只支持同时对一列进行排序
+     * - 只支持同时对一列进行排序，除非指定 `multiSort`，建议后端支持时使用
      * - 保证只有一列的 `sort` 值，否则自动获取所有列的第一个值
      */
     sort?: 'ascend' | 'descend';
@@ -142,6 +143,10 @@ export interface SimpleTableColumn {
      * 合并列
      */
     colSpan?: number;
+    /**
+     * 数字格式，`type=number` 有效
+     */
+    numberDigits?: string;
     /**
      * 日期格式，`type=date` 有效，（默认：YYYY-MM-DD HH:mm）
      */

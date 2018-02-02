@@ -1,4 +1,5 @@
 import { Component, Inject, Input, Output, OnDestroy, OnInit, OnChanges, SimpleChanges, EventEmitter, Renderer2, ElementRef, TemplateRef, SimpleChange, QueryList, ViewChildren, AfterViewInit, ContentChildren, ContentChild, Optional } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { _HttpClient, CNCurrencyPipe, MomentDatePipe, YNPipe, ModalHelper, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 import { ACLService } from '@delon/acl';
 import { Observable } from 'rxjs/Observable';
@@ -16,7 +17,7 @@ import { SimpleTableExport } from './simple-table-export';
     selector: 'simple-table',
     templateUrl: './simple-table.component.html',
     styleUrls: [ './simple-table.less' ],
-    providers: [ SimpleTableExport, CNCurrencyPipe, MomentDatePipe, YNPipe ]
+    providers: [ SimpleTableExport, CNCurrencyPipe, MomentDatePipe, YNPipe, DecimalPipe ]
 })
 export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 
@@ -28,10 +29,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     _classMap: string[] = [];
     _allChecked = false;
     _indeterminate = false;
-    _sortMap: { [key: number ]: any } = {};
-    _sortColumn: SimpleTableColumn = null;
-    _sortOrder: string;
-    _sortIndex: number;
     _footer = false;
     _columns: SimpleTableColumn[] = [];
     _resRN: ResReNameType = { total: ['total'], list: ['list'] };
@@ -157,6 +154,13 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     private _toTopOffset = 0;
     /** 重命名排序值，`columns` 的重命名高于属性 */
     @Input() sortReName: { ascend?: string, descend?: string };
+    /** 是否多排序，建议后端支持时使用，默认：`false` */
+    @Input()
+    get multiSort() { return this._multiSort; }
+    set multiSort(value: any) {
+        this._multiSort = coerceBooleanProperty(value);
+    }
+    private _multiSort = false;
     /** 数据处理前回调 */
     @Input() preDataChange: (data: SimpleTableData[]) => SimpleTableData[];
     /** 额外 `body` 内容 */
@@ -187,7 +191,8 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         private modal: ModalHelper,
         private currenty: CNCurrencyPipe,
         private date: MomentDatePipe,
-        private yn: YNPipe
+        private yn: YNPipe,
+        private number: DecimalPipe
     ) {
         Object.assign(this, deepCopy(defConfig));
         this.updateResName();
@@ -308,6 +313,8 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         switch (col.type) {
             case 'img':
                 return `<img src="${ret}" class="img">`;
+            case 'number':
+                return this.number.transform(ret, col.numberDigits);
             case 'currency':
                 return this.currenty.transform(ret);
             case 'date':
@@ -357,13 +364,28 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
     // region: sort
 
+    _sortMap: { [key: number ]: any } = {};
+    _sortColumn: SimpleTableColumn = null;
+    _sortOrder: string;
+    _sortIndex: number;
+
     private getReqSortMap(): { [key: string]: string } {
         const ret: { [ key: string]: string } = {};
         if (!this._sortOrder) return ret;
 
-        const mapData = this._sortMap[this._sortIndex];
-        ret[mapData.key] =
-            (this._sortColumn.sortReName || this.sortReName || {})[mapData.v] || mapData.v;
+        if (this.multiSort) {
+            Object.keys(this._sortMap).forEach(key => {
+                const item = this._sortMap[key];
+                if (item.v) {
+                    ret[item.key] = (item.column.sortReName || this.sortReName || {})[item.v] || item.v;
+                }
+            });
+        } else {
+            const mapData = this._sortMap[this._sortIndex];
+            ret[mapData.key] =
+                (this._sortColumn.sortReName || this.sortReName || {})[mapData.v] || mapData.v;
+        }
+        console.log(ret);
         return ret;
     }
 
@@ -395,7 +417,11 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         this._sortColumn = this._columns[index];
         this._sortOrder = value;
         this._sortIndex = index;
-        Object.keys(this._sortMap).forEach(key => this._sortMap[key].v = +key === index ? value : null);
+        if (this.multiSort) {
+            this._sortMap[index].v = value;
+        } else {
+            Object.keys(this._sortMap).forEach(key => this._sortMap[key].v = +key === index ? value : null);
+        }
         this._genAjax(true);
         this._genData(true);
         this.sortChange.emit({ value, map: this.getReqSortMap(), column: this._sortColumn });
@@ -597,6 +623,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
                     item.className = {
                         // 'checkbox': 'text-center',
                         // 'radio': 'text-center',
+                        'number': 'text-right',
                         'currency': 'text-right',
                         'date': 'text-center'
                     }[item.type];
@@ -606,7 +633,11 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
                 // sorter
                 if (item.sorter) {
-                    sortMap[idx] = { v: item.sort, key: item.sortKey || item.indexKey };
+                    sortMap[idx] = {
+                        v: item.sort,
+                        key: item.sortKey || item.indexKey,
+                        column: item
+                    };
                     if (item.sort && !this._sortColumn) {
                         this._sortColumn = item;
                         this._sortOrder = item.sort;
