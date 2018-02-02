@@ -291,7 +291,7 @@ export class MenuService implements OnDestroy {
         const item = this._list.find((menu: Menu) => {
             if (menu.id === id) return true;
         });
-        return item ? item._hidden : false;
+        return item ? !item._hidden : false;
     }
 
     getLink(id: string) {

@@ -1,6 +1,6 @@
 {
 	"name": "@microon/abc",
-	"version": "0.6.8",
+	"version": "0.7.0",
 	"description": "@microon/abc",
 	"main": "./bundles/abc.umd.js",
 	"module": "./index.js",

@@ -1,6 +1,6 @@
 {
 	"name": "@microon/platform",
-	"version": "0.6.8",
+	"version": "0.7.0",
 	"description": "@microon/platform",
 	"main": "./bundles/platform.umd.js",
 	"module": "./index.js",
