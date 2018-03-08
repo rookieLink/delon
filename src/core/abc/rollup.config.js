@@ -36,15 +36,12 @@ const globals = {
 };
 
 module.exports = {
+    sourcemap: true,
     rollup: require('rollup'),
     context: 'this',
-    output: {
-        file: 'abc.umd.js',
-        name: 'alain.abc',
-        format: 'umd',
-        sourcemap: true,
-        globals: globals
-    },
+    name: 'alain.abc',
+    output: 'abc.umd.js',
+    format: 'umd',
     plugins: [
         replace({ "import * as moment": "import moment" }),
         resolve({
@@ -52,5 +49,6 @@ module.exports = {
             main: true
         })
     ],
-    external: Object.keys(globals)
+    external: Object.keys(globals),
+    globals: globals
 };

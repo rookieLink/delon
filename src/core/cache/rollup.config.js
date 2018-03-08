@@ -23,15 +23,12 @@ const globals = {
 };
 
 module.exports = {
+    sourcemap: true,
     rollup: require('rollup'),
     context: 'this',
-    output: {
-        file: 'cache.umd.js',
-        name: 'alain.cache',
-        format: 'umd',
-        sourcemap: true,
-        globals: globals
-    },
+    name: 'alain.cache',
+    output: 'cache.umd.js',
+    format: 'umd',
     plugins: [
         replace({ "import * as moment": "import moment" }),
         resolve({
@@ -39,5 +36,6 @@ module.exports = {
             main: true
         })
     ],
-    external: Object.keys(globals)
+    external: Object.keys(globals),
+    globals: globals
 };

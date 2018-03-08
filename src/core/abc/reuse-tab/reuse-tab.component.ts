@@ -75,21 +75,24 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
 
     private gen(url?: string) {
         if (!url) url = this.srv.getUrl(this.route.snapshot);
+        const rawUrl = this.srv.getRawUrl(this.route.snapshot);
         const ls = [...this.srv.items].map((item: ReuseTabCached, index: number) => {
             return {
                 url: item.url,
+                rawUrl: item.rawUrl,
                 // closabled: this.allowClose && item.closable,
                 title: item.customTitle || item.title,
                 index
             };
         });
         if (this.showCurrent) {
-            const idx = ls.findIndex(w => w.url === url);
+            const idx = ls.findIndex(w => w.rawUrl === rawUrl);
             if (idx !== -1) {
                 this._pos = idx;
             } else {
                 ls.push({
                     url,
+                    rawUrl,
                     title: this.srv.getTitle(url, this.srv.getTruthRoute(this.route.snapshot)),
                     // closabled: this.allowClose && this.srv.getClosable(url, next.snapshot),
                     index: -1
@@ -171,7 +174,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
             first()
         ).subscribe(res => {
             this.gen(this.router.url);
-            title$.unsubscribe();
+           title$.unsubscribe();
         });
 
         this.gen();

@@ -37,6 +37,8 @@ export interface ReuseTabCached {
 
     url: string;
 
+    rawUrl: string;
+
     _snapshot: ActivatedRouteSnapshot;
 
     _handle: any;
