@@ -72,6 +72,8 @@ export interface Menu {
 
     _accessible?: boolean;
 
+    _authorized?: boolean;
+
     [key: string]: any;
 }
 
@@ -153,7 +155,7 @@ export class MenuService implements OnDestroy {
 
             // acl
             if (item.acl && this.aclService) {
-                item._hidden = !this.aclService.can(item.acl);
+                item._authorized = !this.aclService.can(item.acl);
             }
 
             if (callback) callback(item, parent, depth);
@@ -291,7 +293,7 @@ export class MenuService implements OnDestroy {
         const item = this._list.find((menu: Menu) => {
             if (menu.id === id) return true;
         });
-        return item ? !item._hidden : false;
+        return item ? item._authorized : false;
     }
 
     getLink(id: string) {
@@ -303,9 +305,9 @@ export class MenuService implements OnDestroy {
 
     updateACLFlag(serverIDArr: Array<string>) {
         this.visit((menu: Menu) => {
-            menu._hidden = true;
+            menu._authorized = false;
             if (serverIDArr.indexOf(menu.serverID || 'no id') >= 0) {
-                menu._hidden = false;
+                menu._authorized = true;
             }
         });
     }
