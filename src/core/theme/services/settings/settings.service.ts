@@ -42,12 +42,21 @@ export class SettingsService {
 
     private _layout: Layout = null;
 
-    private get(key: string) {
-        return JSON.parse(localStorage.getItem(key) || 'null') || null;
+    setApp(val: App) {
+        this.app = Object.assign(this.app, val);
     }
 
-    private set(key: string, value: any) {
-        localStorage.setItem(key, JSON.stringify(value));
+    setUser(val: User) {
+        this.user = Object.assign(this.user, val);
+    }
+
+    setLayout(name: string, value: any): boolean {
+        if (typeof this.layout[name] !== 'undefined') {
+            this.layout[name] = value;
+            this.set(KEY, this._layout);
+            return true;
+        }
+        return false;
     }
 
     get layout(): Layout {
@@ -64,21 +73,14 @@ export class SettingsService {
         return this._layout;
     }
 
-    setLayout(name: string, value: any): boolean {
-        if (typeof this.layout[name] !== 'undefined') {
-            this.layout[name] = value;
-            this.set(KEY, this._layout);
-            return true;
-        }
-        return false;
+
+
+    private get(key: string) {
+        return JSON.parse(localStorage.getItem(key) || 'null') || null;
     }
 
-    setApp(val: App) {
-        this.app = Object.assign(this.app, val);
-    }
-
-    setUser(val: User) {
-        this.user = Object.assign(this.user, val);
+    private set(key: string, value: any) {
+        localStorage.setItem(key, JSON.stringify(value));
     }
 
 }
