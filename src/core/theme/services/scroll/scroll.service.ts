@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { PlatformLocation } from '@angular/common';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT, PlatformLocation } from '@angular/common';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 
 export const topMargin = 16;
@@ -14,6 +13,9 @@ export class ScrollService {
   get topOffset() {
     if (!this._topOffset) {
         const toolbar = this.doc.querySelector('.header');
+        // 这个属性是只读属性，对于没有定义CSS或者内联布局盒子的元素为0，
+        // 同时它是元素内部的高度(单位像素)，包含内边距，但不包括水平滚动条、边框和外边距。
+        // clientHeight 可以通过 CSS height + CSS padding - 水平滚动条高度 (如果存在)来计算.
         this._topOffset = (toolbar && toolbar.clientHeight || 0) + topMargin;
     }
     return this._topOffset;
