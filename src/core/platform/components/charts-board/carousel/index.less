@@ -1,0 +1,33 @@
+:host{
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    perspective: 1000px;
+    .carousel {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        transition: transform 1s;
+        transform-style: preserve-3d;
+        figure {
+            margin: 0;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 3px;
+            background-color: rgba(255, 255, 255, 0.98);
+            position: absolute;
+            transition: opacity 1s, transform 1s;
+        }
+        &.backface-invisible{
+            figure {
+                backface-visibility: hidden;
+            }
+        }
+    }
+}
+
+
+

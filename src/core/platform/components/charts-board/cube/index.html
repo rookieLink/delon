@@ -1,0 +1,32 @@
+<div class="cube" [ngClass]="[face]">
+    <figure class="front">
+        <div class="inner-wrapper">
+            <ng-content select="[front]"></ng-content>
+        </div>
+    </figure>
+    <figure class="back">
+        <div class="inner-wrapper">
+            <ng-content select="[back]"></ng-content>
+        </div>
+    </figure>
+    <figure class="right">
+        <div class="inner-wrapper">
+            <ng-content select="[right]"></ng-content>
+        </div>
+    </figure>
+    <figure class="left">
+        <div class="inner-wrapper">
+            <ng-content select="[left]"></ng-content>
+        </div>
+    </figure>
+    <figure class="top">
+        <div class="inner-wrapper">
+            <ng-content select="[top]"></ng-content>
+        </div>
+    </figure>
+    <figure class="bottom">
+        <div class="inner-wrapper">
+            <ng-content select="[bottom]"></ng-content>
+        </div>
+    </figure>
+</div>
