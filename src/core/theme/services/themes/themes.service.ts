@@ -15,9 +15,6 @@ export class ThemesService {
     }
 
     setTheme(name: ThemeType) {
-        if (name === this.settings.layout.theme) {
-            return;
-        }
         const bodyEl = this.doc.querySelector('body');
         const removeArr = [];
         for (let i = 0; i < bodyEl.classList.length; i++) {
