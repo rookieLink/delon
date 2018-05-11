@@ -1,9 +1,10 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 import { ITokenModel, ITokenService, DA_SERVICE_TOKEN } from '../token/interface';
 import { Observer } from 'rxjs/Observer';
+
 
 const OPENTYPE = '_delonAuthSocialType';
 const HREFCALLBACK = '_delonAuthSocialCallbackByHref';
