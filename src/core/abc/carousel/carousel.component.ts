@@ -24,7 +24,7 @@ import {PanelComponent} from './panel.component';
             </a>
         </div>
     `,
-    styleUrls: ['./carousel.component.scss']
+    styleUrls: ['./carousel.component.less']
 })
 export class CarouselComponent implements OnInit, OnChanges {
 
