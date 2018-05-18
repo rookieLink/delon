@@ -67,7 +67,9 @@ export class LayoutComponent implements OnInit {
                     icon: 'anticon anticon-appstore',
                     children: [
                         { text: 'Reuse Tab', link: '/abc/reuse-tab' },
-                        { text: 'Ellipsis', link: '/abc/ellipsis' }
+                        { text: 'Ellipsis', link: '/abc/ellipsis' },
+                        { text: 'carousel', link: '/abc/carousel' },
+                        { text: 'dashboard', link: '/abc/dashboard'}
                     ]
                 },
                 {

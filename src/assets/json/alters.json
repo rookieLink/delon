@@ -1,0 +1,139 @@
+{
+    "retCode": "00",
+    "retList": [
+        {
+            "id": "ce5fc0a7-a14c-4307-9441-48bdc9ca3841",
+            "icon": "",
+            "name": "TT",
+            "chartDesc": "1222222",
+            "type": "0"
+        },
+        {
+            "id": "6646cbac-78ce-4f58-8657-0b7a26575800",
+            "icon": "",
+            "name": "232",
+            "chartDesc": "",
+            "type": "0"
+        },
+        {
+            "id": "43c31fda-fc5a-4e40-8654-9bf8fed4954e",
+            "icon": "",
+            "name": "test0507002",
+            "chartDesc": "test2",
+            "type": "0"
+        },
+        {
+            "id": "22d4641b-5026-4049-89c2-5ed754753a0d",
+            "icon": "",
+            "name": "test0507001",
+            "chartDesc": "test",
+            "type": "0"
+        },
+        {
+            "id": "4af0c5c8-dd82-46bc-be66-d91eb55f498e",
+            "icon": "",
+            "name": "来来来",
+            "chartDesc": "来来来",
+            "type": "0"
+        },
+        {
+            "id": "88901b25-e94f-4c24-834c-46fbc172c3ef",
+            "icon": "",
+            "name": "rrr",
+            "chartDesc": "rrr",
+            "type": "0"
+        },
+        {
+            "id": "07ecb2ce-0a77-4759-8b1a-e46ee9360907",
+            "icon": "",
+            "name": "设备自助渠道年交易额",
+            "chartDesc": "设备自助渠道年交易额",
+            "type": "0"
+        },
+        {
+            "id": "b674dc41-44dc-4945-8fc2-320753450f54",
+            "icon": "",
+            "name": "设备效益Top5",
+            "chartDesc": "设备效益Top5",
+            "type": "0"
+        },
+        {
+            "id": "6303db6b-bd84-466c-afeb-036dba27b8ec",
+            "icon": null,
+            "name": "echarts-8",
+            "chartDesc": "echarts-8",
+            "type": "0"
+        },
+        {
+            "id": "b20dacc4-928e-4b5b-a77c-40df00a2c3d3",
+            "icon": null,
+            "name": "info2",
+            "chartDesc": "info2",
+            "type": "1"
+        },
+        {
+            "id": "906db9f7-dc57-4650-822c-da549f34a1b1",
+            "icon": null,
+            "name": "11111",
+            "chartDesc": "111111",
+            "type": "10"
+        },
+        {
+            "id": "a648c17b-5194-4cf9-b1a8-ff882294ac3e",
+            "icon": null,
+            "name": "turnover-8",
+            "chartDesc": "turnover-8",
+            "type": "10"
+        },
+        {
+            "id": "0154999f-b747-4af6-9934-23dbd010c390",
+            "icon": null,
+            "name": "turn-over2",
+            "chartDesc": "turn-over2",
+            "type": "10"
+        },
+        {
+            "id": "0616bdae-6793-4c56-b644-faa55df3a866",
+            "icon": null,
+            "name": "turn-over",
+            "chartDesc": "turn-over",
+            "type": "10"
+        },
+        {
+            "id": "001abbbf-40bb-4209-a4e7-f685c0e03107",
+            "icon": null,
+            "name": "嗯嗯",
+            "chartDesc": "嗯嗯",
+            "type": "2"
+        },
+        {
+            "id": "4f92187e-3c39-41f5-a8e0-25dec445951c",
+            "icon": null,
+            "name": "detail-8",
+            "chartDesc": "detail-8",
+            "type": "2"
+        },
+        {
+            "id": "4a0f37b5-78fc-4da0-aa92-de9c0858e4e0",
+            "icon": null,
+            "name": "detail2",
+            "chartDesc": "detail2",
+            "type": "2"
+        },
+        {
+            "id": "a8f1f7dc-5d14-48ea-b7bc-511c15234a73",
+            "icon": null,
+            "name": "rank-8",
+            "chartDesc": "rank-8",
+            "type": "3"
+        },
+        {
+            "id": "3c4029cc-1fc1-43b3-8d23-573da5c2d2e0",
+            "icon": null,
+            "name": "rank2",
+            "chartDesc": "rank2",
+            "type": "3"
+        }
+    ],
+    "retMsg": "成功"
+}

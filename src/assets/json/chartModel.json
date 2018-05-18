@@ -1,0 +1,46 @@
+{
+    "element": {
+        "dataMsg": {
+            "dimensionList": [
+                {
+                    "name": "设备号",
+                    "data": [
+                        "null",
+                        "9999",
+                        "8888",
+                        "1152",
+                        "1151"
+                    ]
+                }
+            ],
+            "measureList": [
+                {
+                    "name": "设备效益",
+                    "data": [
+                        "1441.0",
+                        "1802.0",
+                        "1383.0",
+                        "1053.0",
+                        "1562.0"
+                    ]
+                }
+            ],
+            "legend": [
+                "设备效益"
+            ]
+        },
+        "componentMsg": {
+            "icon": "",
+            "creatorOrgNo": "0000",
+            "status": 0,
+            "subject": 0,
+            "describe": "设备效益Top5",
+            "name": "设备效益Top5",
+            "type": "0",
+            "creator": "dinghuishu"
+        },
+        "optionMsg": "\nthat.option = {\n    title: {\n        text: '设备效益Top5',\n        subtext: '（近一年）'\n    },\n    tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n            type: 'shadow'\n        }\n    },\n    legend: {\n        data: that.payload.legend\n    },\n    grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n    },\n    xAxis: {\n        type: 'value',\n        boundaryGap: [0, 0.01]\n    },\n    yAxis: {\n        type: 'category',\n        data: that.payload.dimensionList[0].data\n    },\n    series: [\n      {\n        type:'bar',\n        name:that.payload.measureList[0].name,\n        data:that.payload.measureList[0].data\n      }\n    ]\n};\n"
+    },
+    "retCode": "00",
+    "retMsg": "成功"
+}

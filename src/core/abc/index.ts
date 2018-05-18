@@ -64,6 +64,8 @@ export * from './reuse-tab';
 export * from './full-content';
 export * from './xlsx';
 export * from './zip';
+export * from './carousel';
+export * from './dashboard';
 
 // endregion
 
