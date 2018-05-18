@@ -4,6 +4,14 @@
     position: relative;
     overflow: auto;
 }
+:host /deep/ .ant-tabs-content.ant-tabs-content-animated {
+    height: calc(100% - 52px);
+    .ant-tabs-tabpane {
+        height: 100% !important;
+    }
+}
+
+
 
 .mask {
     position: fixed;
@@ -111,3 +119,6 @@ div[nz-row] {
         transform: scale(1.001, 1.001);
     }
 }
+
+
+

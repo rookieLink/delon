@@ -8,7 +8,7 @@ import {DashboardComponent} from '@delon/abc/dashboard/dashboard.component';
     `,
     styles: [`
         :host {
-            height: 600px;
+            height: 800px;
         }
     `]
 })
