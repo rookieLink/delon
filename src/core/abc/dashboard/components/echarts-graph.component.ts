@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NzMessageService} from 'ng-zorro-antd';
-import {DashboardService} from '../dashboard.service';
 
 @Component({
     selector: 'home-chart',
@@ -26,41 +25,44 @@ import {DashboardService} from '../dashboard.service';
 export class EchartsGraphComponent implements OnInit {
 
     @Input() id;   // 图表的id值
+    @Input() dashboardService;
 
     option: any;
     payload: any;
 
     chartInitFailed = false;
 
-
-    constructor(private dashBoardService: DashboardService,
-                private  message: NzMessageService) {
+    constructor(private  message: NzMessageService) {
     }
 
     ngOnInit(): void {
         if (this.id) {
-            this.dashBoardService.getOptionAndDataById(this.id)
-                .subscribe(data => {
-                    if (data['element']) {
-                        this.payload = data['element'].dataMsg;
-                        const legend = this.payload.legend,
-                            dimensionList = this.payload.dimensionList,
-                            measureList = this.payload.measureList,
-                            that = this;
-                        try {
-                            eval(data['element'].optionMsg);
-                        } catch (e) {
-                            console.log(e);
-                            this.message.error(e);
+            if (this.dashboardService.hasOwnProperty('getOptionAndDataById')) {
+                this.dashboardService.getOptionAndDataById(this.id)
+                    .subscribe(data => {
+                        if (data['element']) {
+                            this.payload = data['element'].dataMsg;
+                            const legend = this.payload.legend,
+                                dimensionList = this.payload.dimensionList,
+                                measureList = this.payload.measureList,
+                                that = this;
+                            try {
+                                eval(data['element'].optionMsg);
+                            } catch (e) {
+                                console.log(e);
+                                this.message.error(e);
+                            }
+                        } else {
+                            this.chartInitFailed = true;
+                            this.message.error('获取数据失败');
                         }
-                    } else {
+                    }, err => {
                         this.chartInitFailed = true;
-                        this.message.error('获取数据失败');
-                    }
-                }, err => {
-                    this.chartInitFailed = true;
-                    this.message.error(err.body.retMsg);
-                });
+                        this.message.error(err.body.retMsg);
+                    });
+            } else {
+                this.message.error('您所传递驾驶舱配置服务有误，\n 请确定其获取图表数据信息的服务名为"getOptionAndDataById"');
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {DashboardComponent} from '@delon/abc/dashboard/dashboard.component';
+import {DashboardService} from './dashboard.service';
 
 @Component({
     selector: 'app-demo-dashboard',
@@ -14,41 +15,30 @@ import {DashboardComponent} from '@delon/abc/dashboard/dashboard.component';
 })
 export class DemoDashboardComponent {
 
+    constructor(public dashboardService: DashboardService) {
+
+    }
+
 
     homeConfig = [
         {
             data: {
                 pageId: 'meta-analysis',
-                requestParams: {
-                    getPageDefById: {},
-                    updatePageDefById: {},
-                    getChartsDef: {},
-                    getOptionAndDataById: {}
-                }
+                dashboardService: this.dashboardService
             },
             component: DashboardComponent
         },
         {
             data: {
                 pageId: 'meta-analysis',
-                requestParams: {
-                    getPageDefById: {},
-                    updatePageDefById: {},
-                    getChartsDef: {},
-                    getOptionAndDataById: {}
-                }
+                dashboardService: this.dashboardService
             },
             component: DashboardComponent
         },
         {
             data: {
                 pageId: 'meta-analysis',
-                requestParams: {
-                    getPageDefById: {},
-                    updatePageDefById: {},
-                    getChartsDef: {},
-                    getOptionAndDataById: {}
-                }
+                dashboardService: this.dashboardService
             },
             component: DashboardComponent
         }

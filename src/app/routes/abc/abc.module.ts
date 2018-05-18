@@ -9,6 +9,7 @@ import {DemoReuseTabEditComponent} from './reuse-tab/edit.component';
 import {CarouselComponent} from './carousel/carousel.component';
 import {TestComponent} from './carousel/test.component';
 import {DemoDashboardComponent} from './dashboard/dashboard.component';
+import {DashboardService} from './dashboard/dashboard.service';
 
 const COMPONENTS = [
     DemoReuseTabComponent,
@@ -44,6 +45,9 @@ const routes: Routes = [
     ],
     entryComponents: [
         TestComponent
+    ],
+    providers: [
+        DashboardService
     ]
 })
 export class DEMOABCModule {

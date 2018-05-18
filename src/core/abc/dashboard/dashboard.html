@@ -13,7 +13,7 @@
 <div nz-row [nzGutter]="16">
     <div nz-col class="gutter-row" [nzSpan]="6" *ngFor="let card of cards; index as i;">
         <div class="card-item">
-            <home-chart [id]="card.id"></home-chart>
+            <home-chart [id]="card.id" [dashboardService]="data.dashboardService"></home-chart>
         </div>
         <div class="overlay" *ngIf="setting">
             <span class="title">name</span>
@@ -43,7 +43,7 @@
                 </ng-template>
                 <div style="height: 99%;overflow: auto;">
                     <ng-template [ngIf]="!tab.pending">
-                        <home-chart [id]="tab.id"></home-chart>
+                        <home-chart [id]="tab.id" [dashboardService]="data.dashboardService"></home-chart>
                     </ng-template>
                     <ng-template [ngIf]="tab.pending">
                         <tab-alt [alts]="alternatives" [index]="[i,r]" (tabSelect)="selectTab($event)"></tab-alt>

@@ -1,7 +1,6 @@
-import {Component, Injector, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Injector, Input, OnInit, Output} from '@angular/core';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {CardAlternativesComponent} from './components/card-alternatives.component';
-import {DashboardService} from './dashboard.service';
 import * as _ from 'lodash';
 
 @Component({
@@ -13,9 +12,9 @@ export class DashboardComponent implements OnInit {
 
     data: any;   // dynamic created
 
-    requestParams: any;
+    dashboardService: any;
 
-    @Input() pageId;
+    pageId;
     name;
     description;
 
@@ -29,8 +28,6 @@ export class DashboardComponent implements OnInit {
 
     constructor(private modal: NzModalService,
                 private injector: Injector,
-                // private session: SessionService,
-                private dashboardService: DashboardService,
                 private _message: NzMessageService) {
     }
 
@@ -153,17 +150,22 @@ export class DashboardComponent implements OnInit {
             });
         });
 
+        if (this.dashboardService.hasOwnProperty('updatePageDefById')) {
+            this.dashboardService.updatePageDefById(homeDef)
+                .subscribe(data => {
+                    this.setting = false;
+                    this.openSetting = false;
+                    localStorage.setItem('homeDef', JSON.stringify(homeDef));
+                    this._message.success('驾驶舱配置成功！');
+                }, err => {
+                    this.openSetting = false;
+                    this._message.error(err.body.retMsg);
+                });
+        } else {
+            this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其保存的服务名为"updatePageDefById"');
+        }
 
-        this.dashboardService.updatePageDefById(homeDef)
-            .subscribe(data => {
-                this.setting = false;
-                this.openSetting = false;
-                localStorage.setItem('homeDef', JSON.stringify(homeDef));
-                this._message.success('驾驶舱配置成功！');
-            }, err => {
-                this.openSetting = false;
-                this._message.error(err.body.retMsg);
-            });
+
     }
 
 
@@ -174,29 +176,38 @@ export class DashboardComponent implements OnInit {
             return;
         }
         this.pageId = this.data.pageId;
-        this.requestParams = this.data.requestParams;
+        this.dashboardService = this.data.dashboardService;
 
-        // 获取当前主页配置
-        this.dashboardService.getPageDefById(this.requestParams.getPageDefById)
-            .subscribe((data: any) => {
-                console.log(data);
-                this.cards = data.cards;
-                this.tabs = data.tabs;
-                // this.name = this.data.name;
-                // this.description = this.data.description;
-            }, err => {
-                this._message.error(err.body.retMsg);
-            });
-        // 获取可选择内容
-        this.dashboardService.getChartsDef({orgNo: '0000'})
-            .subscribe((data) => {
-                const list = data['retList'] || [];
-                this.alternatives = list.filter((value) => {
-                    return value.type === '0';
+        if (this.dashboardService.hasOwnProperty('getPageDefById')) {
+            // 获取当前主页配置
+            this.dashboardService.getPageDefById(this.pageId)
+                .subscribe((data: any) => {
+                    console.log(data);
+                    this.cards = data.cards;
+                    this.tabs = data.tabs;
+                    // this.name = this.data.name;
+                    // this.description = this.data.description;
+                }, err => {
+                    this._message.error(err.body.retMsg);
                 });
-            }, err => {
-                this._message.error(err.body.retMsg);
-            });
+        } else {
+            this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其获取页面配置信息的服务名为"getPageDefById"');
+        }
+
+        if (this.dashboardService.hasOwnProperty('getChartsDef')) {
+            // 获取可选择内容
+            this.dashboardService.getChartsDef({orgNo: '0000'})
+                .subscribe((data) => {
+                    const list = data['retList'] || [];
+                    this.alternatives = list.filter((value) => {
+                        return value.type === '0';
+                    });
+                }, err => {
+                    this._message.error(err.body.retMsg);
+                });
+        } else {
+            this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其获取所有图表配置信息的服务名为"getChartsDef"');
+        }
     }
 
     cancel() {
