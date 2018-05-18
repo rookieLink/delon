@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { NgZorroAntdExtraModule } from 'ng-zorro-antd-extra';
 import { AlainThemeModule } from '@delon/theme';
-import { AlainABCModule, SimpleTableConfig, FullContentService } from '@delon/abc';
+import {AlainABCModule, SimpleTableConfig, FullContentService} from '@delon/abc';
 import { AlainACLModule } from '@delon/acl';
 import { DelonMockModule } from '@delon/mock';
 
@@ -112,7 +112,8 @@ const ZORROMODULES = [
     // NzBackTopModule,
     // NzAffixModule,
     // NzAnchorModule,
-    NzAvatarModule
+    NzAvatarModule,
+
 ];
 // endregion
 
@@ -140,7 +141,9 @@ import {
     AdImageModule,
     AdUtilsModule,
     AdFullContentModule,
-    AdXlsxModule
+    AdXlsxModule,
+    CarouselModule,
+    DashboardModule,
 } from '@delon/abc';
 const ABCMODULES = [
     AdSimpleTableModule,
@@ -165,7 +168,10 @@ const ABCMODULES = [
     AdImageModule,
     AdUtilsModule,
     AdFullContentModule,
-    AdXlsxModule
+    AdXlsxModule,
+    // your Module
+    CarouselModule,
+    DashboardModule
 ];
 // endregion
 
