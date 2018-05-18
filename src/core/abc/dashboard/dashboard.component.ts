@@ -150,7 +150,7 @@ export class DashboardComponent implements OnInit {
             });
         });
 
-        if (this.dashboardService.hasOwnProperty('updatePageDefById')) {
+        if (this.dashboardService.updatePageDefById) {
             this.dashboardService.updatePageDefById(homeDef)
                 .subscribe(data => {
                     this.setting = false;
@@ -178,7 +178,7 @@ export class DashboardComponent implements OnInit {
         this.pageId = this.data.pageId;
         this.dashboardService = this.data.dashboardService;
 
-        if (this.dashboardService.hasOwnProperty('getPageDefById')) {
+        if (this.dashboardService.getPageDefById) {
             // 获取当前主页配置
             this.dashboardService.getPageDefById(this.pageId)
                 .subscribe((data: any) => {
@@ -194,7 +194,7 @@ export class DashboardComponent implements OnInit {
             this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其获取页面配置信息的服务名为"getPageDefById"');
         }
 
-        if (this.dashboardService.hasOwnProperty('getChartsDef')) {
+        if (this.dashboardService.getChartsDef) {
             // 获取可选择内容
             this.dashboardService.getChartsDef({orgNo: '0000'})
                 .subscribe((data) => {

@@ -37,7 +37,7 @@ export class EchartsGraphComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.id) {
-            if (this.dashboardService.hasOwnProperty('getOptionAndDataById')) {
+            if (this.dashboardService.getOptionAndDataById) {
                 this.dashboardService.getOptionAndDataById(this.id)
                     .subscribe(data => {
                         if (data['element']) {
