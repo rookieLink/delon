@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 @Component({
     selector: 'zijin-dashboard',
     templateUrl: './dashboard.html',
-    styleUrls: ['./dashboard.scss']
+    styleUrls: ['./dashboard.less']
 })
 export class DashboardComponent implements OnInit {
 
