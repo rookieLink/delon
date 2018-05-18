@@ -8,7 +8,7 @@ const globals = {
     '@angular/router': 'ng.router',
     '@angular/common/http': 'ng.common.http',
     '@angular/forms': 'ng.forms',
-
+    'ngx-echarts': 'ngx.echarts',
     'ng-zorro-antd': 'ngZorro.antd',
     'moment': 'moment',
     'ng-zorro-antd-extra': 'ngZorro.antd_extra',
@@ -16,6 +16,7 @@ const globals = {
     'ngx-countdown': 'ngxCountDown',
     'xlsx': 'xlsx',
     'jszip': 'jszip',
+    'lodash': 'lodash',
 
     '@angular/cdk': 'ng.cdk',
     '@angular/cdk/coercion': 'ng.cdk.coercion',
