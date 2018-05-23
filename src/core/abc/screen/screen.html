@@ -1,0 +1,82 @@
+<div class="screen-wrapper" *ngIf="splitConf">
+    <div class="screen-header">
+        <div class="screen-setting">
+            <i class="anticon anticon-setting" *ngIf="!setting" (click)="openSettings()"></i>
+            <i class="anticon anticon-save" *ngIf="setting" (click)="saveSettings()"></i>
+            <i class="anticon anticon-shrink" toggleFullscreen *ngIf="fullScreen" (click)="fullScreen=false;"></i>
+            <i class="anticon anticon-arrows-alt" toggleFullscreen *ngIf="!fullScreen" (click)="fullScreen=true;"></i>
+        </div>
+        <img src="assets/img/screen/zjlogo.png" alt="">
+        <!--<img src="assets/img/screen/hzlogo.svg" alt="" style="margin-top: -70px;height: 90%;">-->
+        <a routerLink="/home">
+            <i class="anticon anticon-close"></i>
+        </a>
+    </div>
+    <div class="screen-container">
+        <split direction="horizontal" [disabled]="splitConf.disabled" gutterColor="transparent"
+               (dragEnd)="onDragEnd(-1, $event)">
+            <split-area [size]="splitConf.lColumn.size">
+                <div class="screen-left">
+                    <split direction="vertical" [disabled]="splitConf.disabled" gutterColor="transparent"
+                           (dragEnd)="onDragEnd(1, $event)">
+                        <split-area *ngFor="let card of lCards;index as i;trackBy: trackByFn;">
+                            <div class="card">
+                                <ng-container
+                                    *ngComponentOutlet="card.component;injector:card.injector;"></ng-container>
+                                <div class="overlay" *ngIf="setting">
+                                    <span class="title">{{card.desc}}</span>
+                                    <i class="anticon anticon-edit" (click)="cardModal(card)"></i>
+                                </div>
+                            </div>
+                        </split-area>
+                    </split>
+                </div>
+            </split-area>
+            <split-area [size]="splitConf.cColumn.size">
+                <div class="screen-center">
+                    <split direction="vertical" [disabled]="splitConf.disabled" gutterColor="transparent"
+                           (dragEnd)="onDragEnd(2, $event)">
+                        <split-area [size]="splitConf.cColumn.rows[0].size">
+                            <div class="card">
+                                <div class="center-top" *ngFor="let c of cCards;">
+                                    <ng-container
+                                        *ngComponentOutlet="c.component;injector:c.injector;"></ng-container>
+                                    <div class="overlay" *ngIf="setting">
+                                        <span class="title">{{c.desc}}</span>
+                                        <i class="anticon anticon-edit" (click)="cardModal(c)"></i>
+                                    </div>
+                                </div>
+                                <div class="separator-bar"></div>
+                            </div>
+                        </split-area>
+                        <split-area [size]="splitConf.cColumn.rows[1].size">
+                            <div class="card">
+                                <zijin-carousel [panels]="carouselCards"></zijin-carousel>
+                            </div>
+                        </split-area>
+                    </split>
+                </div>
+            </split-area>
+            <split-area [size]="splitConf.rColumn.size">
+                <split direction="vertical" [disabled]="splitConf.disabled" gutterColor="transparent"
+                       (dragEnd)="onDragEnd(3, $event)">
+                    <split-area *ngFor="let card of rCards;index as i;trackBy: trackByFn;">
+                        <div class="screen-right">
+                            <div class="card">
+                                <ng-container
+                                    *ngComponentOutlet="card.component;injector:card.injector;"></ng-container>
+                                <div class="overlay" *ngIf="setting">
+                                    <span class="title">{{card.desc}}</span>
+                                    <i class="anticon anticon-edit" (click)="cardModal(card)"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </split-area>
+                </split>
+            </split-area>
+        </split>
+    </div>
+</div>
+<div class="mask" *ngIf="openSetting === true || !splitConf">
+    <nz-spin [nzSize]="'large'"></nz-spin>
+</div>

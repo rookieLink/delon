@@ -76,6 +76,7 @@
             "icon": null,
             "name": "11111",
             "chartDesc": "111111",
+            "children": [],
             "type": "10"
         },
         {
@@ -83,6 +84,7 @@
             "icon": null,
             "name": "turnover-8",
             "chartDesc": "turnover-8",
+            "children": [],
             "type": "10"
         },
         {
@@ -90,6 +92,7 @@
             "icon": null,
             "name": "turn-over2",
             "chartDesc": "turn-over2",
+            "children": [],
             "type": "10"
         },
         {
@@ -97,6 +100,7 @@
             "icon": null,
             "name": "turn-over",
             "chartDesc": "turn-over",
+            "children": [],
             "type": "10"
         },
         {

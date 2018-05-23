@@ -1,0 +1,167 @@
+:host {
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.card {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 0;
+    border-radius: 7px;
+    position: relative;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+    height: 100%;
+    overflow: hidden;
+}
+
+.screen-wrapper {
+    position: relative;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-color: rebeccapurple;
+
+    .screen-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 75px;
+        z-index: 1;
+        img {
+            width: 34%;
+            display: block;
+            height: 100%;
+            margin: 20px auto 0;
+        }
+        .screen-setting {
+            position: absolute;
+            height: 21px;
+            font-size: 15px;
+            color: wheat;
+            text-align: right;
+            padding-left: 17px;
+            top: 10px;
+        }
+        .anticon {
+            padding: 0 3px;
+            line-height: 20px;
+            &:hover {
+                color: #21e616;
+                cursor: pointer;
+            }
+        }
+        a {
+            position: absolute;
+            right: 20px;
+            top: 12px;
+            color: azure;
+        }
+    }
+
+    .screen-container {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        position: relative;
+        overflow: hidden;
+        padding: 44px 15px 20px;
+        .screen-left {
+            float: left;
+            width: 100%;
+            height: 100%;
+            .card {
+                &:first-child {
+                    z-index: 2;
+                }
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+        .screen-center {
+            float: left;
+            width: 100%;
+            padding: 0 5px;
+            height: 100%;
+            .center-top {
+                @diff: 2px;
+                height: 99%;
+                width: calc(~"50% - @{diff}");
+                position: absolute;
+                overflow: hidden;
+                padding: 10% 4px 4px;
+                &:first-child {
+                    left: 0;
+                }
+                &:nth-child(2n) {
+                    right: 0;
+                }
+            }
+            .separator-bar {
+                border-left: 2px white solid;
+                height: 52%;
+                position: absolute;
+                margin: 15% auto 0;
+                left: 50%;
+            }
+        }
+        .screen-right {
+            float: left;
+            width: 100%;
+            padding-left: 5px;
+            height: 100%;
+            .card {
+                overflow: hidden;
+                z-index: 2;
+            }
+        }
+    }
+}
+
+.overlay {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 8px;
+    right: 8px;
+    height: 22px;
+    font-size: 16px;
+    color: darkseagreen;
+    background-color: #f0f0f061;
+    //animation: flash 1s infinite alternate;
+    .title {
+        float: left;
+        font-size: 14px;
+        padding-left: 10px;
+        line-height: 20px;
+    }
+}
+
+@keyframes flash {
+    0% {
+        background-color: rgba(103, 229, 48, 0.8);
+        transform: scale(1, 1);
+    }
+
+    100% {
+        background-color: rgba(224, 229, 34, 0.99);
+        transform: scale(1.001, 1.001);
+    }
+}
+
+.mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    opacity: 0.4;
+    background: #0f0e0e;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    z-index: 1233;
+}

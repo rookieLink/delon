@@ -1,31 +1,31 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import {NgModule, ModuleWithProviders} from '@angular/core';
 
 // region: all modules
-import { AdErrorCollectModule } from './error-collect/error-collect.module';
-import { AdFooterToolbarModule } from './footer-toolbar/footer-toolbar.module';
-import { AdSidebarNavModule } from './sidebar-nav/sidebar-nav.module';
-import { AdDownFileModule } from './down-file/down-file.module';
-import { AdImageModule } from './image/image.module';
-import { AdAvatarListModule } from './avatar-list/avatar-list.module';
-import { AdDescListModule } from './desc-list/desc-list.module';
-import { AdEllipsisModule } from './ellipsis/ellipsis.module';
-import { AdGlobalFooterModule } from './global-footer/global-footer.module';
-import { AdExceptionModule } from './exception/exception.module';
-import { AdNoticeIconModule } from './notice-icon/notice-icon.module';
-import { AdNumberInfoModule } from './number-info/number-info.module';
-import { AdProHeaderModule } from './pro-header/pro-header.module';
-import { AdResultModule } from './result/result.module';
-import { AdStandardFormRowModule } from './standard-form-row/standard-form-row.module';
-import { AdTagSelectModule } from './tag-select/tag-select.module';
-import { AdTrendModule } from './trend/trend.module';
-import { AdUtilsModule } from './utils/utils.module';
-import { AdChartsModule } from './charts/charts.module';
-import { AdCountDownModule } from './count-down/count-down.module';
-import { AdSimpleTableModule } from './simple-table/simple-table.module';
-import { AdReuseTabModule } from './reuse-tab/reuse-tab.module';
-import { AdFullContentModule } from './full-content/full-content.module';
-import { AdXlsxModule } from './xlsx/xlsx.module';
-import { AdZipModule } from './zip/zip.module';
+import {AdErrorCollectModule} from './error-collect/error-collect.module';
+import {AdFooterToolbarModule} from './footer-toolbar/footer-toolbar.module';
+import {AdSidebarNavModule} from './sidebar-nav/sidebar-nav.module';
+import {AdDownFileModule} from './down-file/down-file.module';
+import {AdImageModule} from './image/image.module';
+import {AdAvatarListModule} from './avatar-list/avatar-list.module';
+import {AdDescListModule} from './desc-list/desc-list.module';
+import {AdEllipsisModule} from './ellipsis/ellipsis.module';
+import {AdGlobalFooterModule} from './global-footer/global-footer.module';
+import {AdExceptionModule} from './exception/exception.module';
+import {AdNoticeIconModule} from './notice-icon/notice-icon.module';
+import {AdNumberInfoModule} from './number-info/number-info.module';
+import {AdProHeaderModule} from './pro-header/pro-header.module';
+import {AdResultModule} from './result/result.module';
+import {AdStandardFormRowModule} from './standard-form-row/standard-form-row.module';
+import {AdTagSelectModule} from './tag-select/tag-select.module';
+import {AdTrendModule} from './trend/trend.module';
+import {AdUtilsModule} from './utils/utils.module';
+import {AdChartsModule} from './charts/charts.module';
+import {AdCountDownModule} from './count-down/count-down.module';
+import {AdSimpleTableModule} from './simple-table/simple-table.module';
+import {AdReuseTabModule} from './reuse-tab/reuse-tab.module';
+import {AdFullContentModule} from './full-content/full-content.module';
+import {AdXlsxModule} from './xlsx/xlsx.module';
+import {AdZipModule} from './zip/zip.module';
 
 const MODULES = [
     AdErrorCollectModule, AdFooterToolbarModule, AdSidebarNavModule, AdDownFileModule, AdImageModule,
@@ -66,6 +66,7 @@ export * from './xlsx';
 export * from './zip';
 export * from './carousel';
 export * from './dashboard';
+export * from './screen';
 
 // endregion
 
@@ -82,9 +83,9 @@ export * from './dashboard';
 export class AlainABCRootModule {
 }
 
-@NgModule({ exports: MODULES })
+@NgModule({exports: MODULES})
 export class AlainABCModule {
     public static forRoot(): ModuleWithProviders {
-        return { ngModule: AlainABCRootModule };
+        return {ngModule: AlainABCRootModule};
     }
 }

@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Injector, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Injector, Input, OnInit, Optional, Output} from '@angular/core';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {CardAlternativesComponent} from './components/card-alternatives.component';
 import * as _ from 'lodash';
+import {DashboardService, DASHBOARDSERVICE} from './config';
 
 @Component({
     selector: 'zijin-dashboard',
@@ -12,8 +13,7 @@ export class DashboardComponent implements OnInit {
 
     data: any;   // dynamic created
 
-    dashboardService: any;
-
+    dashboardService: DashboardService;
     pageId;
     name;
     description;
@@ -27,8 +27,10 @@ export class DashboardComponent implements OnInit {
     pendingTabs = [];
 
     constructor(private modal: NzModalService,
+                @Inject(DASHBOARDSERVICE) dashboardService,
                 private injector: Injector,
                 private _message: NzMessageService) {
+        this.dashboardService = dashboardService;
     }
 
     cardModal(card) {
@@ -176,7 +178,6 @@ export class DashboardComponent implements OnInit {
             return;
         }
         this.pageId = this.data.pageId;
-        this.dashboardService = this.data.dashboardService;
 
         if (this.dashboardService.getPageDefById) {
             // 获取当前主页配置

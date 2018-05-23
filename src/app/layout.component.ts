@@ -69,7 +69,8 @@ export class LayoutComponent implements OnInit {
                         { text: 'Reuse Tab', link: '/abc/reuse-tab' },
                         { text: 'Ellipsis', link: '/abc/ellipsis' },
                         { text: 'carousel', link: '/abc/carousel' },
-                        { text: 'dashboard', link: '/abc/dashboard'}
+                        { text: 'dashboard', link: '/abc/dashboard'},
+                        { text: 'screen', link: '/abc/screen'}
                     ]
                 },
                 {

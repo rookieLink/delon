@@ -144,6 +144,7 @@ import {
     AdXlsxModule,
     CarouselModule,
     DashboardModule,
+    ScreenModule
 } from '@delon/abc';
 const ABCMODULES = [
     AdSimpleTableModule,
@@ -171,7 +172,8 @@ const ABCMODULES = [
     AdXlsxModule,
     // your Module
     CarouselModule,
-    DashboardModule
+
+    ScreenModule
 ];
 // endregion
 

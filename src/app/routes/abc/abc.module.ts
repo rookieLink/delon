@@ -9,13 +9,17 @@ import {DemoReuseTabEditComponent} from './reuse-tab/edit.component';
 import {CarouselComponent} from './carousel/carousel.component';
 import {TestComponent} from './carousel/test.component';
 import {DemoDashboardComponent} from './dashboard/dashboard.component';
-import {DashboardService} from './dashboard/dashboard.service';
+import {DemoDashboardService} from './dashboard/dashboard.service';
+import {DemoScreenComponent} from './screen/screen.component';
+import {DashboardModule, ScreenModule} from '@delon/abc';
+import {DemoScreenService} from './screen/screen.service';
 
 const COMPONENTS = [
     DemoReuseTabComponent,
     DemoReuseTabEditComponent,
     DemoDashboardComponent,
     DemoEllipsisComponent,
+    DemoScreenComponent,
     CarouselComponent,
     TestComponent
 ];
@@ -29,12 +33,15 @@ const routes: Routes = [
     },
     {path: 'ellipsis', component: DemoEllipsisComponent},
     {path: 'carousel', component: CarouselComponent},
-    {path: 'dashboard', component: DemoDashboardComponent}
+    {path: 'dashboard', component: DemoDashboardComponent},
+    {path: 'screen', component: DemoScreenComponent}
 ];
 
 @NgModule({
     imports: [
         SharedModule,
+        DashboardModule.forRoot(DemoDashboardService),
+        ScreenModule.forRoot(DemoScreenService),
         RouterModule.forChild(routes)
     ],
     declarations: [
@@ -45,9 +52,6 @@ const routes: Routes = [
     ],
     entryComponents: [
         TestComponent
-    ],
-    providers: [
-        DashboardService
     ]
 })
 export class DEMOABCModule {
