@@ -32,7 +32,9 @@ export class AlainAuthModule {
                 { provide: DA_USER_OPTIONS_TOKEN, useValue: options },
                 { provide: DA_OPTIONS_TOKEN, useFactory: optionsFactory, deps: [DA_USER_OPTIONS_TOKEN] },
                 { provide: DA_STORE_TOKEN, useClass: LocalStorageStore },
-                { provide: DA_SERVICE_TOKEN, useClass: TokenService }
+                { provide: LocalStorageStore, useExisting: DA_STORE_TOKEN },
+                { provide: DA_SERVICE_TOKEN, useClass: TokenService },
+                { provide: TokenService, useExisting: DA_SERVICE_TOKEN }
             ]
         };
     }

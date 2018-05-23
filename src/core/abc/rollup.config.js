@@ -21,6 +21,8 @@ const globals = {
     '@angular/cdk': 'ng.cdk',
     '@angular/cdk/coercion': 'ng.cdk.coercion',
 
+    'ngx-perfect-scrollbar':'ngxPerfectScrollbar',
+    'angular-split':'angularSplit',
     'rxjs/BehaviorSubject': 'Rx',
     'rxjs/Observable': 'Rx',
     'rxjs/Subject': 'Rx',

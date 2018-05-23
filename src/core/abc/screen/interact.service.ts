@@ -10,7 +10,7 @@ export class InteractService {
 
     private valueAnnouncedSource = new Subject<any>();
 
-    valueAnnounced$ = this.valueAnnouncedSource.asObservable();
+    private valueAnnounced$ = this.valueAnnouncedSource.asObservable();
 
     announceValue(value) {
         this.valueAnnouncedSource.next(value);
