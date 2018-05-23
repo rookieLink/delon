@@ -4,7 +4,7 @@ import {DashboardComponent} from '@delon/abc/dashboard/dashboard.component';
 @Component({
     selector: 'app-demo-dashboard',
     template: `
-        <zijin-carousel [panels]="homeConfig" [zjArrows]="false"></zijin-carousel>
+        <zijin-dashboard [panels]="homeConfig"></zijin-dashboard>
     `,
     styles: [`
         :host {

@@ -5,7 +5,6 @@ import * as _ from 'lodash';
 import {DashboardService, DASHBOARDSERVICE} from './config';
 
 @Component({
-    selector: 'zijin-dashboard',
     templateUrl: './dashboard.html',
     styleUrls: ['./dashboard.less']
 })

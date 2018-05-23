@@ -1,4 +1,4 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
+import {ModuleWithProviders, NgModule, Provider} from '@angular/core';
 import {NgxEchartsModule} from 'ngx-echarts';
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {AngularSplitModule} from 'angular-split';
@@ -44,12 +44,10 @@ const COMPONENTS = [
     ]
 })
 export class ScreenModule {
-    static forRoot(ScreenService): ModuleWithProviders {
+    static forRoot(providers: Provider[]): ModuleWithProviders {
         return {
             ngModule: ScreenModule,
-            providers: [
-                {provide: SCREENSERVICE, useClass: ScreenService},
-            ]
+            providers: providers
         };
     }
 }

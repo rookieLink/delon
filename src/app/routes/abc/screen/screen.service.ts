@@ -1,11 +1,14 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ScreenService} from '@delon/abc/screen/config';
+import {SessionService} from '../../../core/session.service';
 
 @Injectable()
 export class DemoScreenService implements ScreenService {
 
-    constructor(private http: HttpClient) {
+
+    constructor(private http: HttpClient,
+                private session: SessionService) {
     }
 
     // todo(ccliu): localStorage存储

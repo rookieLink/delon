@@ -13,6 +13,7 @@ import {DemoDashboardService} from './dashboard/dashboard.service';
 import {DemoScreenComponent} from './screen/screen.component';
 import {DashboardModule, ScreenModule} from '@delon/abc';
 import {DemoScreenService} from './screen/screen.service';
+import {SCREENSERVICE} from '@delon/abc/screen/config';
 
 const COMPONENTS = [
     DemoReuseTabComponent,
@@ -41,7 +42,10 @@ const routes: Routes = [
     imports: [
         SharedModule,
         DashboardModule.forRoot(DemoDashboardService),
-        ScreenModule.forRoot(DemoScreenService),
+        ScreenModule.forRoot([{
+            provide: SCREENSERVICE,
+            useClass: DemoScreenService
+        }]),
         RouterModule.forChild(routes)
     ],
     declarations: [

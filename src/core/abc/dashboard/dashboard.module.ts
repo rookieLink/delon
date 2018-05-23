@@ -8,15 +8,19 @@ import {WarningMessageComponent} from './components/warning-message.component';
 import {CommonModule} from '@angular/common';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {DASHBOARDSERVICE} from './config';
+import {CarouselModule} from '../carousel';
+import {ZijinDashboardComponent} from './zijin-dashboard.component';
 
 
 @NgModule({
     imports: [
         CommonModule,
         NgZorroAntdModule,
+        CarouselModule,
         NgxEchartsModule,
     ],
     declarations: [
+        ZijinDashboardComponent,
         DashboardComponent,
         CardAlternativesComponent,
         TabAlternativesComponent,
@@ -31,7 +35,7 @@ import {DASHBOARDSERVICE} from './config';
         WarningMessageComponent
     ],
     exports: [
-        DashboardComponent
+        ZijinDashboardComponent
     ]
 })
 export class DashboardModule {
