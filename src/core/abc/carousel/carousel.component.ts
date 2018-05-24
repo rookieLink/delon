@@ -51,6 +51,12 @@ export class CarouselComponent implements OnInit, OnChanges {
 
         const componentRef = viewContainerRef.createComponent(componentFactory);
         (<PanelComponent>componentRef.instance).data = panelItem.data;
+        componentRef.instance.onSuccess.subscribe(val => {
+            console.log(val);
+            console.log(val);
+            console.log(val);
+            console.log(val);
+        });
     }
 
 
@@ -81,6 +87,14 @@ export class CarouselComponent implements OnInit, OnChanges {
     prev() {
         this.currentPanelIndex = this.currentPanelIndex > 0 ? this.currentPanelIndex - 1 : this.panels.length - 1;
         this.loadComponent();
+    }
+
+    test(evt) {
+        console.log(evt);
+        console.log(evt);
+        console.log(evt);
+        console.log(evt);
+        console.log(evt);
     }
 
 }

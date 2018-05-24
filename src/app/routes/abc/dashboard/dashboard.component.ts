@@ -4,6 +4,7 @@ import {Component} from '@angular/core';
     selector: 'app-demo-dashboard',
     template: `
         <zj-dashboard></zj-dashboard>
+        <!--<zj-single-dashboard [pageId]="'meta-analysis'"></zj-single-dashboard>-->
     `,
     styles: [`
         :host {

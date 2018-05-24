@@ -36,7 +36,8 @@ import {ZijinDashboardComponent} from './zijin-dashboard.component';
         WarningMessageComponent
     ],
     exports: [
-        ZijinDashboardComponent
+        ZijinDashboardComponent,
+        DashboardComponent
     ]
 })
 export class ZjDashboardModule {

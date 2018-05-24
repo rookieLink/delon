@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import {DashboardService, DASHBOARDSERVICE} from './config';
 
 @Component({
+    selector: 'zj-single-dashboard',
     templateUrl: './dashboard.html',
     styleUrls: ['./dashboard.less']
 })
@@ -12,8 +13,10 @@ export class DashboardComponent implements OnInit {
 
     data: any;   // dynamic created
 
-    dashboardService: DashboardService;
-    pageId;
+    @Input() pageId;
+    @Input() dashboardService;
+    @Output() onSuccess = new EventEmitter();
+
     name;
     description;
 
@@ -26,10 +29,10 @@ export class DashboardComponent implements OnInit {
     pendingTabs = [];
 
     constructor(private modal: NzModalService,
-                @Inject(DASHBOARDSERVICE) dashboardService,
+                @Inject(DASHBOARDSERVICE) @Optional() dashboardService,
                 private injector: Injector,
                 private _message: NzMessageService) {
-        this.dashboardService = dashboardService;
+        this.dashboardService = this.dashboardService || dashboardService;
     }
 
     cardModal(card) {
@@ -158,6 +161,7 @@ export class DashboardComponent implements OnInit {
                     this.openSetting = false;
                     localStorage.setItem('homeDef', JSON.stringify(homeDef));
                     this._message.success('驾驶舱配置成功！');
+                    this.onSuccess.emit('驾驶舱配置成功');
                 }, err => {
                     this.openSetting = false;
                     this._message.error(err.body.retMsg);
@@ -165,18 +169,17 @@ export class DashboardComponent implements OnInit {
         } else {
             this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其保存的服务名为"updatePageDefById"');
         }
-
-
     }
 
 
     ngOnInit(): void {
 
-        if (!this.data) {
-            this._message.error('data绑定信息失败！');
+        this.pageId = this.pageId || this.data.pageId;
+
+        if (!this.pageId) {
+            this._message.error('获取主页id失败！');
             return;
         }
-        this.pageId = this.data.pageId;
 
         if (this.dashboardService.getPageDefById) {
             // 获取当前主页配置
