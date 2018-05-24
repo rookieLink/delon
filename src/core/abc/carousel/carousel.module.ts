@@ -17,6 +17,6 @@ import {PanelDirective} from './panel.directive';
         CarouselComponent
     ]
 })
-export class CarouselModule {
+export class ZjCarouselModule {
 
 }

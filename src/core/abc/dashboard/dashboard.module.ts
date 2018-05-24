@@ -8,7 +8,7 @@ import {WarningMessageComponent} from './components/warning-message.component';
 import {CommonModule} from '@angular/common';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {DASHBOARDSERVICE} from './config';
-import {CarouselModule} from '../carousel';
+import {ZjCarouselModule} from '../carousel';
 import {ZijinDashboardComponent} from './zijin-dashboard.component';
 
 
@@ -16,7 +16,7 @@ import {ZijinDashboardComponent} from './zijin-dashboard.component';
     imports: [
         CommonModule,
         NgZorroAntdModule,
-        CarouselModule,
+        ZjCarouselModule,
         NgxEchartsModule,
     ],
     declarations: [
@@ -38,10 +38,10 @@ import {ZijinDashboardComponent} from './zijin-dashboard.component';
         ZijinDashboardComponent
     ]
 })
-export class DashboardModule {
+export class ZjDashboardModule {
     static forRoot(DashboardService): ModuleWithProviders {
         return {
-            ngModule: DashboardModule,
+            ngModule: ZjDashboardModule,
             providers: [
                 {provide: DASHBOARDSERVICE, useClass: DashboardService},
             ]

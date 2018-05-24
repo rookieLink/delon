@@ -1,1 +1,1 @@
-export {DashboardModule} from './dashboard.module';
+export {ZjDashboardModule} from './dashboard.module';

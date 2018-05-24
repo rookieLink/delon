@@ -6,7 +6,7 @@ import {TestComponent} from './test.component';
 @Component({
     selector: 'app-demo-carousel',
     template: `
-        <zijin-carousel [panels]="homeConfig" [zjArrows]="false"></zijin-carousel>
+        <zj-carousel [panels]="homeConfig" [zjArrows]="false"></zj-carousel>
     `,
     styles: [`
         :host {
@@ -17,7 +17,7 @@ import {TestComponent} from './test.component';
         }
     `]
 })
-export class CarouselComponent implements OnInit {
+export class DemoCarouselComponent implements OnInit {
 
     homeConfig: any;
 
@@ -26,6 +26,10 @@ export class CarouselComponent implements OnInit {
 
     ngOnInit() {
         this.homeConfig = [
+            {
+                data: {},
+                component: TestComponent
+            },
             {
                 data: {},
                 component: TestComponent

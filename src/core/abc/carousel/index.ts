@@ -1,1 +1,1 @@
-export {CarouselModule} from './carousel.module';
+export {ZjCarouselModule} from './carousel.module';

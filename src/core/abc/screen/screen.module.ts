@@ -11,7 +11,7 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {ViewInfoComponent} from './components/view-info.component';
 import {ViewDetailComponent} from './components/view-detail.component';
 import {ViewRankComponent} from './components/view-rank.component';
-import {CarouselModule} from '../carousel';
+import {ZjCarouselModule} from '../carousel';
 import {SCREENSERVICE} from './config';
 
 const COMPONENTS = [
@@ -30,7 +30,7 @@ const COMPONENTS = [
         NgxEchartsModule,
         NgZorroAntdModule,
         PerfectScrollbarModule,
-        CarouselModule,
+        ZjCarouselModule,
         AngularSplitModule
     ],
     declarations: [
@@ -43,11 +43,13 @@ const COMPONENTS = [
         ScreenComponent
     ]
 })
-export class ScreenModule {
-    static forRoot(providers: Provider[]): ModuleWithProviders {
+export class ZjScreenModule {
+    static forRoot(ClassForScreenService): ModuleWithProviders {
         return {
-            ngModule: ScreenModule,
-            providers: providers
+            ngModule: ZjScreenModule,
+            providers: [
+                {provide: SCREENSERVICE, useClass: ClassForScreenService},
+            ]
         };
     }
 }

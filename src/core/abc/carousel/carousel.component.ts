@@ -4,7 +4,7 @@ import {PanelDirective} from './panel.directive';
 import {PanelComponent} from './panel.component';
 
 @Component({
-    selector: 'zijin-carousel',
+    selector: 'zj-carousel',
     template: `
         <div class="carousel slide">
             <ol class="carousel-indicators" *ngIf="(panels.length !== 1) && zjDots">
@@ -40,6 +40,7 @@ export class CarouselComponent implements OnInit, OnChanges {
     }
 
     loadComponent() {
+        console.log('loading component');
         this.currentPanelIndex = this.currentPanelIndex % this.panels.length;
         const panelItem = this.panels[this.currentPanelIndex];
 
@@ -60,6 +61,7 @@ export class CarouselComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
+        console.log('-----------');
         if (!this.panels || this.panels.length === 0) {
             return;
         }

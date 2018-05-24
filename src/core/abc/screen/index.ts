@@ -1,1 +1,1 @@
-export {ScreenModule} from './screen.module';
+export {ZjScreenModule} from './screen.module';

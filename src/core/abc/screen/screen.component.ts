@@ -9,7 +9,7 @@ import {SCREENSERVICE} from './config';
 
 
 @Component({
-    selector: 'zijin-screen',
+    selector: 'zj-screen',
     templateUrl: './screen.html',
     styleUrls: ['./screen.less']
 })

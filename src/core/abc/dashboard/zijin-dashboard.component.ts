@@ -1,26 +1,36 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {NzMessageService} from 'ng-zorro-antd';
+import {DASHBOARDSERVICE} from './config';
+import {DashboardComponent} from './dashboard.component';
 
 
 @Component({
-    selector: 'zijin-dashboard',
+    selector: 'zj-dashboard',
     template: `
-        <zijin-carousel [panels]="panels" [zjArrows]="false"></zijin-carousel>
+        <zj-carousel [panels]="panels" [zjArrows]="false"></zj-carousel>
     `,
 })
 export class ZijinDashboardComponent implements OnInit {
 
-    @Input() panels;
+    panels = [];
 
-    constructor(private message: NzMessageService) {
+    constructor(private message: NzMessageService,
+                @Inject(DASHBOARDSERVICE) private dashboardService) {
 
     }
 
     ngOnInit(): void {
-        if (!this.panels) {
-            this.panels = [];
-            this.message.error('驾驶舱初始化失败！');
-        }
+        this.dashboardService.getMultiPagesMeta()
+            .subscribe(data => {
+                const panels = [];
+                data.panels.forEach(val => {
+                    panels.push({
+                        data: {pageId: val.pageId},
+                        component: DashboardComponent
+                    });
+                });
+                this.panels = panels;
+            });
     }
 
 

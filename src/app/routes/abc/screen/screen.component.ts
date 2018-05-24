@@ -4,7 +4,7 @@ import {DemoScreenService} from './screen.service';
 @Component({
     selector: 'app-demo-screen',
     template: `
-        <zijin-screen></zijin-screen>
+        <zj-screen></zj-screen>
     `,
     styles: [`
         :host {
@@ -20,16 +20,4 @@ export class DemoScreenComponent {
     constructor(public screenService: DemoScreenService) {
 
     }
-
-
-    screenConfig = [
-        {
-            data: {
-                pageId: 'meta-analysis',
-                screenService: this.screenService
-            },
-        }
-    ];
-
-
 }
