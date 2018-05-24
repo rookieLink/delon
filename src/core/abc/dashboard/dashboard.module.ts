@@ -28,6 +28,7 @@ import {ZijinDashboardComponent} from './zijin-dashboard.component';
         WarningMessageComponent
     ],
     entryComponents: [
+        ZijinDashboardComponent,
         DashboardComponent,
         CardAlternativesComponent,
         TabAlternativesComponent,

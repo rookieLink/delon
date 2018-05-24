@@ -182,11 +182,10 @@ export class DashboardComponent implements OnInit {
             // 获取当前主页配置
             this.dashboardService.getPageDefById(this.pageId)
                 .subscribe((data: any) => {
-                    console.log(data);
                     this.cards = data.cards;
                     this.tabs = data.tabs;
-                    // this.name = this.data.name;
-                    // this.description = this.data.description;
+                    this.name = '渠道综合分析';
+                    this.description = '现金自助渠道相关数据和关键指标综合分析';
                 }, err => {
                     this._message.error(err.body.retMsg);
                 });
