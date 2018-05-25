@@ -65,6 +65,8 @@ export class ScreenComponent implements OnInit {
                     this.rCards[this.rCards.indexOf(card)] = value;
                 } else if (this.cTCards.indexOf(card) !== -1) {
                     this.cTCards[this.cTCards.indexOf(card)] = value;
+                } else if (this.cBCards.indexOf(card) !== -1) {
+                    this.cBCards[this.cBCards.indexOf(card)] = value;
                 }
             }
         });

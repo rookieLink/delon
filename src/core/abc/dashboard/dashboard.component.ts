@@ -32,7 +32,9 @@ export class DashboardComponent implements OnInit {
                 @Inject(DASHBOARDSERVICE) @Optional() dashboardService,
                 private injector: Injector,
                 private _message: NzMessageService) {
-        this.dashboardService = this.dashboardService || dashboardService;
+        if (dashboardService) {
+            this.dashboardService = dashboardService;
+        }
     }
 
     cardModal(card) {
@@ -174,16 +176,16 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.pageId = this.pageId || this.data.pageId;
+        const pageId = this.pageId || this.data.pageId;
 
-        if (!this.pageId) {
+        if (!pageId) {
             this._message.error('获取主页id失败！');
             return;
         }
 
         if (this.dashboardService.getPageDefById) {
             // 获取当前主页配置
-            this.dashboardService.getPageDefById(this.pageId)
+            this.dashboardService.getPageDefById(pageId)
                 .subscribe((data: any) => {
                     this.cards = data.cards;
                     this.tabs = data.tabs;

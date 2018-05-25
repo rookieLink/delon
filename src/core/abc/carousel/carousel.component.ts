@@ -95,12 +95,4 @@ export class CarouselComponent implements OnInit, OnChanges {
         this.loadComponent();
     }
 
-    test(evt) {
-        console.log(evt);
-        console.log(evt);
-        console.log(evt);
-        console.log(evt);
-        console.log(evt);
-    }
-
 }
