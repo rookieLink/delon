@@ -13,6 +13,9 @@ import {PanelDirective} from './panel.directive';
         CarouselComponent,
         PanelDirective
     ],
+    entryComponents: [
+        CarouselComponent
+    ],
     exports: [
         CarouselComponent
     ]

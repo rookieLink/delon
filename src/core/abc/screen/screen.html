@@ -38,7 +38,7 @@
                            (dragEnd)="onDragEnd(2, $event)">
                         <split-area [size]="splitConf.cColumn.rows[0].size">
                             <div class="card">
-                                <div class="center-top" *ngFor="let c of cCards;">
+                                <div class="center-top" *ngFor="let c of cTCards;">
                                     <ng-container
                                         *ngComponentOutlet="c.component;injector:c.injector;"></ng-container>
                                     <div class="overlay" *ngIf="setting">
@@ -51,7 +51,14 @@
                         </split-area>
                         <split-area [size]="splitConf.cColumn.rows[1].size">
                             <div class="card">
-                                <zj-carousel [panels]="carouselCards"></zj-carousel>
+                                <div class="center-bottom" *ngFor="let c of cBCards;">
+                                    <ng-container
+                                        *ngComponentOutlet="c.component;injector:c.injector;"></ng-container>
+                                    <div class="overlay" *ngIf="setting">
+                                        <span class="title">{{c.desc}}</span>
+                                        <i class="anticon anticon-edit" (click)="cardModal(c)"></i>
+                                    </div>
+                                </div>
                             </div>
                         </split-area>
                     </split>

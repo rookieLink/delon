@@ -1,5 +1,5 @@
 import {Component, Inject, Input, OnInit, Optional} from '@angular/core';
-import {PANEL_ID} from '../injectToken';
+import {PANEL_ID} from '../../abc.options';
 import {SCREENSERVICE} from '../config';
 
 @Component({

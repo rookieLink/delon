@@ -1,7 +1,11 @@
-import {Component, ComponentFactoryResolver, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {
+    Component, ComponentFactoryResolver, Inject, Input, OnChanges, OnInit, Optional, SimpleChanges,
+    ViewChild
+} from '@angular/core';
 import {PanelItem} from './panel-item';
 import {PanelDirective} from './panel.directive';
 import {PanelComponent} from './panel.component';
+import {PANEL_ITEM} from '../abc.options';
 
 @Component({
     selector: 'zj-carousel',
@@ -36,7 +40,9 @@ export class CarouselComponent implements OnInit, OnChanges {
     @Input() panels: PanelItem[];
     @ViewChild(PanelDirective) panelHost: PanelDirective;
 
-    constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+    constructor(private componentFactoryResolver: ComponentFactoryResolver,
+                @Inject(PANEL_ITEM) @Optional() panels: PanelItem[]) {
+        this.panels = this.panels || panels;
     }
 
     loadComponent() {
@@ -51,16 +57,16 @@ export class CarouselComponent implements OnInit, OnChanges {
 
         const componentRef = viewContainerRef.createComponent(componentFactory);
         (<PanelComponent>componentRef.instance).data = panelItem.data;
-        componentRef.instance.onSuccess.subscribe(val => {
-            console.log(val);
-            console.log(val);
-            console.log(val);
-            console.log(val);
-        });
     }
 
 
     ngOnInit(): void {
+
+        if (!this.panels || this.panels.length === 0) {
+            return;
+        }
+        this.loadComponent();
+
         if (this.zjAutoPlay) {
             // todo(ccliu): 轮播内容
         }

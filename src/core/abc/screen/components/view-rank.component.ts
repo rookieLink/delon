@@ -1,5 +1,5 @@
 import {Component, Inject, Input, OnChanges, OnInit, Optional, SimpleChanges} from '@angular/core';
-import {PANEL_ID} from '../injectToken';
+import {PANEL_ID} from '../../abc.options';
 import {HttpClient} from '@angular/common/http';
 
 @Component({

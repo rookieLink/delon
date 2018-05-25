@@ -1,11 +1,12 @@
 import {Injector} from '@angular/core';
 import * as _ from 'lodash';
-import {PANEL_ID, TURNOVER_NEGATIVE, TURNOVER_POSITIVE} from './injectToken';
-import {EchartsGraphComponent} from './components/echarts-graph.component';
-import {TurnOverComponent} from './components/turn-over.component';
-import {ViewInfoComponent} from './components/view-info.component';
-import {ViewDetailComponent} from './components/view-detail.component';
-import {ViewRankComponent} from './components/view-rank.component';
+import {PANEL_ID, PANEL_ITEM, TURNOVER_NEGATIVE, TURNOVER_POSITIVE} from './abc.options';
+import {EchartsGraphComponent} from './screen/components/echarts-graph.component';
+import {TurnOverComponent} from './screen/components/turn-over.component';
+import {ViewInfoComponent} from './screen/components/view-info.component';
+import {ViewDetailComponent} from './screen/components/view-detail.component';
+import {ViewRankComponent} from './screen/components/view-rank.component';
+import {CarouselComponent} from './carousel/carousel.component';
 
 export const ComponentTypeCode: Map<string, any> = new Map<string, any>();
 
@@ -15,6 +16,7 @@ ComponentTypeCode.set('2', ViewDetailComponent);
 ComponentTypeCode.set('3', ViewRankComponent);
 
 ComponentTypeCode.set('10', TurnOverComponent);
+ComponentTypeCode.set('11', CarouselComponent);
 
 export const panelAdapt = (arr: Array<any>, injector: Injector) => {
     const results = [];
@@ -57,8 +59,8 @@ export const panelAdapt = (arr: Array<any>, injector: Injector) => {
                 }, value));
                 break;
             case '10':
-                const provides = [];
-                const children = value.children;
+                let provides = [];
+                let children = value.children;
                 children.forEach((val, index) => {
                     if (index === 0) {
                         provides.push({
@@ -81,6 +83,25 @@ export const panelAdapt = (arr: Array<any>, injector: Injector) => {
                 results.push(_.extend({
                     component: TurnOverComponent,
                     injector: Injector.create([...provides], injector)
+                }, value));
+                break;
+            case '11':
+                provides = [];
+                children = value.children;
+                children.forEach(val => {
+                    provides.push({
+                        component: ComponentTypeCode.get(val.type),
+                        data: {
+                            id: val.id
+                        }
+                    });
+                });
+                results.push(_.extend({
+                    component: CarouselComponent,
+                    injector: Injector.create([{
+                        provide: PANEL_ITEM,
+                        useValue: provides
+                    }], injector)
                 }, value));
                 break;
             default:

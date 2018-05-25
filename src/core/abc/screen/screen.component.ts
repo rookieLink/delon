@@ -3,8 +3,7 @@ import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {CardAlternativesComponent} from './components/card-alternatives.component';
 
 import * as _ from 'lodash';
-import {EchartsGraphComponent} from './components/echarts-graph.component';
-import {panelAdapt} from './componentTypeUtil';
+import {panelAdapt} from '../componentTypeUtil';
 import {SCREENSERVICE} from './config';
 
 
@@ -23,8 +22,8 @@ export class ScreenComponent implements OnInit {
 
     lCards = [];
     rCards = [];
-    cCards = [];
-    carouselCards = [];
+    cTCards = [];
+    cBCards = [];
 
     constructor(private injector: Injector,
                 private modal: NzModalService,
@@ -41,19 +40,9 @@ export class ScreenComponent implements OnInit {
             // 获取Components
             this.lCards = panelAdapt(screenConfig.lCards, this.injector);
             this.rCards = panelAdapt(screenConfig.rCards, this.injector);
-            this.cCards = panelAdapt(screenConfig.cCards, this.injector);
+            this.cTCards = panelAdapt(screenConfig.cTCards, this.injector);
+            this.cBCards = panelAdapt(screenConfig.cBCards, this.injector);
         });
-
-        this.carouselCards = [
-            {
-                data: {id: '6303db6b-bd84-466c-afeb-036dba27b8ec'},
-                component: EchartsGraphComponent,
-            },
-            {
-                data: {id: '6303db6b-bd84-466c-afeb-036dba27b8ec'},
-                component: EchartsGraphComponent,
-            }
-        ];
 
         this.screenService.getSelfDefCharts()
             .subscribe((data) => {
@@ -74,8 +63,8 @@ export class ScreenComponent implements OnInit {
                     this.lCards[this.lCards.indexOf(card)] = value;
                 } else if (this.rCards.indexOf(card) !== -1) {
                     this.rCards[this.rCards.indexOf(card)] = value;
-                } else if (this.cCards.indexOf(card) !== -1) {
-                    this.cCards[this.cCards.indexOf(card)] = value;
+                } else if (this.cTCards.indexOf(card) !== -1) {
+                    this.cTCards[this.cTCards.indexOf(card)] = value;
                 }
             }
         });
@@ -101,7 +90,7 @@ export class ScreenComponent implements OnInit {
         //     layout: this.splitConf,
         //     lCards: this.transform(this.lCards),
         //     rCards: this.transform(this.rCards),
-        //     cCards: this.transform(this.cCards),
+        //     cTCards: this.transform(this.cTCards),
         //     // carouselCards: this.carouselCards
         // };
         //
