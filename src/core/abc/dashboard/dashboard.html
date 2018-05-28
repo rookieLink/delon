@@ -29,9 +29,9 @@
                 <ng-template #nzTabHeading>
                     <i class="anticon anticon-plus" (click)="addTab(r)"></i>
                 </ng-template>
-                <div style="height: 99%;overflow: auto;"></div>
+                <div style="height: 99%;"></div>
             </nz-tab>
-            <nz-tab *ngFor="let tab of tabset; index as i; last as isLast;trackBy: trackByFn;" style="overflow: scroll;">
+            <nz-tab *ngFor="let tab of tabset; index as i; last as isLast;trackBy: trackByFn;">
                 <ng-template #nzTabHeading>
                     {{tab.name}}
                     <span *ngIf="setting">

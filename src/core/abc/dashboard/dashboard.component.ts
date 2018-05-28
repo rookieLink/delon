@@ -157,17 +157,18 @@ export class DashboardComponent implements OnInit {
         });
 
         if (this.dashboardService.updatePageDefById) {
-            this.dashboardService.updatePageDefById(homeDef)
-                .subscribe(data => {
-                    this.setting = false;
-                    this.openSetting = false;
-                    localStorage.setItem('homeDef', JSON.stringify(homeDef));
-                    this._message.success('驾驶舱配置成功！');
-                    this.onSuccess.emit('驾驶舱配置成功');
-                }, err => {
-                    this.openSetting = false;
-                    this._message.error(err.body.retMsg);
-                });
+            this.dashboardService.updatePageDefById({
+                pageId: this.pageId, homeDef: homeDef
+            }).subscribe(data => {
+                this.setting = false;
+                this.openSetting = false;
+                localStorage.setItem('homeDef', JSON.stringify(homeDef));
+                this._message.success('驾驶舱配置成功！');
+                this.onSuccess.emit('驾驶舱配置成功');
+            }, err => {
+                this.openSetting = false;
+                this._message.error(err.body.retMsg);
+            });
         } else {
             this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其保存的服务名为"updatePageDefById"');
         }
@@ -176,16 +177,16 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit(): void {
 
-        const pageId = this.pageId || this.data.pageId;
+        this.pageId = this.pageId || this.data.pageId;
 
-        if (!pageId) {
+        if (!this.pageId) {
             this._message.error('获取主页id失败！');
             return;
         }
 
         if (this.dashboardService.getPageDefById) {
             // 获取当前主页配置
-            this.dashboardService.getPageDefById(pageId)
+            this.dashboardService.getPageDefById(this.pageId)
                 .subscribe((data: any) => {
                     this.cards = data.cards;
                     this.tabs = data.tabs;
