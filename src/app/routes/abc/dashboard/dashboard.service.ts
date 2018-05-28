@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {DashboardService} from '@delon/abc/dashboard/config';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class DemoDashboardService implements DashboardService {
@@ -11,7 +12,16 @@ export class DemoDashboardService implements DashboardService {
 
     // 获取用户的主题数目
     getMultiPagesMeta() {
-        return this.http.get('assets/json/multiPagesMeta.json');
+        return Observable.of(
+            [
+                {
+                    pageId: 'meta-analysis1'
+                },
+                {
+                    pageId: 'meta-analysis2'
+                }
+            ]
+        );
     }
 
     // 获取主题的配置信息
@@ -37,5 +47,32 @@ export class DemoDashboardService implements DashboardService {
         return this.http.get('assets/json/chartModel.json', {
             params: id
         });
+    }
+
+    //  获取所有主题信息
+    getAllPagesMeta() {
+        return Observable.of([
+                {
+                    pageId: 'meta-analysis',
+                    name: '渠道综合分析',
+                    description: '现金自助渠道相关数据和关键指标综合分析'
+                },
+                {
+                    pageId: 'meta-analysis1',
+                    name: '渠道综合分析1',
+                    description: '现金自助渠道相关数据和关键指标综合分析1'
+                },
+                {
+                    pageId: 'meta-analysis2',
+                    name: '渠道综合分析2',
+                    description: '现金自助渠道相关数据和关键指标综合分析2'
+                },
+                {
+                    pageId: 'meta-analysis3',
+                    name: '渠道综合分析3',
+                    description: '现金自助渠道相关数据和关键指标综合分析3'
+                }
+            ]
+        );
     }
 }

@@ -9,7 +9,7 @@ import * as _ from 'lodash';
     selector: 'zj-dashboard',
     template: `
         <!-- 提供更改主题数目的操作 -->
-        <nz-dropdown nzTrigger="click" nzPlacement="bottomRight" style="position: absolute;z-index: 1;">
+        <nz-dropdown nzTrigger="click" nzPlacement="bottomRight">
             <span class="anticon anticon-setting" nz-dropdown></span>
             <div nz-menu style="width:200px">
                 <div nz-menu-item class="theme-switch" (click)="deleteCurrentPage()">
@@ -52,6 +52,13 @@ import * as _ from 'lodash';
     `,
     styles: [
             `
+            nz-dropdown {
+                position: absolute;
+                z-index: 1;
+                font-size: 20px;
+                right: 40px;
+            }
+
             .card-available {
                 cursor: pointer;
                 background-color: #8bd22f;
@@ -62,6 +69,10 @@ import * as _ from 'lodash';
                 cursor: pointer;
                 background-color: darkslategray;
                 margin-bottom: 5px;
+            }
+
+            .anticon.anticon-setting:hover {
+                background-color: #43b3f0;
             }
         `
     ]

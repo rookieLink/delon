@@ -3,11 +3,10 @@
         <span style="font-size: 24px;font-weight: 500;">{{name}}</span>
         <span>{{description}}</span>
     </div>
-    <div nz-col [nzSpan]="4" style="text-align: right;font-size: 22px;">
-        <i class="anticon anticon-setting" style="padding: 7px 3px;" *ngIf="!setting" (click)="openSettings()"></i>
-        <i class="anticon anticon-save" style="padding: 7px 3px;" *ngIf="setting" (click)="saveSetting()"></i>
-
-        <i class="anticon anticon-close-square-o" style="padding: 7px 3px;" *ngIf="setting" (click)="cancel()"></i>
+    <div nz-col [nzSpan]="4" style="text-align: right;font-size: 20px;">
+        <i class="anticon anticon-edit" style="padding: 4px 27px 0 0;" *ngIf="!setting" (click)="openSettings()"></i>
+        <i class="anticon anticon-save" style="padding: 4px 27px 0 0;" *ngIf="setting" (click)="saveSetting()"></i>
+        <i class="anticon anticon-close-square-o" style="padding: 4px 10px 0 0;" *ngIf="setting" (click)="cancel()"></i>
     </div>
 </div>
 <div nz-row [nzGutter]="16">
