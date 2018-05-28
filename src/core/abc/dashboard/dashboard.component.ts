@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
 
     @Input() pageId;
     @Input() dashboardService;
+
     @Output() onSuccess = new EventEmitter();
 
     name;
@@ -162,7 +163,6 @@ export class DashboardComponent implements OnInit {
             }).subscribe(data => {
                 this.setting = false;
                 this.openSetting = false;
-                localStorage.setItem('homeDef', JSON.stringify(homeDef));
                 this._message.success('驾驶舱配置成功！');
                 this.onSuccess.emit('驾驶舱配置成功');
             }, err => {
@@ -173,7 +173,6 @@ export class DashboardComponent implements OnInit {
             this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其保存的服务名为"updatePageDefById"');
         }
     }
-
 
     ngOnInit(): void {
 

@@ -1,13 +1,9 @@
-{
-    "panels": [
-        {
-            "pageId": "meta-analysis"
-        },
-        {
-            "pageId": "meta-analysis"
-        },
-        {
-            "pageId": "meta-analysis"
-        }
-    ]
-}
+[
+    {
+        "pageId": "meta-analysis1"
+    },
+    {
+        "pageId": "meta-analysis2"
+    }
+]
+

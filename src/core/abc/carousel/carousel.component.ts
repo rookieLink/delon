@@ -1,5 +1,6 @@
 import {
-    Component, ComponentFactoryResolver, Inject, Input, OnChanges, OnInit, Optional, SimpleChanges,
+    Component, ComponentFactoryResolver, EventEmitter, Inject, Input, OnChanges, OnInit, Optional, Output,
+    SimpleChanges,
     ViewChild
 } from '@angular/core';
 import {PanelItem} from './panel-item';
@@ -13,7 +14,7 @@ import {PANEL_ITEM} from '../abc.options';
         <div class="carousel slide">
             <ol class="carousel-indicators" *ngIf="(panels.length !== 1) && zjDots">
                 <li [ngClass]="{'active':i===currentPanelIndex}" (click)="active(i)"
-                    *ngFor="let c of panels;index as i;"></li>
+                    *ngFor="let c of panels;index as i;trackBy: trackByFn;"></li>
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active moveToLeft">
@@ -40,6 +41,8 @@ export class CarouselComponent implements OnInit, OnChanges {
     @Input() panels: PanelItem[];
     @ViewChild(PanelDirective) panelHost: PanelDirective;
 
+    @Output() onActive = new EventEmitter();
+
     constructor(private componentFactoryResolver: ComponentFactoryResolver,
                 @Inject(PANEL_ITEM) @Optional() panels: PanelItem[]) {
         this.panels = this.panels || panels;
@@ -57,6 +60,8 @@ export class CarouselComponent implements OnInit, OnChanges {
 
         const componentRef = viewContainerRef.createComponent(componentFactory);
         (<PanelComponent>componentRef.instance).data = panelItem.data;
+
+        this.onActive.emit(panelItem.data);
     }
 
 
@@ -78,6 +83,10 @@ export class CarouselComponent implements OnInit, OnChanges {
             return;
         }
         this.loadComponent();
+
+        if (this.zjAutoPlay) {
+            // todo(ccliu): 轮播内容
+        }
     }
 
     active(i: number) {
@@ -93,6 +102,10 @@ export class CarouselComponent implements OnInit, OnChanges {
     prev() {
         this.currentPanelIndex = this.currentPanelIndex > 0 ? this.currentPanelIndex - 1 : this.panels.length - 1;
         this.loadComponent();
+    }
+
+    trackByFn(index) {
+        return index;
     }
 
 }
