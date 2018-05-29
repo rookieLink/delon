@@ -90,6 +90,9 @@ export class CarouselComponent implements OnInit, OnChanges {
     }
 
     active(i: number) {
+        if (this.currentPanelIndex === i) {
+            return;
+        }
         this.currentPanelIndex = i;
         this.loadComponent();
     }

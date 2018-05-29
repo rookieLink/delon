@@ -1,96 +1,51 @@
 [
     {
-        "id": "6303db6b-bd84-466c-afeb-036dba27b8ec",
-        "element": {
-            "dataMsg": {
-                "dimensionList": [
-                    {
-                        "name": "设备号",
-                        "data": [
-                            "null",
-                            "9999",
-                            "8888",
-                            "1152",
-                            "1151"
-                        ]
-                    }
-                ],
-                "measureList": [
-                    {
-                        "name": "设备效益",
-                        "data": [
-                            "1441.0",
-                            "1802.0",
-                            "1383.0",
-                            "1053.0",
-                            "1562.0"
-                        ]
-                    }
-                ],
-                "legend": [
-                    "设备效益"
-                ]
-            },
-            "componentMsg": {
-                "icon": "",
-                "creatorOrgNo": "0000",
-                "status": 0,
-                "subject": 0,
-                "describe": "设备效益Top5",
-                "name": "设备效益Top5",
-                "type": "0",
-                "creator": "dinghuishu"
-            },
-            "optionMsg": "\nthat.option = {\n    title: {\n        text: '设备效益Top5',\n        subtext: '（近一年）'\n    },\n    tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n            type: 'shadow'\n        }\n    },\n    legend: {\n        data: that.payload.legend\n    },\n    grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n    },\n    xAxis: {\n        type: 'value',\n        boundaryGap: [0, 0.01]\n    },\n    yAxis: {\n        type: 'category',\n        data: that.payload.dimensionList[0].data\n    },\n    series: [\n      {\n        type:'bar',\n        name:that.payload.measureList[0].name,\n        data:that.payload.measureList[0].data\n      }\n    ]\n};\n"
-        }
-    },
-    {
-        "id": "88901b25-e94f-4c24-834c-46fbc172c3ef",
-        "element": {
-            "dataMsg": {
-                "dimensionList": [
-                    {
-                        "name": "设备号",
-                        "data": [
-                            "null",
-                            "9999",
-                            "8888",
-                            "1152",
-                            "1151"
-                        ]
-                    }
-                ],
-                "measureList": [
-                    {
-                        "name": "设备效益",
-                        "data": [
-                            "1441.0",
-                            "1802.0",
-                            "1383.0",
-                            "1053.0",
-                            "1562.0"
-                        ]
-                    }
-                ],
-                "legend": [
-                    "设备效益"
-                ]
-            },
-            "componentMsg": {
-                "icon": "",
-                "creatorOrgNo": "0000",
-                "status": 0,
-                "subject": 0,
-                "describe": "设备效益Top5",
-                "name": "设备效益Top5",
-                "type": "0",
-                "creator": "dinghuishu"
-            },
-            "optionMsg": "\nthat.option = {\n    title: {\n        text: '设备效益Top5',\n        subtext: '（近一年）'\n    },\n    tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n            type: 'shadow'\n        }\n    },\n    legend: {\n        data: that.payload.legend\n    },\n    grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n    },\n    xAxis: {\n        type: 'value',\n        boundaryGap: [0, 0.01]\n    },\n    yAxis: {\n        type: 'category',\n        data: that.payload.dimensionList[0].data\n    },\n    series: [\n      {\n        type:'bar',\n        name:that.payload.measureList[0].name,\n        data:that.payload.measureList[0].data\n      }\n    ]\n};\n"
-        }
-    },
-    {
         "id": "4af0c5c8-dd82-46bc-be66-d91eb55f498e",
+        "element": {
+            "dataMsg": {
+                "dimensionList": [
+                    {
+                        "name": "交易类型",
+                        "data": [
+                            "存款",
+                            "转账",
+                            "改密",
+                            "其它",
+                            "取款"
+                        ]
+                    }
+                ],
+                "measureList": [
+                    {
+                        "name": "交易量",
+                        "data": [
+                            "4968",
+                            "11661",
+                            "5047",
+                            "48331",
+                            "8217"
+                        ]
+                    }
+                ],
+                "legend": [
+                    "交易量"
+                ]
+            },
+            "componentMsg": {
+                "icon": null,
+                "creatorOrgNo": "0000",
+                "status": 0,
+                "subject": 0,
+                "describe": "echarts-8",
+                "name": "echarts-8",
+                "type": "0",
+                "creator": "ccliu"
+            },
+            "optionMsg": "\nthat.option = {\n    title: {\n        text: '交易类型占比'\n    },\n    tooltip : {\n        trigger: 'axis',\n        axisPointer: {\n            type: 'cross',\n            label: {\n                backgroundColor: '#6a7985'\n            }\n        }\n    },\n    legend: {\n        data:legend\n    },\n    toolbox: {\n        feature: {\n            saveAsImage: {}\n        }\n    },\n    grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n    },\n    xAxis : [\n        {\n            type : 'category',\n            boundaryGap : false,\n            data : dimensionList[0].data\n        }\n    ],\n    yAxis : [\n        {\n            type : 'value'\n        }\n    ],\n    series : [\n     {\n       name: measureList[0].name,\n       type: 'line',\n       stack: '总量',\n       areaStyle: {normal: {}},\n       data: measureList[0].data,\n     }\n   ]\n};\n"
+        }
+    },
+    {
+        "id": "6303db6b-bd84-466c-afeb-036dba27b8ec",
         "element": {
             "dataMsg": {
                 "dimensionList": [
@@ -140,30 +95,28 @@
             "dataMsg": {
                 "dimensionList": [
                     {
-                        "name": "设备号",
+                        "name": "交易年份",
                         "data": [
-                            "null",
-                            "9999",
-                            "8888",
-                            "1152",
-                            "1151"
+                            "2015",
+                            "2016",
+                            "2017",
+                            "2018"
                         ]
                     }
                 ],
                 "measureList": [
                     {
-                        "name": "设备效益",
+                        "name": "交易额",
                         "data": [
-                            "1441.0",
-                            "1802.0",
-                            "1383.0",
-                            "1053.0",
-                            "1562.0"
+                            "7.671321E+8",
+                            "7.742127E+8",
+                            "9.132392E+8",
+                            "2.924334E+8"
                         ]
                     }
                 ],
                 "legend": [
-                    "设备效益"
+                    "交易额"
                 ]
             },
             "componentMsg": {
@@ -171,12 +124,166 @@
                 "creatorOrgNo": "0000",
                 "status": 0,
                 "subject": 0,
-                "describe": "设备效益Top5",
-                "name": "设备效益Top5",
+                "describe": "设备自助渠道年交易额",
+                "name": "设备自助渠道年交易额",
                 "type": "0",
                 "creator": "dinghuishu"
             },
-            "optionMsg": "\nthat.option = {\n    title: {\n        text: '设备效益Top5',\n        subtext: '（近一年）'\n    },\n    tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n            type: 'shadow'\n        }\n    },\n    legend: {\n        data: that.payload.legend\n    },\n    grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n    },\n    xAxis: {\n        type: 'value',\n        boundaryGap: [0, 0.01]\n    },\n    yAxis: {\n        type: 'category',\n        data: that.payload.dimensionList[0].data\n    },\n    series: [\n      {\n        type:'bar',\n        name:that.payload.measureList[0].name,\n        data:that.payload.measureList[0].data\n      }\n    ]\n};\n"
+            "optionMsg": "\n let dataList = [];\n    that.payload.dimensionList[0].data.forEach(val=>{\n      dataList.push({name:val});\n    });\n    that.payload.measureList[0].data.forEach((val,i)=>{\n      dataList[i].value = val;\n    });\n\n that.option = {\n      title: {\n        text: '现金自助渠道年交易额'\n      },\n      tooltip: {\n        trigger: \"item\",\n      },\n      legend: {\n        orient: \"vertical\",\n        x: \"left\",\n        data: that.payload.legend\n      },\n      series: [\n        {\n          name: \"交易类型\",\n          type: \"pie\",\n          selectedMode: \"single\",\n          radius: [0, \"30%\"],\n\n          label: {\n            normal: {\n              position: \"inner\"\n            }\n          },\n          labelLine: {\n            normal: {\n              show: false\n            }\n          },\n          data: dataList\n        },\n        {\n          name: \"交易类型\",\n          type: \"pie\",\n          radius: [\"40%\", \"55%\"],\n          label: {\n            normal: {\n              formatter: \"{a|{a}}{abg|}\\n{hr|}\\n  {b|{b}：}{c}  {per|{d}%}  \",\n              backgroundColor: \"#eee\",\n              borderColor: \"#aaa\",\n              borderWidth: 1,\n              borderRadius: 4,\n              rich: {\n                a: {\n                  color: \"#999\",\n                  lineHeight: 22,\n                  align: \"center\"\n                },\n                hr: {\n                  borderColor: \"#aaa\",\n                  width: \"100%\",\n                  borderWidth: 0.5,\n                  height: 0\n                },\n                b: {\n                  fontSize: 16,\n                  lineHeight: 33\n                },\n                per: {\n                  color: \"#eee\",\n                  backgroundColor: \"#334455\",\n                  padding: [2, 4],\n                  borderRadius: 2\n                }\n              }\n            }\n          },\n          data: dataList\n        }\n      ]\n    };\n\n"
+        }
+    },
+    {
+        "id": "07ecb2ce-0a77-4759-8b1a-e46ee9360907",
+        "element": {
+            "dataMsg": {
+                "dimensionList": [
+                    {
+                        "name": "交易类型",
+                        "data": [
+                            "存款",
+                            "转账",
+                            "改密",
+                            "其它",
+                            "取款"
+                        ]
+                    }
+                ],
+                "measureList": [
+                    {
+                        "name": "交易量",
+                        "data": [
+                            "4968",
+                            "11661",
+                            "5047",
+                            "48331",
+                            "8217"
+                        ]
+                    }
+                ],
+                "legend": [
+                    "交易量"
+                ]
+            },
+            "componentMsg": {
+                "icon": "",
+                "creatorOrgNo": "0000",
+                "status": 0,
+                "subject": 0,
+                "describe": "1222222",
+                "name": "TT",
+                "type": "0",
+                "creator": "admin"
+            },
+            "optionMsg": "\n  let dataList = [];\n    that.payload.dimensionList[0].data.forEach(val=>{\n      dataList.push({name:val});\n    });\n    that.payload.measureList[0].data.forEach((val,i)=>{\n      dataList[i].value = val;\n    });\nthat.option = {\n      title: {\n        text: \"某站点用户访问来源QQQQ\",\n        subtext: \"纯属虚构\",\n        x: \"center\"\n      },\n      tooltip: {\n        trigger: \"item\"\n      },\n      legend: {\n        orient: \"vertical\",\n        left: \"left\",\n        data: that.payload.legend || []\n      },\n      series: [\n        {\n          name: that.payload.legend,\n          type: \"pie\",\n          radius: \"55%\",\n          center: [\"50%\", \"60%\"],\n          data: dataList,\n          itemStyle: {\n            emphasis: {\n              shadowBlur: 10,\n              shadowOffsetX: 0,\n              shadowColor: \"rgba(0, 0, 0, 0.5)\"\n            }\n          }\n        }\n      ]\n    };\n"
+        }
+    },
+    {
+        "id": "ce5fc0a7-a14c-4307-9441-48bdc9ca3841",
+        "element": {
+            "dataMsg": {
+                "dimensionList": [
+                    {
+                        "name": "交易年份",
+                        "data": [
+                            "2015",
+                            "2016",
+                            "2017",
+                            "2018"
+                        ]
+                    }
+                ],
+                "measureList": [
+                    {
+                        "name": "交易额",
+                        "data": [
+                            "7.671321E+8",
+                            "7.742127E+8",
+                            "9.132392E+8",
+                            "2.924334E+8"
+                        ]
+                    }
+                ],
+                "legend": [
+                    "交易额"
+                ]
+            },
+            "componentMsg": {
+                "icon": "",
+                "creatorOrgNo": "0000",
+                "status": 0,
+                "subject": 0,
+                "describe": "设备自助渠道年交易额",
+                "name": "设备自助渠道年交易额",
+                "type": "0",
+                "creator": "dinghuishu"
+            },
+            "optionMsg": "\n let dataList = [];\n    that.payload.dimensionList[0].data.forEach(val=>{\n      dataList.push({name:val});\n    });\n    that.payload.measureList[0].data.forEach((val,i)=>{\n      dataList[i].value = val;\n    });\n\n that.option = {\n      title: {\n        text: '现金自助渠道年交易额'\n      },\n      tooltip: {\n        trigger: \"item\",\n      },\n      legend: {\n        orient: \"vertical\",\n        x: \"left\",\n        data: that.payload.legend\n      },\n      series: [\n        {\n          name: \"交易类型\",\n          type: \"pie\",\n          selectedMode: \"single\",\n          radius: [0, \"30%\"],\n\n          label: {\n            normal: {\n              position: \"inner\"\n            }\n          },\n          labelLine: {\n            normal: {\n              show: false\n            }\n          },\n          data: dataList\n        },\n        {\n          name: \"交易类型\",\n          type: \"pie\",\n          radius: [\"40%\", \"55%\"],\n          label: {\n            normal: {\n              formatter: \"{a|{a}}{abg|}\\n{hr|}\\n  {b|{b}：}{c}  {per|{d}%}  \",\n              backgroundColor: \"#eee\",\n              borderColor: \"#aaa\",\n              borderWidth: 1,\n              borderRadius: 4,\n              rich: {\n                a: {\n                  color: \"#999\",\n                  lineHeight: 22,\n                  align: \"center\"\n                },\n                hr: {\n                  borderColor: \"#aaa\",\n                  width: \"100%\",\n                  borderWidth: 0.5,\n                  height: 0\n                },\n                b: {\n                  fontSize: 16,\n                  lineHeight: 33\n                },\n                per: {\n                  color: \"#eee\",\n                  backgroundColor: \"#334455\",\n                  padding: [2, 4],\n                  borderRadius: 2\n                }\n              }\n            }\n          },\n          data: dataList\n        }\n      ]\n    };\n\n"
+        }
+    },
+    {
+        "id": "07ecb2ce-0a77-4759-8b1a-e46ee9360907",
+        "element": {
+            "dataMsg": {
+                "dimensionList": [
+                    {
+                        "name": "交易类型",
+                        "data": [
+                            "存款",
+                            "转账",
+                            "改密",
+                            "其它",
+                            "取款"
+                        ]
+                    },
+                    {
+                        "name": "交易量",
+                        "data": [
+                            "4968",
+                            "11661",
+                            "5047",
+                            "48331",
+                            "8217"
+                        ]
+                    }
+                ],
+                "measureList": [
+                    {
+                        "name": "交易类型",
+                        "data": [
+                            "存款",
+                            "转账",
+                            "改密",
+                            "其它",
+                            "取款"
+                        ]
+                    },
+                    {
+                        "name": "交易量",
+                        "data": [
+                            "4968",
+                            "11661",
+                            "5047",
+                            "48331",
+                            "8217"
+                        ]
+                    }
+                ],
+                "legend": [
+                    "交易类型",
+                    "交易量"
+                ]
+            },
+            "componentMsg": {
+                "icon": "",
+                "creatorOrgNo": "0000",
+                "status": 0,
+                "subject": 0,
+                "describe": "来来来",
+                "name": "来来来",
+                "type": "0",
+                "creator": "ccliu"
+            },
+            "optionMsg": "\nthat.option = {\n    title: {\n        text: '堆叠区域图'\n    },\n    tooltip : {\n        trigger: 'axis',\n        axisPointer: {\n            type: 'cross',\n            label: {\n                backgroundColor: '#6a7985'\n            }\n        }\n    },\n    legend: {\n        data:legend\n    },\n    toolbox: {\n        feature: {\n            saveAsImage: {}\n        }\n    },\n    grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n    },\n    xAxis : [\n        {\n            type : 'category',\n            boundaryGap : false,\n            data : dimensionList[0].data\n        }\n    ],\n    yAxis : [\n        {\n            type : 'value'\n        }\n    ],\n    series : [\n     {\n       name: measureList[0].name,\n       type: 'line',\n       stack: '总量',\n       areaStyle: {normal: {}},\n       data: measureList[0].data,\n     },\n     {\n       name: measureList[1].name,\n       type: 'line',\n       stack: '总量',\n       areaStyle: {normal: {}},\n       data: measureList[1].data,\n     }\n   ]\n};\n"
         }
     }
 ]
