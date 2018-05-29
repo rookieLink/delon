@@ -1,0 +1,20 @@
+[
+    {
+        "id": "meta-analysis1",
+        "pageId": "meta-analysis1",
+        "name": "渠道综合分析1",
+        "description": "现金自助渠道相关数据和关键指标综合分析1"
+    },
+    {
+        "id": "meta-analysis2",
+        "pageId": "meta-analysis2",
+        "name": "渠道综合分析2",
+        "description": "现金自助渠道相关数据和关键指标综合分析2"
+    },
+    {
+        "id": "meta-analysis3",
+        "pageId": "meta-analysis3",
+        "name": "渠道综合分析3",
+        "description": "现金自助渠道相关数据和关键指标综合分析3"
+    }
+]

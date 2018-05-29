@@ -137,7 +137,10 @@ export class ZijinDashboardComponent implements OnInit {
     }
 
     addPage() {
-
+        if (!this.pageSelected) {
+            return;
+        }
+        console.log(this.pageSelected);
         this.dashboardService.addNewPageDef({
             pageId: this.pageSelected.pageId
         }).subscribe(data => {
@@ -147,16 +150,6 @@ export class ZijinDashboardComponent implements OnInit {
         }, err => {
             this.message.error(err.body.retMsg);
         });
-
-
-        // this.pages.push({pageId: this.pageSelected.pageId});
-        // this.panels.push({
-        //     data: {pageId: this.pageSelected.pageId},
-        //     component: DashboardComponent
-        // });
-        // this.panels = [].concat(this.panels);
-        // this.pageSelected = null;
-        // this.pVisible = false;
     }
 
     activatePage(page) {
@@ -164,18 +157,6 @@ export class ZijinDashboardComponent implements OnInit {
     }
 
     deleteCurrentPage() {
-        // let idx;
-        // this.panels.forEach((val, index) => {
-        //     if (val.data.pageId === this.pageActivating) {
-        //         idx = index;
-        //     }
-        // });
-        //
-        // if (idx > -1) {
-        //     this.panels.splice(idx, 1);
-        //     this.panels = [].concat(this.panels);   // 脏值检测
-        // }
-
         this.dashboardService.deletePageById(this.pageActivating)
             .subscribe(data => {
                 this.getMultiPagesMeta();
@@ -191,15 +172,15 @@ export class ZijinDashboardComponent implements OnInit {
     getMultiPagesMeta() {
         this.dashboardService.getMultiPagesMeta()
             .subscribe(data => {
-                const panels = [];
+                this.panels = [];
+                this.pages = [];
                 data.forEach(val => {
-                    panels.push({
-                        data: val,
+                    this.panels.push({
+                        data: {pageId: val.pageId},
                         component: DashboardComponent
                     });
+                    this.pages.push({pageId: val.pageId});
                 });
-                this.panels = panels;
-                this.pages = data;
             });
     }
 

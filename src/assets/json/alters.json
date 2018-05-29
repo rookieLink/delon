@@ -1,5 +1,4 @@
 {
-    "retCode": "00",
     "retList": [
         {
             "id": "ce5fc0a7-a14c-4307-9441-48bdc9ca3841",
@@ -138,6 +137,5 @@
             "chartDesc": "rank2",
             "type": "3"
         }
-    ],
-    "retMsg": "成功"
+    ]
 }
