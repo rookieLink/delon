@@ -200,7 +200,7 @@ export class DashboardComponent implements OnInit {
 
         if (this.dashboardService.getChartsDef) {
             // 获取可选择内容
-            this.dashboardService.getChartsDef({orgNo: '0000'})
+            this.dashboardService.getChartsDef()
                 .subscribe((data) => {
                     this.alternatives = data.filter((value) => {
                         return value.type === '0';

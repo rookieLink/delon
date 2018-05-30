@@ -17,14 +17,14 @@ import {PANEL_ITEM} from '../abc.options';
                     *ngFor="let c of panels;index as i;trackBy: trackByFn;"></li>
             </ol>
             <div class="carousel-inner">
-                <div class="carousel-item active moveToLeft">
+                <div class="carousel-item" [ngClass]="lightSpeedIn">
                     <ng-template panel-host></ng-template>
                 </div>
             </div>
-            <a class="carousel-control-prev" (click)="prev()" *ngIf="zjArrows">
+            <a class="carousel-control-prev" (click)="prev()" *ngIf="panels.length>0 && zjArrows">
                 <span class="anticon anticon-left"></span>
             </a>
-            <a class="carousel-control-next" (click)="next()" *ngIf="zjArrows">
+            <a class="carousel-control-next" (click)="next()" *ngIf="panels.length>0 && zjArrows">
                 <span class="anticon anticon-right"></span>
             </a>
         </div>
@@ -38,14 +38,18 @@ export class CarouselComponent implements OnInit, OnChanges {
     @Input() zjDots = true;
     @Input() zjAutoPlay = false;
 
-    @Input() panels: PanelItem[];
+    @Input() panels: PanelItem[] = [];
     @ViewChild(PanelDirective) panelHost: PanelDirective;
 
     @Output() onActive = new EventEmitter();
 
+    lightSpeedIn;
+
     constructor(private componentFactoryResolver: ComponentFactoryResolver,
                 @Inject(PANEL_ITEM) @Optional() panels: PanelItem[]) {
-        this.panels = this.panels || panels;
+        if (panels) {
+            this.panels = panels;
+        }
     }
 
     loadComponent() {
@@ -93,6 +97,11 @@ export class CarouselComponent implements OnInit, OnChanges {
         if (this.currentPanelIndex === i) {
             return;
         }
+        if (this.currentPanelIndex > i) {
+            this.lightSpeedIn = 'lightSpeedLeftIn';
+        } else {
+            this.lightSpeedIn = 'lightSpeedRightIn';
+        }
         this.currentPanelIndex = i;
         this.loadComponent();
     }
@@ -100,11 +109,21 @@ export class CarouselComponent implements OnInit, OnChanges {
     next() {
         ++this.currentPanelIndex;
         this.loadComponent();
+        this.lightSpeedIn = 'lightSpeedRightIn';
+        this.clearAnimationClass();
     }
 
     prev() {
         this.currentPanelIndex = this.currentPanelIndex > 0 ? this.currentPanelIndex - 1 : this.panels.length - 1;
         this.loadComponent();
+        this.lightSpeedIn = 'lightSpeedLeftIn';
+        this.clearAnimationClass();
+    }
+
+    clearAnimationClass() {
+        setTimeout(() => {
+            this.lightSpeedIn = null;
+        }, 1000);
     }
 
     trackByFn(index) {

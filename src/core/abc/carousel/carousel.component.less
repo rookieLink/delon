@@ -42,6 +42,7 @@
         .carousel-item {
             position: relative;
             height: 100%;
+            background-color: rgba(85, 70, 172, 0.19);
             padding-bottom: 20px;
             -webkit-box-align: center;
             -ms-flex-align: center;
@@ -101,6 +102,56 @@
     }
 }
 
-.moveToLeft {
-    transition: all 1s ease-out;
+@keyframes lightSpeedRightIn {
+    from {
+        transform: translate3d(50%, 0, 0);
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+}
+
+.lightSpeedRightIn {
+    animation-name: lightSpeedRightIn;
+    animation-timing-function: ease-out;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+@keyframes lightSpeedLeftIn {
+    from {
+        transform: translate3d(-50%, 0, 0);
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+}
+
+.lightSpeedLeftIn {
+    animation-name: lightSpeedLeftIn;
+    animation-timing-function: ease-out;
+    animation-duration: 1s;
+    animation-fill-mode: both;
 }
