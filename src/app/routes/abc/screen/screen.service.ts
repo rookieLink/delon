@@ -1,27 +1,29 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ScreenService} from '@delon/abc/screen/config';
-import {SessionService} from '../../../core/session.service';
 
 @Injectable()
 export class DemoScreenService implements ScreenService {
 
+    private api = 'http://localhost:3000';
 
-    constructor(private http: HttpClient,
-                private session: SessionService) {
+
+    constructor(private http: HttpClient) {
     }
 
-    // todo(ccliu): localStorage存储
-    getScreenDef(params/*pageId = 'meta-analysis'*/) {
-        return this.http.get('assets/json/screenDef.json', {params: params});
+    // 获取大屏配置
+    getScreenDef() {
+        return this.http.get(this.api + '/screenDef');
     }
 
-    updateScreenDef(def) {
-        return this.http.get('assets/json/alters.json', {params: def});
-        // return this.http.put('assets/json/alters.json', {...def});
+    // 更新大屏配置
+    updateScreenDef(newDef) {
+        return this.http.put(this.api + '/screenDef', {
+            screenDef: newDef
+        });
     }
 
-    // 获取自定义的图表类型 todo(ccliu):该接口建议后端不返回chart_option字段值
+    // 获取自定义的图表类型
     getSelfDefCharts(params) {
         return this.http.get('assets/json/alters.json', {
             params: params
@@ -30,8 +32,6 @@ export class DemoScreenService implements ScreenService {
 
     // 根据id获取图表详细信息
     getOptionAndDataById(id) {
-        return this.http.get('assets/json/chartModel.json', {
-            params: id
-        });
+        return this.http.get(this.api + '/chartModel/' + id);
     }
 }

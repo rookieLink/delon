@@ -121,7 +121,7 @@ export class DashboardComponent implements OnInit {
         setTimeout(() => {
             this.setting = true;
             this.openSetting = false;
-        }, 50);
+        }, 500);
     }
 
     /**
@@ -202,8 +202,7 @@ export class DashboardComponent implements OnInit {
             // 获取可选择内容
             this.dashboardService.getChartsDef({orgNo: '0000'})
                 .subscribe((data) => {
-                    const list = data['retList'] || [];
-                    this.alternatives = list.filter((value) => {
+                    this.alternatives = data.filter((value) => {
                         return value.type === '0';
                     });
                 }, err => {

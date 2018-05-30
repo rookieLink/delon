@@ -25,6 +25,8 @@ export class ScreenComponent implements OnInit {
     cTCards = [];
     cBCards = [];
 
+    @Input() headImg;
+
     constructor(private injector: Injector,
                 private modal: NzModalService,
                 @Inject(SCREENSERVICE) private screenService,
@@ -33,21 +35,28 @@ export class ScreenComponent implements OnInit {
 
     ngOnInit() {
 
-        this.screenService.getScreenDef().subscribe(screenConfig => {
-            // 获取布局settings
-            this.splitConf = screenConfig.layout;
+        this.screenService.getScreenDef()
+            .subscribe(screenConfig => {
+                // 获取布局settings
+                this.splitConf = screenConfig.layout;
 
-            // 获取Components
-            this.lCards = panelAdapt(screenConfig.lCards, this.injector);
-            this.rCards = panelAdapt(screenConfig.rCards, this.injector);
-            this.cTCards = panelAdapt(screenConfig.cTCards, this.injector);
-            this.cBCards = panelAdapt(screenConfig.cBCards, this.injector);
-        });
+                // 获取Components
+                this.lCards = panelAdapt(screenConfig.lCards, this.injector);
+                this.rCards = panelAdapt(screenConfig.rCards, this.injector);
+                this.cTCards = panelAdapt(screenConfig.cTCards, this.injector);
+                this.cBCards = panelAdapt(screenConfig.cBCards, this.injector);
+            }, err => {
+                this.message.error(err.body.retMsg);
+            });
 
         this.screenService.getSelfDefCharts()
             .subscribe((data) => {
-                this.alternatives = panelAdapt(data['retList'], this.injector);
+                this.alternatives = panelAdapt(data, this.injector);
+            }, err => {
+                this.message.error(err.body.retMsg);
             });
+
+
     }
 
     cardModal(card) {
@@ -72,7 +81,6 @@ export class ScreenComponent implements OnInit {
         });
     }
 
-
     openSettings() {
         this.openSetting = true;
         setTimeout(() => {
@@ -88,25 +96,19 @@ export class ScreenComponent implements OnInit {
         this.setting = false;
         this.splitConf.disabled = true;
 
-        // const params = {
-        //     layout: this.splitConf,
-        //     lCards: this.transform(this.lCards),
-        //     rCards: this.transform(this.rCards),
-        //     cTCards: this.transform(this.cTCards),
-        //     // carouselCards: this.carouselCards
-        // };
-        //
-        // console.log(params);
-        //
-        // this.screenService.updateScreenDef(params)
-        //     .subscribe(data => {
-        //         this.setting = false;
-        //         this.splitConf.disabled = true;
-        //         localStorage.setItem('screenDef', JSON.stringify(params));
-        //         console.log(data);
-        //     }, err => {
-        //         this.message.error(err.body.retMsg);
-        //     });
+        this.screenService.updateScreenDef({
+            layout: _.omit(this.splitConf, ['disabled']),
+            lCards: this.transform(this.lCards),
+            rCards: this.transform(this.rCards),
+            cTCards: this.transform(this.cTCards),
+            cBCards: this.transform(this.cBCards),
+        }).subscribe(data => {
+            console.log(data);
+            this.setting = false;
+            this.splitConf.disabled = true;
+        }, err => {
+            this.message.error(err.body.retMsg);
+        });
 
 
     }
@@ -134,11 +136,12 @@ export class ScreenComponent implements OnInit {
 
     transform(arr: Array<any>) {
         return _.transform(arr, (result, item: any) => {
+            console.log(item);
             if (item.type >= 10) {
                 result.push({
                     id: item.id,
                     type: item.type,
-                    chart_option: item.chart_option
+                    children: item.children
                 });
             } else {
                 result.push({

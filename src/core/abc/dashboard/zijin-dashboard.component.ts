@@ -1,9 +1,7 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {NzMessageService} from 'ng-zorro-antd';
 import {DASHBOARDSERVICE} from './config';
 import {DashboardComponent} from './dashboard.component';
-
-import * as _ from 'lodash';
 
 @Component({
     selector: 'zj-dashboard',
@@ -11,7 +9,7 @@ import * as _ from 'lodash';
         <!-- 提供更改主题数目的操作 -->
         <nz-dropdown nzTrigger="click" nzPlacement="bottomRight">
             <span class="anticon anticon-setting" nz-dropdown></span>
-            <div nz-menu style="width:200px">
+            <div nz-menu style="width:150px">
                 <div nz-menu-item class="theme-switch" (click)="deleteCurrentPage()">
                     删除当前主题
                 </div>
@@ -72,7 +70,8 @@ import * as _ from 'lodash';
             }
 
             .anticon.anticon-setting:hover {
-                background-color: #43b3f0;
+                color: #21e616;
+                cursor: pointer;
             }
         `
     ]
@@ -157,6 +156,10 @@ export class ZijinDashboardComponent implements OnInit {
     }
 
     deleteCurrentPage() {
+        if (this.panels.length === 1) {
+            this.message.error('至少有一个主题');
+            return;
+        }
         this.dashboardService.deletePageById(this.pageActivating)
             .subscribe(data => {
                 this.getMultiPagesMeta();
@@ -164,7 +167,6 @@ export class ZijinDashboardComponent implements OnInit {
             }, err => {
                 this.message.error(err.body.retMsg);
             });
-
     }
 
 

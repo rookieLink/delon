@@ -1,39 +1,37 @@
-{
-    "retList": [
-        {
-            "id": "07ecb2ce-0a77-4759-8b1a-e46ee9360907",
-            "icon": "",
-            "name": "TT",
-            "chartDesc": "1222222",
-            "type": "0"
-        },
-        {
-            "id": "ce5fc0a7-a14c-4307-9441-48bdc9ca3841",
-            "icon": "",
-            "name": "232",
-            "chartDesc": "adfadsf",
-            "type": "0"
-        },
-        {
-            "id": "b674dc41-44dc-4945-8fc2-320753450f54",
-            "icon": "",
-            "name": "test0507001",
-            "chartDesc": "test",
-            "type": "0"
-        },
-        {
-            "id": "6303db6b-bd84-466c-afeb-036dba27b8ec",
-            "icon": "",
-            "name": "来来来",
-            "chartDesc": "来来来",
-            "type": "0"
-        },
-        {
-            "id": "4af0c5c8-dd82-46bc-be66-d91eb55f498e",
-            "icon": "",
-            "name": "rrr",
-            "chartDesc": "rrr",
-            "type": "0"
-        }
-    ]
-}
+[
+    {
+        "id": "07ecb2ce-0a77-4759-8b1a-e46ee9360907",
+        "icon": "",
+        "name": "TT",
+        "chartDesc": "1222222",
+        "type": "0"
+    },
+    {
+        "id": "ce5fc0a7-a14c-4307-9441-48bdc9ca3841",
+        "icon": "",
+        "name": "232",
+        "chartDesc": "adfadsf",
+        "type": "0"
+    },
+    {
+        "id": "b674dc41-44dc-4945-8fc2-320753450f54",
+        "icon": "",
+        "name": "test0507001",
+        "chartDesc": "test",
+        "type": "0"
+    },
+    {
+        "id": "6303db6b-bd84-466c-afeb-036dba27b8ec",
+        "icon": "",
+        "name": "来来来",
+        "chartDesc": "来来来",
+        "type": "0"
+    },
+    {
+        "id": "4af0c5c8-dd82-46bc-be66-d91eb55f498e",
+        "icon": "",
+        "name": "rrr",
+        "chartDesc": "rrr",
+        "type": "0"
+    }
+]
