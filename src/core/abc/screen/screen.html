@@ -1,8 +1,10 @@
 <div class="screen-wrapper" *ngIf="splitConf">
     <div class="screen-header">
         <div class="screen-setting">
-            <i class="anticon anticon-setting" *ngIf="!setting" (click)="openSettings()"></i>
-            <i class="anticon anticon-save" *ngIf="setting" (click)="saveSettings()"></i>
+            <ng-container *ngIf="developer">
+                <i class="anticon anticon-setting" *ngIf="!setting" (click)="openSettings()"></i>
+                <i class="anticon anticon-save" *ngIf="setting" (click)="saveSettings()"></i>
+            </ng-container>
             <i class="anticon" [ngClass]="iconClass" (click)="toggleFullScreen()"></i>
         </div>
         <img src={{headImg}} alt="">
@@ -17,7 +19,8 @@
                 <div class="screen-left">
                     <split direction="vertical" [disabled]="splitConf.disabled" gutterColor="transparent"
                            (dragEnd)="onDragEnd(1, $event)">
-                        <split-area *ngFor="let card of lCards;index as i;trackBy: trackByFn;">
+                        <split-area *ngFor="let card of lCards;index as i;trackBy: trackByFn;"
+                                    [size]="splitConf.lColumn.rows[i].size">
                             <div class="card">
                                 <ng-container
                                     *ngComponentOutlet="card.component;injector:card.injector;"></ng-container>
@@ -65,7 +68,8 @@
             <split-area [size]="splitConf.rColumn.size">
                 <split direction="vertical" [disabled]="splitConf.disabled" gutterColor="transparent"
                        (dragEnd)="onDragEnd(3, $event)">
-                    <split-area *ngFor="let card of rCards;index as i;trackBy: trackByFn;">
+                    <split-area *ngFor="let card of rCards;index as i;trackBy: trackByFn;"
+                                [size]="splitConf.rColumn.rows[i].size">
                         <div class="screen-right">
                             <div class="card">
                                 <ng-container

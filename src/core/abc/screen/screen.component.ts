@@ -15,6 +15,7 @@ import {SCREENSERVICE} from './config';
 export class ScreenComponent implements OnInit {
 
     @Input() headImg;
+    @Input() developer = false;
 
     splitConf = null;
     setting = false;
@@ -97,7 +98,7 @@ export class ScreenComponent implements OnInit {
             this.splitConf.disabled = false;
             this.setting = true;
             this.openSetting = false;
-        }, 50);
+        }, 500);
     }
 
     saveSettings() {

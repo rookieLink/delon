@@ -5,14 +5,11 @@
             "rows": [
                 {
                     "visible": true,
-                    "size": 47.94188861985472
+                    "size": 70
                 },
                 {
                     "visible": true,
-                    "size": 52.05811138014528
-                },
-                {
-                    "visible": true
+                    "size": 30
                 }
             ],
             "size": 25
@@ -22,14 +19,18 @@
             "rows": [
                 {
                     "visible": true,
-                    "size": 40.773809523809526
+                    "size": 33.333333333333333
                 },
                 {
                     "visible": true,
-                    "size": 36.532738095238095
+                    "size": 33.333333333333333
+                },
+                {
+                    "visible": true,
+                    "size": 33.333333333333333
                 }
             ],
-            "size": 25.70906452539307
+            "size": 25
         },
         "cColumn": {
             "visible": true,
@@ -43,7 +44,7 @@
                     "size": 61.7686168322786
                 }
             ],
-            "size": 49.290935474606925
+            "size": 50
         }
     },
     "lCards": [
