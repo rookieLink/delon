@@ -68,19 +68,20 @@ export class ZijinDashboardComponent implements OnInit {
 
     configPages() {
 
-        this.pendingPages.forEach(val => {
-            val.available = true;
-            val.selected = false;
-        });
-        this.pendingPages.forEach(val => {
+        const pendingPages = [].concat(this.pendingPages);
+
+        pendingPages.forEach(val => {
             this.pages.forEach(v => {
                 if (val.pageId === v.pageId) {
                     val.available = false;
                     val.selected = true;
                 }
             });
+            if (!val.hasOwnProperty('selected')) {
+                val.available = true;
+                val.selected = false;
+            }
         });
-
 
         const subject = this.modal.open({
             title: '选择系统内置主题',
@@ -88,7 +89,7 @@ export class ZijinDashboardComponent implements OnInit {
             maskClosable: false,
             content: BuiltInAddDashboardComponent,
             componentParams: {
-                pages: [].concat(this.pendingPages)
+                pages: pendingPages
             }
         });
         subject.subscribe(data => {
@@ -141,8 +142,8 @@ export class ZijinDashboardComponent implements OnInit {
         // 判断用户是否已有自定义主题
 
         let hasAdded = false;
-        this.pages.forEach(p => {
-            if (p.subjectType === '1') {
+        this.pendingPages.forEach(p => {
+            if (p.pageTye === '1') {
                 hasAdded = true;
             }
         });
