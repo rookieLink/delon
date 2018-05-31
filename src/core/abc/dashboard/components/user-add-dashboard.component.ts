@@ -12,7 +12,7 @@ import {DASHBOARDSERVICE} from '../config';
                     <label [attr.for]="'name'" nz-form-item-required
                            style="font-size: 13px;font-weight: bold;">主题名称</label>
                 </div>
-                <div nz-form-control nz-col [nzSpan]="12" [nzValidateStatus]="getFormControl('name')">
+                <div nz-form-control nz-col [nzSpan]="12">
                     <nz-input [nzSize]="'large'" formControlName="name" [nzId]="'name'"></nz-input>
                 </div>
             </div>
@@ -21,7 +21,7 @@ import {DASHBOARDSERVICE} from '../config';
                     <label [attr.for]="'icon'" nz-form-item-required
                            style="font-size: 13px;font-weight: bold;">主题图标</label>
                 </div>
-                <div nz-form-control nz-col [nzSpan]="12" [nzValidateStatus]="getFormControl('icon')">
+                <div nz-form-control nz-col [nzSpan]="12">
                     <nz-select formControlName="icon" [nzPlaceHolder]="''" [nzSize]="'large'" nzAllowClear
                                name="icon">
                         <nz-option *ngFor="let option of themeIcons" [nzLabel]="option.label" [nzValue]="option.value">
@@ -38,7 +38,7 @@ import {DASHBOARDSERVICE} from '../config';
                     <label [attr.for]="'desc'" nz-form-item-required
                            style="font-size: 13px;font-weight: bold;">主题描述</label>
                 </div>
-                <div nz-form-control nz-col [nzSpan]="12" [nzValidateStatus]="getFormControl('desc')">
+                <div nz-form-control nz-col [nzSpan]="12">
                     <nz-input [nzSize]="'large'" formControlName="desc" [nzId]="'desc'"></nz-input>
                 </div>
             </div>
@@ -79,11 +79,6 @@ export class UserAddDashboardComponent implements OnInit {
         });
     }
 
-    getFormControl(name) {
-        return this.form.controls[name];
-    }
-
-
     _submitForm() {
         for (const i in this.form.controls) {
             if (this.form.controls[i]) {
@@ -120,7 +115,6 @@ export class UserAddDashboardComponent implements OnInit {
                 ]
             }
         }, this.form.value);
-
         this.loading = true;
         console.log(params);
         this.ds.addUserNewPageDef(params)
