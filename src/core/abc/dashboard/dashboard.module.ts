@@ -12,6 +12,7 @@ import {DASHBOARDSERVICE} from './config';
 import {ZjCarouselModule} from '../carousel';
 import {ZijinDashboardComponent} from './zijin-dashboard.component';
 import {UserAddDashboardComponent} from './components/user-add-dashboard.component';
+import {BuiltInAddDashboardComponent} from './components/built-in-add-dashboard.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {UserAddDashboardComponent} from './components/user-add-dashboard.compone
         TabAlternativesComponent,
         EchartsGraphComponent,
         WarningMessageComponent,
-        UserAddDashboardComponent
+        UserAddDashboardComponent,
+        BuiltInAddDashboardComponent
     ],
     entryComponents: [
         ZijinDashboardComponent,
@@ -39,7 +41,8 @@ import {UserAddDashboardComponent} from './components/user-add-dashboard.compone
         TabAlternativesComponent,
         EchartsGraphComponent,
         WarningMessageComponent,
-        UserAddDashboardComponent
+        UserAddDashboardComponent,
+        BuiltInAddDashboardComponent
     ],
     exports: [
         ZijinDashboardComponent,

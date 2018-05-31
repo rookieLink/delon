@@ -89,35 +89,8 @@ export class UserAddDashboardComponent implements OnInit {
             return;
         }
 
-        const params = _.extend({
-            content: {
-                'cards': [
-                    {
-                    },
-                    {
-                    },
-                    {
-                    },
-                    {
-                    }
-                ],
-                'tabs': [
-                    [
-                        {
-                        },
-                        {
-                        }
-                    ],
-                    [
-                        {
-                        }
-                    ]
-                ]
-            }
-        }, this.form.value);
         this.loading = true;
-        console.log(params);
-        this.ds.addUserNewPageDef(params)
+        this.ds.addUserNewPageDef(this.form.value)
             .subscribe(data => {
                 this.loading = false;
                 this.nzModal.destroy('onOk');

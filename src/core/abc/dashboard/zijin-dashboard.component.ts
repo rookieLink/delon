@@ -3,6 +3,7 @@ import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {DASHBOARDSERVICE} from './config';
 import {DashboardComponent} from './dashboard.component';
 import {UserAddDashboardComponent} from './components/user-add-dashboard.component';
+import {BuiltInAddDashboardComponent} from './components/built-in-add-dashboard.component';
 
 @Component({
     selector: 'zj-dashboard',
@@ -23,28 +24,6 @@ import {UserAddDashboardComponent} from './components/user-add-dashboard.compone
             </div>
         </nz-dropdown>
         <zj-carousel [panels]="panels" [zjArrows]="false" (onActive)="activatePage($event)"></zj-carousel>
-        <nz-modal [nzVisible]="pVisible" [nzTitle]="'第一个 Modal'" [nzContent]="modalContent"
-                  (nzOnCancel)="pVisible = false;"
-                  (nzOnOk)="addPage();">
-            <ng-template #modalContent>
-                <div nz-row [nzGutter]="8">
-                    <div nz-col [nzSpan]="8" *ngFor="let page of pendingPages;">
-                        <nz-card [ngClass]="{'card-nonavailable': !page.available,'card-available':page.available}"
-                                 (click)="selectPage(page)">
-                            <ng-template #body>
-                                <i class="anticon anticon-check-circle"
-                                   style="color: blueviolet;font-size: 22px;position: absolute;right: 7px;top:4px;"
-                                   *ngIf="page.selected"></i>
-                                <i class="anticon anticon-check-circle-o" *ngIf="!page.selected"
-                                   style="position: absolute;right: 7px;top:4px"></i>
-                                <i style="font-size: 45px;" [ngClass]="['anticon','anticon-area-chart']"></i>
-                                <p style="height: 50px;">{{page.description}}</p>
-                            </ng-template>
-                        </nz-card>
-                    </div>
-                </div>
-            </ng-template>
-        </nz-modal>
     `,
     styles: [
             `
@@ -55,18 +34,6 @@ import {UserAddDashboardComponent} from './components/user-add-dashboard.compone
                 right: 40px;
             }
 
-            .card-available {
-                cursor: pointer;
-                background-color: #8bd22f;
-                margin-bottom: 5px;
-            }
-
-            .card-nonavailable {
-                cursor: pointer;
-                background-color: darkslategray;
-                margin-bottom: 5px;
-            }
-
             .anticon.anticon-setting:hover {
                 color: #21e616;
                 cursor: pointer;
@@ -75,8 +42,6 @@ import {UserAddDashboardComponent} from './components/user-add-dashboard.compone
     ]
 })
 export class ZijinDashboardComponent implements OnInit {
-
-    pVisible = false;
 
     // 当前已配置的主题项
     pages = [];
@@ -102,7 +67,6 @@ export class ZijinDashboardComponent implements OnInit {
     }
 
     configPages() {
-        this.pVisible = true;
 
         this.pendingPages.forEach(val => {
             val.available = true;
@@ -116,22 +80,27 @@ export class ZijinDashboardComponent implements OnInit {
                 }
             });
         });
-    }
 
-    selectPage(page) {
 
-        if (!page.available) {
-            return;
-        }
-
-        // 标志当前页被选中
-        this.pendingPages.forEach(val => {
-            if (val.available) {
-                val.selected = false;
+        const subject = this.modal.open({
+            title: '选择系统内置主题',
+            width: 600,
+            maskClosable: false,
+            content: BuiltInAddDashboardComponent,
+            componentParams: {
+                pages: [].concat(this.pendingPages)
             }
         });
-        page.selected = true;
-        this.pageSelected = page;
+        subject.subscribe(data => {
+            console.log(data);
+            if (data.selected) {
+                this.pageSelected = data;
+            }
+        });
+
+        subject.on('onOk', () => {
+            this.addPage();
+        });
     }
 
     addPage() {
@@ -143,7 +112,6 @@ export class ZijinDashboardComponent implements OnInit {
             pageId: this.pageSelected.pageId
         }).subscribe(data => {
             this.pageSelected = null;
-            this.pVisible = false;
             this.getMultiPagesMeta();
         }, err => {
             this.message.error(err.body.retMsg);
@@ -161,8 +129,9 @@ export class ZijinDashboardComponent implements OnInit {
         }
         this.dashboardService.deletePageById(this.pageActivating)
             .subscribe(data => {
-                this.getMultiPagesMeta();
                 this.onDeletePage.emit('删除驾驶舱成功');
+                this.getMultiPagesMeta();
+                this.getAllPagesMeta();
             }, err => {
                 this.message.error(err.body.retMsg);
             });
@@ -192,7 +161,6 @@ export class ZijinDashboardComponent implements OnInit {
         });
     }
 
-
     // 获取当前用户下的主题项
     getMultiPagesMeta() {
         this.dashboardService.getMultiPagesMeta()
@@ -206,14 +174,18 @@ export class ZijinDashboardComponent implements OnInit {
                     });
                     this.pages.push({pageId: val.pageId});
                 });
+            }, err => {
+                this.message.error(err.body.retMsg);
             });
     }
 
-    // 获取系统内置的所有主题
+    // 获取用户可选的所有主题
     getAllPagesMeta() {
         this.dashboardService.getAllPagesMeta()
             .subscribe(data => {
                 this.pendingPages = data;
+            }, err => {
+                this.message.error(err.body.retMsg);
             });
     }
 
