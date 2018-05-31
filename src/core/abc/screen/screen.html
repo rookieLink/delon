@@ -3,8 +3,7 @@
         <div class="screen-setting">
             <i class="anticon anticon-setting" *ngIf="!setting" (click)="openSettings()"></i>
             <i class="anticon anticon-save" *ngIf="setting" (click)="saveSettings()"></i>
-            <i class="anticon anticon-shrink" toggleFullscreen *ngIf="fullScreen" (click)="fullScreen=false;"></i>
-            <i class="anticon anticon-arrows-alt" toggleFullscreen *ngIf="!fullScreen" (click)="fullScreen=true;"></i>
+            <i class="anticon" [ngClass]="iconClass" (click)="toggleFullScreen()"></i>
         </div>
         <img src={{headImg}} alt="">
         <a routerLink="/home">

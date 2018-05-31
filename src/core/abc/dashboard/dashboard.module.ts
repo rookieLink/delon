@@ -1,4 +1,5 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TabAlternativesComponent} from './components/tab-alternatives.component';
 import {CardAlternativesComponent} from './components/card-alternatives.component';
 import {DashboardComponent} from './dashboard.component';
@@ -10,11 +11,14 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {DASHBOARDSERVICE} from './config';
 import {ZjCarouselModule} from '../carousel';
 import {ZijinDashboardComponent} from './zijin-dashboard.component';
+import {UserAddDashboardComponent} from './components/user-add-dashboard.component';
 
 
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
         NgZorroAntdModule,
         ZjCarouselModule,
         NgxEchartsModule,
@@ -25,7 +29,8 @@ import {ZijinDashboardComponent} from './zijin-dashboard.component';
         CardAlternativesComponent,
         TabAlternativesComponent,
         EchartsGraphComponent,
-        WarningMessageComponent
+        WarningMessageComponent,
+        UserAddDashboardComponent
     ],
     entryComponents: [
         ZijinDashboardComponent,
@@ -33,7 +38,8 @@ import {ZijinDashboardComponent} from './zijin-dashboard.component';
         CardAlternativesComponent,
         TabAlternativesComponent,
         EchartsGraphComponent,
-        WarningMessageComponent
+        WarningMessageComponent,
+        UserAddDashboardComponent
     ],
     exports: [
         ZijinDashboardComponent,

@@ -49,8 +49,13 @@ export class DemoDashboardService implements DashboardService {
     addNewPageDef(params) {
         return this.http.post(this.api + '/multiPagesMeta/', {
             pageId: params.pageId,
-            id: params.pageId
+            id: params.pageId,
         });
+    }
+
+    // 新增(自定义)主题
+    addUserNewPageDef(params) {
+        return this.http.post(this.api + '/multiPagesMeta/', params);
     }
 
     // 删除主题

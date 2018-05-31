@@ -18,9 +18,7 @@ export class DemoScreenService implements ScreenService {
 
     // 更新大屏配置
     updateScreenDef(newDef) {
-        return this.http.put(this.api + '/screenDef', {
-            screenDef: newDef
-        });
+        return this.http.put(this.api + '/screenDef', newDef);
     }
 
     // 获取自定义的图表类型

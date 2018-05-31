@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
-import {NzMessageService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {DASHBOARDSERVICE} from './config';
 import {DashboardComponent} from './dashboard.component';
+import {UserAddDashboardComponent} from './components/user-add-dashboard.component';
 
 @Component({
     selector: 'zj-dashboard',
@@ -16,12 +17,9 @@ import {DashboardComponent} from './dashboard.component';
                 <div nz-menu-item (click)="configPages()">
                     新增系统主题
                 </div>
-                <div nz-menu-item>
+                <div nz-menu-item (click)="openUserAdd()">
                     新增自定义主题
                 </div>
-                <!--<div nz-menu-item>
-                    <header-i18n></header-i18n>
-                </div>-->
             </div>
         </nz-dropdown>
         <zj-carousel [panels]="panels" [zjArrows]="false" (onActive)="activatePage($event)"></zj-carousel>
@@ -93,6 +91,7 @@ export class ZijinDashboardComponent implements OnInit {
     @Output() onDeletePage = new EventEmitter();
 
     constructor(private message: NzMessageService,
+                private modal: NzModalService,
                 @Inject(DASHBOARDSERVICE) private dashboardService) {
 
     }
@@ -167,6 +166,30 @@ export class ZijinDashboardComponent implements OnInit {
             }, err => {
                 this.message.error(err.body.retMsg);
             });
+    }
+
+    openUserAdd() {
+        // 判断用户是否已有自定义主题
+
+        let hasAdded = false;
+        this.pages.forEach(p => {
+            if (p.subjectType === '1') {
+                hasAdded = true;
+            }
+        });
+        if (hasAdded) {
+            this.message.error('您已添加过自定义主题');
+            return;
+        }
+        this.modal.open({
+            title: '自定义主题',
+            width: 600,
+            footer: false,
+            maskClosable: false,
+            content: UserAddDashboardComponent,
+        }).on('onOk', () => {
+            this.getMultiPagesMeta();
+        });
     }
 
 

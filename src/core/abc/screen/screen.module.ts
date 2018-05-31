@@ -13,7 +13,6 @@ import {ViewDetailComponent} from './components/view-detail.component';
 import {ViewRankComponent} from './components/view-rank.component';
 import {ZjCarouselModule} from '../carousel';
 import {SCREENSERVICE} from './config';
-import {ToggleFullscreenDirective} from './components/toggle-fullscreen.directive';
 
 const COMPONENTS = [
     ScreenComponent,
@@ -35,7 +34,6 @@ const COMPONENTS = [
         AngularSplitModule
     ],
     declarations: [
-        ToggleFullscreenDirective,
         ...COMPONENTS,
     ],
     entryComponents: [

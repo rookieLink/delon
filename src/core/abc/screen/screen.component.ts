@@ -1,11 +1,11 @@
-import {Component, Inject, Injector, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, Injector, Input, OnInit} from '@angular/core';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {CardAlternativesComponent} from './components/card-alternatives.component';
 
 import * as _ from 'lodash';
+import * as screenfull from 'screenfull';
 import {panelAdapt} from '../componentTypeUtil';
 import {SCREENSERVICE} from './config';
-
 
 @Component({
     selector: 'zj-screen',
@@ -14,10 +14,11 @@ import {SCREENSERVICE} from './config';
 })
 export class ScreenComponent implements OnInit {
 
+    @Input() headImg;
+
     splitConf = null;
     setting = false;
     openSetting = false;
-    fullScreen = false;
     alternatives = []; // 图表选择项
 
     lCards = [];
@@ -25,10 +26,11 @@ export class ScreenComponent implements OnInit {
     cTCards = [];
     cBCards = [];
 
-    @Input() headImg;
+    iconClass = 'anticon-arrows-alt';
 
     constructor(private injector: Injector,
                 private modal: NzModalService,
+                private el: ElementRef,
                 @Inject(SCREENSERVICE) private screenService,
                 private message: NzMessageService) {
     }
@@ -56,6 +58,14 @@ export class ScreenComponent implements OnInit {
                 this.message.error(err.body.retMsg);
             });
 
+        screenfull.on('change', () => {
+            if (screenfull.isFullscreen) {
+                this.iconClass = 'anticon-shrink';
+            } else {
+                this.iconClass = 'anticon-arrows-alt';
+
+            }
+        });
 
     }
 
@@ -150,6 +160,15 @@ export class ScreenComponent implements OnInit {
                 });
             }
         }, []);
+    }
+
+    toggleFullScreen() {
+        if (screenfull.isFullscreen) {
+            screenfull.exit();
+        } else {
+            // screenfull.request();
+            screenfull.request(this.el.nativeElement);
+        }
     }
 
     trackByFn(index) {
