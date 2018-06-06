@@ -27,6 +27,9 @@ export class DashboardComponent implements OnInit {
     tabs;
     alternatives;
 
+    // 当前驾驶舱配置项
+    currentSettings: any;
+
     pendingTabs = [];
 
     constructor(private modal: NzModalService,
@@ -118,6 +121,10 @@ export class DashboardComponent implements OnInit {
 
     openSettings() {
         this.openSetting = true;
+        this.currentSettings = {
+            cards: [].concat(this.cards),
+            tabs: [Array.prototype.concat(this.tabs[0]), Array.prototype.concat(this.tabs[1])]
+        };
         setTimeout(() => {
             this.setting = true;
             this.openSetting = false;
@@ -214,6 +221,8 @@ export class DashboardComponent implements OnInit {
     }
 
     cancel() {
+        this.cards = this.currentSettings.cards;
+        this.tabs = this.currentSettings.tabs;
         this.setting = false;
         this.openSetting = false;
     }
