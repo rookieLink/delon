@@ -1,0 +1,9 @@
+<div nz-row style="padding-top: 30px;">
+    <div nz-col [nzSpan]="4" *ngFor="let panel of panels">
+        <nz-card style="width:200px;height: 200px;" (click)="select(panel)">
+            <ng-template #body>
+                <p>{{panel.name}}</p>
+            </ng-template>
+        </nz-card>
+    </div>
+</div>

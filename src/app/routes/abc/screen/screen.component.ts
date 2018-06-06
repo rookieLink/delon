@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 @Component({
     selector: 'app-demo-screen',
     template: `
-        <zj-screen [headImg]="headImage"></zj-screen>
+        <zj-screen [headImg]="headImage" [developer]="true"></zj-screen>
     `,
     styles: [`
         :host {

@@ -79,7 +79,15 @@ export class LayoutComponent implements OnInit {
                     children: [
                         { text: 'JWT', link: '/acl/jwt' }
                     ]
-                }
+                },
+                {
+                    text: 'develop',
+                    icon: 'anticon anticon-api',
+                    children: [
+                        { text: '图表', link: '/develop/charts' },
+                        { text: '面板', link: '/develop/panels' }
+                    ]
+                },
             ]
         }
     ];

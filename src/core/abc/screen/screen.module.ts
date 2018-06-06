@@ -13,6 +13,7 @@ import {ViewDetailComponent} from './components/view-detail.component';
 import {ViewRankComponent} from './components/view-rank.component';
 import {ZjCarouselModule} from '../carousel';
 import {SCREENSERVICE} from './config';
+import {RouterModule} from "@angular/router";
 
 const COMPONENTS = [
     ScreenComponent,
@@ -29,6 +30,7 @@ const COMPONENTS = [
         CommonModule,
         NgxEchartsModule,
         NgZorroAntdModule,
+        RouterModule,
         PerfectScrollbarModule,
         ZjCarouselModule,
         AngularSplitModule
@@ -40,7 +42,10 @@ const COMPONENTS = [
         ...COMPONENTS
     ],
     exports: [
-        ScreenComponent
+        ScreenComponent,
+        ViewInfoComponent,
+        ViewDetailComponent,
+        ViewRankComponent
     ]
 })
 export class ZjScreenModule {

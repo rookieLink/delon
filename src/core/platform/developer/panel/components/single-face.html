@@ -1,0 +1,114 @@
+<split>
+    <split-area>
+        <form nz-form #form="ngForm">
+            <div nz-form-item nz-row>
+                <div nz-row style="font-size:20px; font-weight:bold ;margin-left: 10px;height: 35px ">大屏组件基本信息：</div>
+
+                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                    <label [attr.for]="'name'" nz-form-item-required>服务</label>
+                </div>
+                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                    <nz-select [nzSize]="'large'" name="AxisType" [nzPlaceHolder]="'--请选择服务--'"
+                               [(ngModel)]="formModel.modelMsg.service" required
+                               (ngModelChange)="selectService(formModel.modelMsg.service)">
+                        <nz-option *ngFor="let s of availableServices" [nzLabel]="s.serviceName"
+                                   [nzValue]="s"></nz-option>
+                    </nz-select>
+                </div>
+            </div>
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                    <label [attr.for]="'name'" nz-form-item-required>字段</label>
+                </div>
+                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                    <nz-select name="xxx" [nzPlaceHolder]="'--请选择字段--'"
+                               [nzMode]="'multiple'" required
+                               [(ngModel)]="formModel.modelMsg.measureRows">
+                        <nz-option
+                            *ngFor="let option of availableFields"
+                            [nzLabel]="option.name"
+                            [nzValue]="option.name">
+                        </nz-option>
+                    </nz-select>
+                </div>
+            </div>
+            <div nz-form-item nz-row style="margin-bottom:8px;">
+                <div nz-form-control nz-col [nzSpan]="14" [nzOffset]="6">
+                    <button nz-button [nzSize]="'large'" [nzType]="'primary'" (click)="getJsonData()"
+                            [disabled]="form.invalid"
+                            style="width: 40%;">获取Json
+                    </button>
+                </div>
+            </div>
+        </form>
+        <form nz-form #form1="ngForm">
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                    <label [attr.for]="'name'" nz-form-item-required>组件名称</label>
+                </div>
+                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+                    <nz-input [nzSize]="'large'" [(ngModel)]="formModel.componentMsg.name" [nzId]="'name'" required
+                              name="name"></nz-input>
+                </div>
+            </div>
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col [nzSpan]="6">
+                    <label>组件描述</label>
+                </div>
+                <div nz-form-control nz-col [nzSpan]="14">
+                    <nz-input [nzSize]="'large'" name="describe"
+                              [(ngModel)]="formModel.componentMsg.describe"></nz-input>
+                </div>
+            </div>
+            <div nz-form-item nz-row style="margin-bottom:8px;">
+                <div nz-form-control nz-col [nzSpan]="14" [nzOffset]="6">
+                    <button nz-button [nzSize]="'large'" [nzType]="'primary'"
+                            (click)="save()" [disabled]="form.invalid || form1.invalid"
+                            style="width: 40%;">
+                        保存
+                    </button>&nbsp;
+                    <button nz-button [nzType]="'primary'" [nzSize]="'large'" [routerLink]="['/developer/screen']" style="width: 40%;">
+                        <span>返回</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </split-area>
+    <split-area>
+        <div nz-row style="font-size:20px; font-weight:bold;margin-left: 10px;height: 35px ">json数据：</div>
+        <div ace-editor
+             [text]="payload"
+             [mode]="'json'"
+             [theme]="'clouds'"
+             [options]="aceConfig.options"
+             [readOnly]="true"
+             style="height: 100%;"></div>
+    </split-area>
+    <split-area>
+        <div nz-row>
+            <div nz-col [nzSpan]="12">
+                <span style="font-size: 20px; font-weight:bold;margin-left: 10px;height: 35px ;">HTML页面：</span>
+            </div>
+            <div nz-col [nzSpan]="12" style="text-align: right;">
+                <button nz-button [nzType]="'primary'" (click)="preview()" style="width: 40%;">
+                    预览
+                </button>
+            </div>
+        </div>
+        <div ace-editor
+             [text]="optionMsg"
+             [mode]="'json'"
+             [theme]="'clouds'"
+             [options]="aceConfig.options"
+             [readOnly]="false"
+             (textChanged)="aceConfig.textChanged($event)"
+             style="height:calc(100% - 32px);">
+        </div>
+    </split-area>
+    <split-area>
+        <div nz-row style="font-size:20px; font-weight:bold;margin-left: 10px;height: 35px ">预览效果图：</div>
+        <view-info [meta]="formModel.optionMsg" [payload]="_payload" *ngIf="faceType==='info'"></view-info>
+        <view-detail [meta]="formModel.optionMsg" [payload]="_payload" *ngIf="faceType==='detail'"></view-detail>
+        <view-rank [meta]="formModel.optionMsg" [payload]="_payload" *ngIf="faceType==='rank'"></view-rank>
+    </split-area>
+</split>

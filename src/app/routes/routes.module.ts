@@ -22,7 +22,8 @@ import { LoginComponent } from './passport/login.component';
                     { path: 'dashboard', component: DashboardComponent },
                     { path: 'abc', loadChildren: './abc/abc.module#DEMOABCModule' },
                     { path: 'acl', loadChildren: './acl/acl.module#DEMOACLModule' },
-                    { path: 'editor', loadChildren: './editor/editor.module#EditorModule' }
+                    { path: 'editor', loadChildren: './editor/editor.module#EditorModule' },
+                    { path: 'develop', loadChildren: './developer/developer.module#DeveloperModule' }
                 ]
             },
             {
