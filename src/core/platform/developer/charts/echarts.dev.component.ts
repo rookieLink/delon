@@ -11,7 +11,6 @@ import 'brace';
 import 'brace/mode/javascript';
 import 'brace/theme/clouds';
 import 'brace/mode/json';
-import {JsonEditorComponent, JsonEditorOptions} from "ang-jsoneditor";
 
 @Component({
     selector: 'zj-echarts-dev',
@@ -61,9 +60,7 @@ export class EchartsDevComponent implements OnInit {
     availableServices;  // 可供选择的服务
     availableFields;    // 可供选择的字段（度量/维度）
 
-    public editorOptions: JsonEditorOptions;
     public data: any;
-    @ViewChild(JsonEditorComponent) editor: JsonEditorComponent;
 
     @ViewChild('aceJson') aceJson$: ElementRef;
 
@@ -109,14 +106,14 @@ export class EchartsDevComponent implements OnInit {
             _.omit(this.formModel.modelMsg.service, ['returnParam'])
         );
         console.log(params);
-        this.chartService.preview(params)
-            .subscribe(data => {
-                console.log(data);
-                this.payload = data['element'];
-            }, err => {
-                this.message.error(err.body.retMsg);
-                console.log(err);
-            });
+        // this.chartService.preview(params)
+        //     .subscribe(data => {
+        //         console.log(data);
+        //         this.payload = data['element'];
+        //     }, err => {
+        //         this.message.error(err.body.retMsg);
+        //         console.log(err);
+        //     });
     }
 
 
@@ -145,14 +142,14 @@ export class EchartsDevComponent implements OnInit {
         // delete this.formModel.modelMsg.service;
         const params = _.extend({optionMsg: this.aceConfig.text}, this.formModel);
         console.log(params);
-        this.chartService.save(params)
-            .subscribe(data => {
-                console.log(data);
-                this.message.success('图表保存成功！');
-            }, err => {
-                this.message.error(err.body.retMsg);
-                console.log(err);
-            });
+        // this.chartService.save(params)
+        //     .subscribe(data => {
+        //         console.log(data);
+        //         this.message.success('图表保存成功！');
+        //     }, err => {
+        //         this.message.error(err.body.retMsg);
+        //         console.log(err);
+        //     });
     }
 
 }

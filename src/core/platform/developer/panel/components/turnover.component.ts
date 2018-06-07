@@ -1,6 +1,6 @@
 import {Component, Inject, Injector, Input, OnInit, Optional} from '@angular/core';
 import {NzMessageService} from 'ng-zorro-antd';
-import {CardAlternativesComponent} from "@delon/abc/screen/components/card-alternatives.component";
+import {CardAlternativesComponent} from "../../../../abc/screen/components/card-alternatives.component";
 
 // 该组件所包含的正反两面的组件没有交互关系
 @Component({

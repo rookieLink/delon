@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
 @Component({
     selector: 'zj-chart-dev',
     templateUrl: 'chart-develop.html',
-    styleUrls: ['chart-develop.scss']
+    styleUrls: ['chart-develop.less']
 })
 export class ChartDevelopComponent {
 

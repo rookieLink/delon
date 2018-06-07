@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild} f
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdDirective} from './ad.directive';
 import {DevComponentTypeCode} from "../util";
-import {PanelComponent} from "@delon/abc/carousel/panel.component";
+import {PanelComponent} from "../../../abc/carousel/panel.component";
 
 @Component({
     selector: 'zj-dynamic-comp',

@@ -1,9 +1,9 @@
 import {SingleFaceComponent} from "./panel/components/single-face.component";
 import {TurnoverComponent} from "./panel/components/turnover.component";
 import {MultiFaceComponent} from "./panel/components/multi-face.component";
-import {ViewInfoComponent} from "@delon/abc/screen/components/view-info.component";
-import {ViewDetailComponent} from "@delon/abc/screen/components/view-detail.component";
-import {ViewRankComponent} from "@delon/abc/screen/components/view-rank.component";
+import {ViewInfoComponent} from "../../abc/screen/components/view-info.component";
+import {ViewDetailComponent} from "../../abc/screen/components/view-detail.component";
+import {ViewRankComponent} from "../../abc/screen/components/view-rank.component";
 
 
 export const DevComponentTypeCode: Map<string, any> = new Map<string, any>();

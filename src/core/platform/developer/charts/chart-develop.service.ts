@@ -13,27 +13,27 @@ export class ChartDevelopService {
 
 
     preview(paramMsg) {
-        return this.http.post<any>(this.chartDevUrl + '/v1/chartModel/preview', paramMsg);
+        // return this.http.post<any>(this.chartDevUrl + '/v1/chartModel/preview', paramMsg);
     }
 
     save(paramMsg) {
-        return this.http.post(this.chartDevUrl + '/v1/chartModel', paramMsg);
+        // return this.http.post(this.chartDevUrl + '/v1/chartModel', paramMsg);
     }
 
     modChart(paramMsg) {
-        return this.http.put(this.modUrl, paramMsg);
+        // return this.http.put(this.modUrl, paramMsg);
     }
 
     queryChartSubjects(paramMsg) {
-        return this.http.get(this.chartDevUrl + '/queryChartSubjects', {
-            params: {orgNo: this.session.orgNo}
-        });
+        // return this.http.get(this.chartDevUrl + '/queryChartSubjects', {
+        //     params: {orgNo: this.session.orgNo}
+        // });
     }
 
     queryServiceList() {
-        return this.http.get(this.chartDevUrl + '/v1/chartModel/serviceList', {
-            params: {orgNo: this.session.orgNo}
-        });
+        // return this.http.get(this.chartDevUrl + '/v1/chartModel/serviceList', {
+        //     params: {orgNo: this.session.orgNo}
+        // });
     }
 
 
