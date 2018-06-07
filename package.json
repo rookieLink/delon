@@ -1,8 +1,8 @@
 {
     "name": "delon",
-    "version": "0.7.0",
-    "version_laster": "0.7.0",
-    "version_next": "0.7.0",
+    "version": "0.9.7",
+    "version_laster": "0.9.7",
+    "version_next": "0.9.7",
     "typings": "index.d.ts",
     "description": "Delon is a set of essential modules for ng-alain.",
     "repository": {
@@ -141,7 +141,7 @@
         "gulp-less": "^3.3.2",
         "gulp-rename": "^1.2.2",
         "gulp-replace": "^0.6.0",
-        "gulp-rollup": "^2.15.0",
+        "gulp-rollup": "2.15.0",
         "gulp-transform": "^3.0.5",
         "gulp-util": "^3.0.8",
         "gulp-wrap": "^0.13.0",

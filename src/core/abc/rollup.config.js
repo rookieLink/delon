@@ -17,6 +17,7 @@ const globals = {
     'xlsx': 'xlsx',
     'jszip': 'jszip',
     'lodash': 'lodash',
+    'screenfull': 'screenfull',
 
     '@angular/cdk': 'ng.cdk',
     '@angular/cdk/coercion': 'ng.cdk.coercion',

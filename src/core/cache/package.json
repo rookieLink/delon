@@ -1,6 +1,6 @@
 {
 	"name": "@microon/cache",
-	"version": "0.7.0",
+	"version": "0.9.7",
 	"description": "@microon/cache",
 	"main": "./bundles/cache.umd.js",
 	"module": "./index.js",

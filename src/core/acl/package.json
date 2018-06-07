@@ -1,6 +1,6 @@
 {
 	"name": "@microon/acl",
-	"version": "0.7.0",
+	"version": "0.9.7",
 	"description": "@microon/acl",
 	"main": "./bundles/acl.umd.js",
 	"module": "./index.js",

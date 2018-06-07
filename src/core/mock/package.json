@@ -1,6 +1,6 @@
 {
 	"name": "@microon/mock",
-	"version": "0.7.0",
+	"version": "0.9.7",
 	"description": "@microon/mock",
 	"main": "./bundles/mock.umd.js",
 	"module": "./index.js",

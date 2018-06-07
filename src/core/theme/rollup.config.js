@@ -21,7 +21,8 @@ const globals = {
     'rxjs/observable/FromEventObservable': 'Rx.Observable',
     'rxjs/observable/combineLatest': 'Rx.Observable',
 
-    '@delon/acl': 'alain.acl'
+    '@delon/acl': 'alain.acl',
+    '@delon/theme': 'alain.theme'
 };
 
 module.exports = {
