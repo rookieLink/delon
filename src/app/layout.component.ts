@@ -85,7 +85,8 @@ export class LayoutComponent implements OnInit {
                     icon: 'anticon anticon-api',
                     children: [
                         { text: '图表', link: '/develop/charts' },
-                        { text: '面板', link: '/develop/panels' }
+                        { text: '面板', link: '/develop/panels' },
+                        { text: '明细查询', link: '/develop/detail-query' }
                     ]
                 },
             ]

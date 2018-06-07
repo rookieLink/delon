@@ -5,10 +5,10 @@
                 <i class="anticon anticon-setting" *ngIf="!setting" (click)="openSettings()"></i>
                 <i class="anticon anticon-save" *ngIf="setting" (click)="saveSettings()"></i>
             </ng-container>
-            <i class="anticon" [ngClass]="iconClass" (click)="toggleFullScreen()"></i>
+            <i class="anticon" *ngIf="!developer" [ngClass]="iconClass" (click)="toggleFullScreen()"></i>
         </div>
         <img src={{headImg}} alt="">
-        <a routerLink="/home">
+        <a routerLink="/home" *ngIf="!developer">
             <i class="anticon anticon-close"></i>
         </a>
     </div>

@@ -9,6 +9,7 @@ import {NgxEchartsModule} from "ngx-echarts";
 import {AceEditorDirective} from "./ace-editor.directive";
 import {DynamicComponent} from "./dynamic.component";
 import {AdDirective} from "./ad.directive";
+import {AgGridModule} from "ag-grid-angular";
 
 @NgModule({
     imports: [
@@ -18,7 +19,8 @@ import {AdDirective} from "./ad.directive";
         ReactiveFormsModule,
         NgZorroAntdModule,
         NgxEchartsModule,
-        AngularSplitModule
+        AngularSplitModule,
+        AgGridModule.withComponents([])
     ],
     declarations: [
         AceEditorDirective,
@@ -33,6 +35,7 @@ import {AdDirective} from "./ad.directive";
         NgZorroAntdModule,
         NgxEchartsModule,
         AngularSplitModule,
+        AgGridModule,
 
         DynamicComponent,
         AceEditorDirective,
