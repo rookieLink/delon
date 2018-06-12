@@ -13,7 +13,7 @@
             <div style="font-size: 24px;font-weight: 500;margin-bottom: 5px;margin-top: 20px;">
                 <a name="{{chart.name}}">{{chart.name}}</a>
             </div>
-            <div nz-col [nzSpan]="4" *ngFor="let item of chart.lists;">
+            <div nz-col [nzSpan]="6" *ngFor="let item of chart.lists;">
                 <nz-card style="width:200px;height: 200px;" (click)="select(item)">
                     <ng-template #body>
                         <p>{{item.name}}</p>
@@ -23,7 +23,3 @@
         </div>
     </div>
 </div>
-
-
-
-

@@ -7,7 +7,6 @@ import {ChartsComponent} from "./charts/charts.component";
 import {DemoEchartsDevComponent} from "./charts/echarts-dev.component";
 import {DemoPanelDevComponent} from "./panel/panel-dev.component";
 import {DemoPanelsComponent} from "./panel/panels.component";
-import {DemoDetailQueryComponent} from "./detail-query/detail-query.component";
 
 
 const routes: Routes = [
@@ -15,7 +14,6 @@ const routes: Routes = [
     {path: 'charts/:id', component: DemoEchartsDevComponent},
     {path: 'panels', component: DemoPanelsComponent},
     {path: 'panels/:id', component: DemoPanelDevComponent},
-    {path: 'detail-query', component: DemoDetailQueryComponent},
 ];
 
 @NgModule({
@@ -29,7 +27,6 @@ const routes: Routes = [
         DemoEchartsDevComponent,
         DemoPanelDevComponent,
         DemoPanelsComponent,
-        DemoDetailQueryComponent
     ],
     entryComponents: []
 })

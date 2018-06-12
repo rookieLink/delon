@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import {SharedModule} from "../shared/shared.module";
 
 import {SingleFaceComponent} from './components/single-face.component';
@@ -7,8 +7,8 @@ import {PanelAlternativesComponent} from './components/panel-alternatives.compon
 import {PreviewMultiFaceComponent} from './components/preview-multi-face.component';
 import {PanelComponent} from "./panel.component";
 import {TurnoverComponent} from "./components/turnover.component";
-import {AngularSplitModule} from "angular-split";
 import {ZjCarouselModule, ZjScreenModule} from "@delon/abc";
+import {PANELDEVSERVICE} from "./config";
 
 const COMPONENTS = [
     PanelComponent,
@@ -23,7 +23,7 @@ const COMPONENTS = [
     imports: [
         SharedModule,
         ZjCarouselModule,
-        ZjScreenModule
+        ZjScreenModule  // 用到大屏展现预览的组件
     ],
     declarations: [
         ...COMPONENTS
@@ -37,5 +37,12 @@ const COMPONENTS = [
     providers: []
 })
 export class PanelDevelopModule {
-
+    static forRoot(ClassForPanelService): ModuleWithProviders {
+        return {
+            ngModule: PanelDevelopModule,
+            providers: [
+                {provide: PANELDEVSERVICE, useClass: ClassForPanelService},
+            ]
+        };
+    }
 }
