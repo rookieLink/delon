@@ -1,7 +1,6 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CHARTTYPEMAPPING} from './charts.config';
-import {ChartDevelopService} from './chart-develop.service';
 import {NzMessageService} from 'ng-zorro-antd';
 import {NzModalSubject} from 'ng-zorro-antd';
 
@@ -11,6 +10,7 @@ import 'brace';
 import 'brace/mode/javascript';
 import 'brace/theme/clouds';
 import 'brace/mode/json';
+import {CHARTDEVSERVICE} from "./config";
 
 @Component({
     selector: 'zj-echarts-dev',
@@ -64,7 +64,7 @@ export class EchartsDevComponent implements OnInit {
 
     @ViewChild('aceJson') aceJson$: ElementRef;
 
-    constructor(private chartService: ChartDevelopService,
+    constructor(@Inject(CHARTDEVSERVICE) private chartService,
                 private nzModal: NzModalSubject,
                 private route: ActivatedRoute,
                 private message: NzMessageService) {
@@ -72,23 +72,22 @@ export class EchartsDevComponent implements OnInit {
 
     ngOnInit() {
 
-        // this.chartService.queryServiceList()
-        //     .subscribe(data => {
-        //         this.availableServices = data['retList'];
-        //     }, err => {
-        //         this.message.error(err.body.retMsg);
-        //     });
-
-
         this.payload = CHARTTYPEMAPPING[this.chartType].payload;
         this.aceConfig.text = CHARTTYPEMAPPING[this.chartType].text;
-
         this.preview();
 
+        this.chartService.qryAllServiceList()
+            .subscribe(dataList => {
+                console.log(dataList);
+                this.availableServices = dataList;
+            }, err => {
+                this.message.error(err.body.retMsg);
+            });
 
     }
 
     selectService(service) {
+        console.log(service);
         if (service) {
             this.availableFields = service.returnParam;
         } else {
@@ -106,14 +105,14 @@ export class EchartsDevComponent implements OnInit {
             _.omit(this.formModel.modelMsg.service, ['returnParam'])
         );
         console.log(params);
-        // this.chartService.preview(params)
-        //     .subscribe(data => {
-        //         console.log(data);
-        //         this.payload = data['element'];
-        //     }, err => {
-        //         this.message.error(err.body.retMsg);
-        //         console.log(err);
-        //     });
+        this.chartService.preview(params)
+            .subscribe(data => {
+                console.log(data);
+                this.payload = data;
+            }, err => {
+                this.message.error(err.body.retMsg);
+                console.log(err);
+            });
     }
 
 
@@ -139,17 +138,16 @@ export class EchartsDevComponent implements OnInit {
     save() {
         this.formModel.modelMsg.service = _.omit(this.formModel.modelMsg.service, 'requestParam', 'returnParam', 'serviceRspExp');
         this.formModel.modelMsg = _.extend(this.formModel.modelMsg, this.formModel.modelMsg.service);
-        // delete this.formModel.modelMsg.service;
         const params = _.extend({optionMsg: this.aceConfig.text}, this.formModel);
         console.log(params);
-        // this.chartService.save(params)
-        //     .subscribe(data => {
-        //         console.log(data);
-        //         this.message.success('图表保存成功！');
-        //     }, err => {
-        //         this.message.error(err.body.retMsg);
-        //         console.log(err);
-        //     });
+        this.chartService.save(params)
+            .subscribe(data => {
+                console.log(data);
+                this.message.success('图表保存成功！');
+            }, err => {
+                this.message.error(err.body.retMsg);
+                console.log(err);
+            });
     }
 
 }

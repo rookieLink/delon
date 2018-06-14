@@ -5,6 +5,7 @@ module.exports = function () {
         chartModel: require('./chartModel'),
         multiPagesMeta: require('./multiPagesMeta'),
         allPagesMeta: require('./allPagesMeta'),
-        screenDef: require('./screenDef')
+        screenDef: require('./screenDef'),
+        serviceList: require('./services')
     }
 };

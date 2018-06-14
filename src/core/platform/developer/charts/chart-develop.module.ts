@@ -1,7 +1,6 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {SharedModule} from "../shared/shared.module";
 
-import {ChartDevelopService} from './chart-develop.service';
 import {ChartDevelopComponent} from './chart-develop.component';
 import {EchartsDevComponent} from './echarts.dev.component';
 import {CHARTDEVSERVICE} from "./config";
@@ -16,7 +15,6 @@ import {CHARTDEVSERVICE} from "./config";
         EchartsDevComponent,
     ],
     providers: [
-        ChartDevelopService,
     ],
     entryComponents: [
         EchartsDevComponent

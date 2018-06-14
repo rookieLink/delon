@@ -1,0 +1,194 @@
+[
+    {
+        "returnParam": [
+            {
+                "desc": "",
+                "remark": "222",
+                "name": "交易类型",
+                "means": "111",
+                "require": 1,
+                "type": "String"
+            },
+            {
+                "desc": "",
+                "remark": "44",
+                "name": "交易量",
+                "means": "33",
+                "require": 1,
+                "type": "Integer"
+            }
+        ],
+        "serviceRspExp": "[]",
+        "sid": "11111111111111111111111111111111111",
+        "serviceMethod": "GET",
+        "requestParam": [
+            {
+                "remark": "11",
+                "name": "text",
+                "value": "11",
+                "means": "11",
+                "require": 1,
+                "type": "11"
+            }
+        ],
+        "serviceURL": "/bi/v1/bds/zj1001",
+        "serviceName": "交易类型占比(近一年)"
+    },
+    {
+        "returnParam": [
+            {
+                "desc": "",
+                "name": "网点",
+                "type": "String"
+            },
+            {
+                "desc": "",
+                "name": "交易量",
+                "type": "Integer"
+            }
+        ],
+        "serviceRspExp": "[]",
+        "sid": "11111111111111111111111111111111112",
+        "serviceMethod": "GET",
+        "requestParam": [],
+        "serviceURL": "/bi/v1/bds/zj1002",
+        "serviceName": "网点日均交易量Top10"
+    },
+    {
+        "returnParam": [
+            {
+                "desc": "",
+                "name": "设备号",
+                "type": "String"
+            },
+            {
+                "desc": "",
+                "name": "设备效益",
+                "type": "Float"
+            }
+        ],
+        "serviceRspExp": "[]",
+        "sid": "11111111111111111111111111111111113",
+        "serviceMethod": "GET",
+        "requestParam": [],
+        "serviceURL": "/bi/v1/bds/zj1003",
+        "serviceName": "设备效益Top5(近一年)"
+    },
+    {
+        "returnParam": [
+            {
+                "desc": "",
+                "name": "网点",
+                "type": "String"
+            },
+            {
+                "desc": "",
+                "name": "Case量",
+                "type": "Integer"
+            }
+        ],
+        "serviceRspExp": "[]",
+        "sid": "11111111111111111111111111111111114",
+        "serviceMethod": "GET",
+        "requestParam": [],
+        "serviceURL": "/bi/v1/bds/zj1004",
+        "serviceName": "网点case量TOP10(近一年)"
+    },
+    {
+        "returnParam": [
+            {
+                "desc": "",
+                "name": "交易年份",
+                "type": "String"
+            },
+            {
+                "desc": "",
+                "name": "交易额",
+                "type": "Integer"
+            }
+        ],
+        "serviceRspExp": "[]",
+        "sid": "11111111111111111111111111111111116",
+        "serviceMethod": "GET",
+        "requestParam": [],
+        "serviceURL": "/bi/v1/bds/zj1006",
+        "serviceName": "设备自助渠道年交易额"
+    },
+    {
+        "returnParam": [
+            {
+                "desc": "",
+                "name": "机构号",
+                "type": "String"
+            },
+            {
+                "desc": "",
+                "name": "交易量",
+                "type": "Integer"
+            }
+        ],
+        "serviceRspExp": "[]",
+        "sid": "11111111111111111111111111111111117",
+        "serviceMethod": "GET",
+        "requestParam": [],
+        "serviceURL": "/bi/v1/bds/zj1007",
+        "serviceName": "杭州地区网点交易量"
+    },
+    {
+        "returnParam": [
+            {
+                "desc": "",
+                "name": "交易日期",
+                "type": "String"
+            },
+            {
+                "desc": "",
+                "name": "交易量",
+                "type": "Integer"
+            }
+        ],
+        "serviceRspExp": "[]",
+        "sid": "11111111111111111111111111111111118",
+        "serviceMethod": "GET",
+        "requestParam": [],
+        "serviceURL": "/bi/v1/bds/zj1008",
+        "serviceName": "日交易量(近三个月)"
+    },
+    {
+        "returnParam": [
+            {
+                "desc": "",
+                "name": "故障类型",
+                "type": "String"
+            },
+            {
+                "desc": "",
+                "name": "故障次数",
+                "type": "Integer"
+            }
+        ],
+        "serviceRspExp": "[]",
+        "sid": "11111111111111111111111111111111119",
+        "serviceMethod": "GET",
+        "requestParam": [],
+        "serviceURL": "/bi/v1/bds/zj1009",
+        "serviceName": "总行设备CASE分布"
+    },
+    {
+        "returnParam": [],
+        "serviceRspExp": "[]",
+        "sid": "438df92b9044406bbc7c6836c4a8f62e",
+        "serviceMethod": "GET",
+        "requestParam": [],
+        "serviceURL": "/bi/v1/bds/xp1001",
+        "serviceName": "故障类型分布"
+    },
+    {
+        "returnParam": [],
+        "sid": "8c1d57f1ae3042949bc006282d380e5a",
+        "serviceMethod": "GET",
+        "requestParam": [],
+        "serviceURL": "/bi/v1/bds/recommend_by_person",
+        "serviceName": "个人客户营销服务"
+    }
+]

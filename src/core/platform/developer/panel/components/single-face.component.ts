@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Component, Inject, OnInit} from '@angular/core';
 import * as _ from 'lodash';
 import {DevInit} from './init-consant';
 import {ActivatedRoute} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd';
+import {PANELDEVSERVICE} from "../config";
 
 export const TypeCode: Map<string, any> = new Map<string, any>();
 TypeCode.set('info', 1);
@@ -68,7 +68,7 @@ export class SingleFaceComponent implements OnInit {
     };
 
 
-    constructor(private http: HttpClient,
+    constructor(@Inject(PANELDEVSERVICE) private panelService,
                 private message: NzMessageService,
                 private activeRoute: ActivatedRoute) {
         this.faceType = this.activeRoute.snapshot.paramMap.get('id');
@@ -79,13 +79,12 @@ export class SingleFaceComponent implements OnInit {
         this.formModel.optionMsg = DevInit.get(this.faceType).optionMsg;
         this._payload = DevInit.get(this.faceType).payload;
 
-        // this.http.get(`${environment.SERVICE_URL}` + 'chartsDevelop/v1/chartModel/serviceList', {
-        //     params: {orgNo: this.session.getUserSession().orgNo}
-        // }).subscribe(data => {
-        //     this.availableServices = data['retList'];
-        // }, err => {
-        //     console.log(err);
-        // });
+        this.panelService.qryAllServiceList()
+            .subscribe(serviceList => {
+                this.availableServices = serviceList;
+            }, err => {
+                console.log(err);
+            });
     }
 
     selectService(service) {
@@ -98,11 +97,12 @@ export class SingleFaceComponent implements OnInit {
             dimensionRows: [],
             measureRows: this.formModel.modelMsg.measureRows,
         }, this.formModel.modelMsg.service);
-        // this.screenDev.getJsonData(params)
-        //     .subscribe(data => {
-        //         console.log(data);
-        //         this._payload = data.element.data;
-        //     });
+
+        this.panelService.preview(params)
+            .subscribe(jsonData => {
+                console.log(jsonData);
+                this._payload = jsonData;
+            });
     }
 
     preview() {
@@ -120,13 +120,13 @@ export class SingleFaceComponent implements OnInit {
         const params = _.cloneDeep(this.formModel);
         _.extend(params.modelMsg, params.modelMsg.service);
         console.log(params);
-        // this.screenDev.save(params)
-        //     .subscribe(data => {
-        //         console.log(data);
-        //         this.message.success(data.retMsg);
-        //     }, err => {
-        //         this.message.error(err.body.retMsg);
-        //     });
+        this.panelService.save(params)
+            .subscribe(data => {
+                console.log(data);
+                this.message.success(data.retMsg);
+            }, err => {
+                this.message.error(err.body.retMsg);
+            });
     }
 
 

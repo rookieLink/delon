@@ -17,7 +17,7 @@ import {HttpClient} from '@angular/common/http';
         </div>
     `,
     styles: [
-        `
+            `
             div[nz-row] {
                 font-size: 16px;
                 height: 40px;
@@ -49,12 +49,27 @@ export class ViewDetailComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         if (this.id) {
-            this.http.get( 'system/v1/chart/' + this.id)
+            this.http.get('system/v1/chart/' + this.id)
                 .subscribe((data: any) => {
                         this.meta = JSON.parse(data.element.optionMsg);
                         this.payload = data.element.dataMsg.data[0];
                     }
                 );
+        }
+
+        if (this.meta) {
+            this.meta = {...this.meta};
+        } else {
+            this.meta = {
+                fields: [],
+                style: {}
+            };
+        }
+
+        if (this.payload) {
+            this.payload = {...this.payload};
+        } else {
+            this.payload = {};
         }
     }
 

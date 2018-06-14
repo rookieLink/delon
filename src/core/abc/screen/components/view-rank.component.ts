@@ -1,6 +1,5 @@
-import {Component, Inject, Input, OnChanges, OnInit, Optional, SimpleChanges} from '@angular/core';
+import {Component, Inject, Input, OnInit, Optional} from '@angular/core';
 import {PANEL_ID} from '../../abc.options';
-import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'view-rank',
@@ -67,28 +66,36 @@ export class ViewRankComponent implements OnInit {
     @Input() meta;
     @Input() payload;
 
-    constructor(private http: HttpClient,
-                @Inject(PANEL_ID) @Optional() private id,) {
+    constructor(@Inject(PANEL_ID) @Optional() private id) {
     }
 
     ngOnInit(): void {
 
+        if (this.meta) {
+            this.meta = {...this.meta};
+        } else {
+            this.meta = {
+                top: {},
+                fields: [],
+                lineStyle: {}
+            };
+        }
 
-        this.meta = this.meta || {
-            top: {},
-            fields: [],
-            lineStyle: {}
-        };
-        this.payload = this.payload || [];
+        if (this.payload) {
+            this.payload = [].concat(this.payload);
+        } else {
+            this.payload = [];
+        }
+
         this.nzSpanLength = Math.floor(24 / (this.meta.fields.length + 1));
 
         if (this.id) {
-            this.http.get('system/v1/chart/' + this.id)
-                .subscribe((data: any) => {
-                    this.meta = JSON.parse(data.element.optionMsg);
-                    this.payload = data.element.dataMsg.data;
-                    this.nzSpanLength = Math.floor(24 / (this.meta.fields.length + 1));
-                });
+            // this.http.get('system/v1/chart/' + this.id)
+            //     .subscribe((data: any) => {
+            //         this.meta = JSON.parse(data.element.optionMsg);
+            //         this.payload = data.element.dataMsg.data;
+            //         this.nzSpanLength = Math.floor(24 / (this.meta.fields.length + 1));
+            //     });
         }
 
     }

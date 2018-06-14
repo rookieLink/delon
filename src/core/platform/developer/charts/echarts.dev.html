@@ -52,8 +52,8 @@
                 <div nz-form-control nz-col [nzSpan]="14" [nzOffset]="6">
                     <button nz-button [nzSize]="'large'" [nzType]="'primary'"
                             [disabled]="form.invalid"
-                            (click)="getJsonData()"
-                            style="width: 40%;">获取Json
+                            (click)="getJsonData()">
+                        获取Json
                     </button>
                 </div>
             </div>
@@ -70,11 +70,11 @@
             </div>
             <div nz-form-item nz-row>
                 <div nz-form-label nz-col [nzSpan]="6">
-                    <label nz-form-item-required>组件主题</label>
+                    <label nz-form-item-required>组件图标</label>
                 </div>
                 <div nz-form-control nz-col [nzSpan]="14">
                     <nz-select [nzSize]="'large'" nzPlaceHolder="" required
-                               [(ngModel)]="formModel.componentMsg.subject" name="subject">
+                               [(ngModel)]="formModel.componentMsg.icon" name="subject">
                         <nz-option [nzLabel]="'综合分析'" [nzValue]="'0'"></nz-option>
                         <nz-option [nzLabel]="'交易分析'" [nzValue]="'1'"></nz-option>
                         <nz-option [nzLabel]="'故障分析'" [nzValue]="'2'"></nz-option>
@@ -135,6 +135,6 @@
     </split-area>
     <split-area>
         <div nz-row style="font-size:20px; font-weight:bold;margin-left: 10px;height: 35px ">预览效果图：</div>
-        <div echarts [options]="option"></div>
+        <div echarts [options]="option" style="background-color: rgba(169, 169, 169, 0.4);"></div>
     </split-area>
 </split>

@@ -1,98 +1,20 @@
 import {Component, Inject, Injector, Input, OnInit, Optional} from '@angular/core';
 import {NzMessageService} from 'ng-zorro-antd';
 import {CardAlternativesComponent} from "../../../../abc/screen/components/card-alternatives.component";
+import {PANELDEVSERVICE} from "../config";
+import {panelAdapt} from "../../../../abc/componentTypeUtil";
 
 // 该组件所包含的正反两面的组件没有交互关系
 @Component({
     selector: 'dev-turnover',
-    template: `
-        <form nz-form #form="ngForm">
-            <div nz-row>
-                <div nz-col [nzMd]="8" [nzSm]="12" [nzXs]="24">
-                    <div nz-form-item nz-row>
-                        <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                            <label [attr.for]="'name'" nz-form-item-required>组件名称</label>
-                        </div>
-                        <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
-                            <nz-input [nzSize]="'large'" [(ngModel)]="formModel['name']" [nzId]="'name'"
-                                      name="name"></nz-input>
-                        </div>
-                    </div>
-                </div>
-                <div nz-col [nzMd]="8" [nzSm]="12" [nzXs]="24">
-                    <div nz-form-item nz-row>
-                        <div nz-form-label nz-col [nzSpan]="6">
-                            <label>组件描述</label>
-                        </div>
-                        <div nz-form-control nz-col [nzSpan]="14">
-                            <nz-input [nzSize]="'large'" name="describe"
-                                      [(ngModel)]="formModel['describe']"></nz-input>
-                        </div>
-                    </div>
-                </div>
-                <div nz-col [nzMd]="8" [nzSm]="12" [nzXs]="24">
-                    <div nz-form-item nz-row>
-                        <div nz-form-control nz-col [nzSpan]="14" [nzOffset]="6">
-                            <button nz-button [nzSize]="'large'" [nzType]="'primary'" (click)="preview()">预览</button>
-                            <button nz-button [nzSize]="'large'" [nzType]="'primary'" 
-                                    (click)="save()">
-                                保存
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <div nz-row [nzGutter]="8">
-            <div nz-col [nzSpan]="8" style="background-color: #eef0f330">
-                <div style="font-size:20px; font-weight:bold">请选择A面组件:</div>
-                <nz-card class="card-available" *ngFor="let card of positiveAlternatives;"
-                         (click)="positiveSelectCard(card)">
-                    <ng-template #body>
-                        <i class="anticon anticon-check-circle"
-                           style="color: blueviolet;font-size: 22px;position: absolute;right: 7px;top:4px;"
-                           *ngIf="card['selected']"></i>
-                        <i class="anticon anticon-check-circle-o" *ngIf="!card.selected"
-                           style="position: absolute;right: 7px;top:4px"></i>
-                        <i style="font-size: 45px;" [ngClass]="['anticon','anticon-area-chart']"></i>
-                        <p style="height: 50px;">{{card.chartDesc}}</p>
-                    </ng-template>
-                </nz-card>
-            </div>
-            <div nz-col [nzSpan]="8">
-              <div style="font-size:20px; font-weight:bold;text-align:center;">预览效果图</div>
-                <div class="zijin-flip-container">
-                    <div class="zijin-card" [ngStyle]="flipped">
-                        <div class="front" (click)="setFlipped()">
-                            <ng-container
-                                *ngComponentOutlet="children[0]?.component;injector:children[0]?.injector;"></ng-container>
-                        </div>
-                        <div class="back" (click)="setFlipped()">
-                            <ng-container
-                                *ngComponentOutlet="children[1]?.component;injector:children[1]?.injector;"></ng-container>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div nz-col [nzSpan]="8" style="background-color: #eef0f330">
-                <div style="font-size:20px; font-weight:bold">请选择B面组件:</div>
-                <nz-card class="card-available" (click)="negativeSelectCard(card)"
-                         *ngFor="let card of negativeAlternatives;">
-                    <ng-template #body>
-                        <i class="anticon anticon-check-circle"
-                           style="color: blueviolet;font-size: 22px;position: absolute;right: 7px;top:4px;"
-                           *ngIf="card['selected']"></i>
-                        <i class="anticon anticon-check-circle-o" *ngIf="!card.selected"
-                           style="position: absolute;right: 7px;top:4px"></i>
-                        <i style="font-size: 45px;" [ngClass]="['anticon','anticon-area-chart']"></i>
-                        <p style="height: 50px;">{{card.chartDesc}}</p>
-                    </ng-template>
-                </nz-card>
-            </div>
-        </div>
-    `,
+    templateUrl: './turn-over.html',
     styles: [
             `
+            .front, .back {
+                height: 390px;
+                width: 390px;
+            }
+
             .zijin-flip-container {
                 height: 400px;
                 width: 400px;
@@ -106,6 +28,38 @@ import {CardAlternativesComponent} from "../../../../abc/screen/components/card-
                 margin-bottom: 5px;
                 width: 100px;
                 float: left;
+            }
+
+            .zijin-flip-container {
+                height: 100%;
+                position: relative;
+                perspective: 800px;
+            }
+
+            .zijin-card {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                transform-style: preserve-3d;
+                transition: transform 1s;
+            }
+
+            .zijin-card .front,
+            .zijin-card .back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                transform: rotateX(0deg);
+                backface-visibility: hidden;
+                -moz-backface-visibility: hidden;
+            }
+
+            .zijin-card .back {
+                transform: rotateY(180deg);
+            }
+
+            .zijin-card.flipped {
+                transform: rotateY(180deg);
             }
         `
     ]
@@ -127,7 +81,8 @@ export class TurnoverComponent implements OnInit {
 
     cardModal: CardAlternativesComponent;
 
-    constructor(private injector: Injector,
+    constructor(@Inject(PANELDEVSERVICE) private panelService,
+                private injector: Injector,
                 private message: NzMessageService) {
 
     }
@@ -147,23 +102,22 @@ export class TurnoverComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // this.screenDev.getSelfDefCharts()
-        //     .subscribe((data) => {
-        //         console.log(data);
-        //         const alts = data['retList'] || [];
-        //         const alternatives = [];
-        //         alts.forEach(value => {
-        //             if (value.type === 10 || value.type === 11) {
-        //
-        //             } else {
-        //                 alternatives.push(value);
-        //             }
-        //         });
-        //         this.positiveAlternatives = panelAdapt(alternatives, this.injector);
-        //         this.negativeAlternatives = panelAdapt(alternatives, this.injector);
-        //     }, err => {
-        //         this.message.error(err.body.retMsg);
-        //     });
+        this.panelService.getChartsDef()
+            .subscribe((dataList) => {
+                const alts = dataList || [];
+                const alternatives = [];
+                alts.forEach(value => {
+                    if (value.type === 10 || value.type === 11) {
+
+                    } else {
+                        alternatives.push(value);
+                    }
+                });
+                this.positiveAlternatives = panelAdapt(alternatives, this.injector);
+                this.negativeAlternatives = panelAdapt(alternatives, this.injector);
+            }, err => {
+                this.message.error(err.body.retMsg);
+            });
     }
 
 
@@ -187,6 +141,9 @@ export class TurnoverComponent implements OnInit {
                 this.children[1] = value;
             }
         });
+        console.log(this.children);
+        console.log(this.children);
+        console.log(this.children);
     }
 
     save() {
@@ -194,7 +151,7 @@ export class TurnoverComponent implements OnInit {
         this.children.forEach(value => {
             children.push({id: value.id, type: value.type});
         });
-        if ( this.formModel.name == null || this.formModel.name === '') {
+        if (this.formModel.name == null || this.formModel.name === '') {
             this.message.warning('请输入组件名称！');
             return;
         }
@@ -212,14 +169,14 @@ export class TurnoverComponent implements OnInit {
             modelMsg: '',
             optionMsg: children
         };
-        //
-        // this.screenDev.save(params)
-        //     .subscribe(data => {
-        //         this.message.success(data.retMsg);
-        //         console.log(data);
-        //     }, err => {
-        //         this.message.error(err.body.retMsg);
-        //     });
+
+        this.panelService.save(params)
+            .subscribe(data => {
+                this.message.success(data.retMsg);
+                console.log(data);
+            }, err => {
+                this.message.error(err.body.retMsg);
+            });
     }
 
 

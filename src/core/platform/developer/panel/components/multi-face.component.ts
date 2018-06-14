@@ -2,6 +2,8 @@ import {Component, Inject, Injector, Input, OnInit, Optional} from '@angular/cor
 import {NzMessageService, NzModalService, NzModalSubject} from 'ng-zorro-antd';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PreviewMultiFaceComponent} from './preview-multi-face.component';
+import {PANELDEVSERVICE} from "../config";
+import {panelAdapt} from "../../../../abc/componentTypeUtil";
 
 // 该组件所包含的正反两面的组件没有交互关系
 @Component({
@@ -33,6 +35,7 @@ export class MultiFaceComponent implements OnInit {
     constructor(private injector: Injector,
                 private modal: NzModalService,
                 private fb: FormBuilder,
+                @Inject(PANELDEVSERVICE) private panelService,
                 private message: NzMessageService) {
 
     }
@@ -48,21 +51,20 @@ export class MultiFaceComponent implements OnInit {
         });
 
 
-        // this.screenDev.getSelfDefCharts()
-        //     .subscribe((data) => {
-        //         console.log(data);
-        //         const alts = data['retList'] || [];
-        //         const alternatives = [];
-        //         alts.forEach(value => {
-        //             if (value.type === 10 || value.type === 11) {
-        //             } else {
-        //                 alternatives.push(value);
-        //             }
-        //         });
-        //         this.alternatives = panelAdapt(alternatives, this.injector);
-        //     }, err => {
-        //         this.message.error(err.body.retMsg);
-        //     });
+         this.panelService.getChartsDef()
+            .subscribe((dataList) => {
+                const alts = dataList || [];
+                const alternatives = [];
+                alts.forEach(value => {
+                    if (value.type === 10 || value.type === 11) {
+                    } else {
+                        alternatives.push(value);
+                    }
+                });
+                this.alternatives = panelAdapt(alternatives, this.injector);
+            }, err => {
+                this.message.error(err.body.retMsg);
+            });
     }
 
 
