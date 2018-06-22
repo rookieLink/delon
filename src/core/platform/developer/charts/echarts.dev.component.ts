@@ -11,6 +11,7 @@ import 'brace/mode/javascript';
 import 'brace/theme/clouds';
 import 'brace/mode/json';
 import {CHARTDEVSERVICE} from "./config";
+import {ReuseTabService} from "@delon/abc";
 
 @Component({
     selector: 'zj-echarts-dev',
@@ -67,11 +68,13 @@ export class EchartsDevComponent implements OnInit {
     constructor(@Inject(CHARTDEVSERVICE) private chartService,
                 private nzModal: NzModalSubject,
                 private route: ActivatedRoute,
-                private message: NzMessageService) {
+                private message: NzMessageService,
+                private reuseTabService: ReuseTabService) {
     }
 
     ngOnInit() {
 
+        this.reuseTabService.title = this.chartType;
         this.payload = CHARTTYPEMAPPING[this.chartType].payload;
         this.aceConfig.text = CHARTTYPEMAPPING[this.chartType].text;
         this.preview();

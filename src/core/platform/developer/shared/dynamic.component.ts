@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AdDirective} from './ad.directive';
 import {DevComponentTypeCode} from "../util";
 import {PanelComponent} from "../../../abc/carousel/panel.component";
+import {ReuseTabService} from "@delon/abc";
 
 @Component({
     selector: 'zj-dynamic-comp',
@@ -18,13 +19,15 @@ export class DynamicComponent implements OnInit, AfterViewInit {
 
     constructor(private componentFactoryResolver: ComponentFactoryResolver,
                 private router: Router,
-                private activeRoute: ActivatedRoute) {
+                private activeRoute: ActivatedRoute,
+                private reuseTabService: ReuseTabService) {
 
     }
 
     ngOnInit(): void {
         const componentId = this.activeRoute.snapshot.paramMap.get('id');
         this.panelItem = DevComponentTypeCode.get(componentId);
+        this.reuseTabService.title = componentId;
     }
 
     ngAfterViewInit() {

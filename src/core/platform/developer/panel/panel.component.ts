@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'zj-panels-dev',
@@ -35,12 +35,12 @@ export class PanelComponent {
         }
     ];
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private route: ActivatedRoute) {
 
     }
 
     select(panel) {
-        this.router.navigate(['develop/panels', panel.face]);
+        this.router.navigate(['develop/panels', panel.face], {skipLocationChange: true});
     }
 
 }
