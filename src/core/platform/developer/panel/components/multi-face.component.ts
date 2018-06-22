@@ -30,7 +30,7 @@ export class MultiFaceComponent implements OnInit {
 
     pageList = [];
 
-    transitionList = [{no: 'carousel', name: '走马灯'}];
+    transitionList = [{no: '11', name: '走马灯'}];
 
     constructor(private injector: Injector,
                 private modal: NzModalService,
@@ -45,13 +45,13 @@ export class MultiFaceComponent implements OnInit {
 
         this.form = this.fb.group({
             pageCount: [null, [Validators.required]],
-            pageTransition: [null, [Validators.required]],
+            type: [null, [Validators.required]],
             name: [null, [Validators.required]],
             describe: [null, [Validators.required]]
         });
 
 
-         this.panelService.getChartsDef()
+        this.panelService.getChartsDef()
             .subscribe((dataList) => {
                 const alts = dataList || [];
                 const alternatives = [];
@@ -81,17 +81,24 @@ export class MultiFaceComponent implements OnInit {
     }
 
     save() {
-        const params = {
-            type: 'carousel',
-            children: [
-                'children id 序列号',       // 这里不需要保存cType字段，强制后端以记录的方式保存
-                {                           // 或者记录cType字段
-                    id: '',
-                    type: ''
-                }
-            ]
-        };
+        console.log(this.form.value);
         console.log(this.pageList);
+        const optionMsg = [];
+        this.pageList.forEach(val => {
+            optionMsg.push({
+                type: val.cType,
+                id: val.cid
+            });
+        });
+
+        const params = {
+            componetMsg: this.form.value,
+            optionMsg: optionMsg
+        };
+
+        console.log(params);
+
+
     }
 
     pageCountChange(num) {

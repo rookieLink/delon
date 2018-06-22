@@ -8,7 +8,14 @@ import {NzMessageService} from 'ng-zorro-antd';
         <div class="echarts-init-failed" *ngIf="chartInitFailed"></div>
     `,
     styles: [`
+        :host {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
         .echarts-init-failed {
+            z-index: -1;
             height: 99%;
             position: absolute;
             top: -19%;
