@@ -16,7 +16,8 @@
             <div nz-col [nzSpan]="6" *ngFor="let item of chart.lists;">
                 <nz-card style="width:200px;height: 200px;" (click)="select(item)">
                     <ng-template #body>
-                        <p>{{item.name}}</p>
+                        <p style="font-size: 20px;">{{item.name}}</p>
+                        <img src="{{item.img}}" style="height: 160px;width: 196px;">
                     </ng-template>
                 </nz-card>
             </div>

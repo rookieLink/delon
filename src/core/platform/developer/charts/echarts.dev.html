@@ -70,14 +70,45 @@
             </div>
             <div nz-form-item nz-row>
                 <div nz-form-label nz-col [nzSpan]="6">
+                    <label nz-form-item-required>组件主题</label>
+                </div>
+                <div nz-form-control nz-col [nzSpan]="14">
+                    <nz-select [nzSize]="'large'" nzPlaceHolder="" required
+                               [(ngModel)]="formModel.componentMsg.subject" name="subject">
+                        <nz-option [nzLabel]="'综合分析'" [nzValue]="'0'"></nz-option>
+                        <nz-option [nzLabel]="'交易分析'" [nzValue]="'1'"></nz-option>
+                        <nz-option [nzLabel]="'故障分析'" [nzValue]="'2'"></nz-option>
+                    </nz-select>
+                </div>
+            </div>
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col [nzSpan]="6">
                     <label nz-form-item-required>组件图标</label>
                 </div>
                 <div nz-form-control nz-col [nzSpan]="14">
                     <nz-select [nzSize]="'large'" nzPlaceHolder="" required
-                               [(ngModel)]="formModel.componentMsg.icon" name="subject">
-                        <nz-option [nzLabel]="'综合分析'" [nzValue]="'0'"></nz-option>
-                        <nz-option [nzLabel]="'交易分析'" [nzValue]="'1'"></nz-option>
-                        <nz-option [nzLabel]="'故障分析'" [nzValue]="'2'"></nz-option>
+                               [(ngModel)]="formModel.componentMsg.icon" name="icon">
+
+                        <nz-option [nzLabel]="'area-chart'" [nzValue]="'anticon anticon-area-chart'">
+                            <ng-template #nzOptionTemplate>
+                                <i class="anticon anticon-area-chart"></i> area-chart
+                            </ng-template>
+                        </nz-option>
+                        <nz-option [nzLabel]="'pie-chart'" [nzValue]="'anticon anticon-pie-chart'">
+                            <ng-template #nzOptionTemplate>
+                                <i class="anticon anticon-pie-chart"></i> pie-chart
+                            </ng-template>
+                        </nz-option>
+                        <nz-option [nzLabel]="'bar-chart'" [nzValue]="'anticon anticon-bar-chart'">
+                            <ng-template #nzOptionTemplate>
+                                <i class="anticon anticon-bar-chart"></i> bar-chart
+                            </ng-template>
+                        </nz-option>
+                        <nz-option [nzLabel]="'dot-chart'" [nzValue]="'anticon anticon-dot-chart'">
+                            <ng-template #nzOptionTemplate>
+                                <i class="anticon anticon-dot-chart"></i> dot-chart
+                            </ng-template>
+                        </nz-option>
                     </nz-select>
                 </div>
             </div>
