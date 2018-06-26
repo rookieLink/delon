@@ -16,7 +16,10 @@ import * as _ from 'lodash';
                             <i class="anticon anticon-check-circle-o" *ngIf="!card.selected"
                                style="position: absolute;right: 7px;top:4px"></i>
                             <i style="font-size: 45px;" [ngClass]="['anticon','anticon-area-chart']"></i>
-                            <p style="height: 50px;">{{card.chartDesc}}</p>
+                            <h2>
+                                {{card.name}}
+                            </h2>
+                            <p style="height: 50px;">{{card.describe}}</p>
                         </ng-template>
                     </nz-card>
                 </div>

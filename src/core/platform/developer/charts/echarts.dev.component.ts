@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CHARTTYPEMAPPING} from './charts.config';
 import {NzMessageService} from 'ng-zorro-antd';
@@ -28,6 +28,7 @@ import {ReuseTabService} from "@delon/abc";
 export class EchartsDevComponent implements OnInit {
 
     @Input() chartType;
+    @Output() onSaveSuccess = new EventEmitter();
 
     formModel = {
         modelMsg: {
@@ -147,6 +148,7 @@ export class EchartsDevComponent implements OnInit {
             .subscribe(data => {
                 console.log(data);
                 this.message.success('图表保存成功！');
+                this.onSaveSuccess.emit('save success');
             }, err => {
                 this.message.error(err.body.retMsg);
                 console.log(err);
