@@ -6,26 +6,57 @@ import * as _ from 'lodash';
 @Component({
     selector: 'tab-alt',
     template: `
-        <div style="background: #ECECEC;padding:30px;">
-            <div nz-row [nzGutter]="8">
-                <div nz-col [nzSpan]="8" *ngFor="let tab of alternatives;">
-                    <nz-card (click)="selectTab(tab)">
-                        <ng-template #body>
-                            <i class="anticon anticon-check-circle"
-                               style="color: blueviolet;font-size: 22px;position: absolute;right: 7px;top:4px;"
-                               *ngIf="tab.selected"></i>
-                            <i class="anticon anticon-check-circle-o" *ngIf="!tab.selected"
-                               style="position: absolute;right: 7px;top:5px;"></i>
-                            <!--<i style="font-size: 45px;" [ngClass]="['anticon',tab.icon]"></i>-->
-                            <i style="font-size: 45px;" class="zijin-icon-histogram"></i>
-                            <!--<i style="font-size: 45px;" [ngClass]="['anticon','anticon-area-chart']"></i>-->
-                            <p style="height: 50px;">{{tab.name}}</p>
-                        </ng-template>
-                    </nz-card>
+
+        <div class="masonry">
+            <div class="item" *ngFor="let tab of alternatives;" (click)="selectTab(tab)">
+                <div class="item__content">
+                    <i class="anticon anticon-check-circle"
+                       style="color: blueviolet;font-size: 22px;position: absolute;right: 7px;top:4px;"
+                       *ngIf="tab.selected"></i>
+                    <i class="anticon anticon-check-circle-o" *ngIf="!tab.selected"
+                       style="position: absolute;right: 7px;top:5px;"></i>
+                    <i style="font-size: 45px;" [ngClass]="['anticon','anticon-area-chart']"></i>
+                    <h3>
+                        {{tab.name}}
+                    </h3>
+                    <p>
+                        {{tab.describe}}
+                    </p>
                 </div>
             </div>
         </div>
-    `
+    `,
+    styles: [`
+        .masonry {
+            column-count: 4;
+            column-gap: 0;
+            counter-reset: item-counter;
+        }
+
+        .item {
+            box-sizing: border-box;
+            break-inside: avoid;
+            padding: 10px;
+            counter-increment: item-counter;
+        }
+
+        .item__content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            box-sizing: border-box;
+            color: #720026;
+            background-color: #afd552a8;
+        }
+
+        .item__content:hover {
+            background: #aceb13b3;
+        }
+
+    `]
 })
 export class TabAlternativesComponent implements OnInit {
 

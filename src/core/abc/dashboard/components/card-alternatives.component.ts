@@ -4,47 +4,69 @@ import * as _ from 'lodash';
 
 @Component({
     template: `
-        <div style="background: #ECECEC;padding:30px;">
-            <div nz-row [nzGutter]="8">
-                <div nz-col [nzSpan]="8" *ngFor="let card of alternatives;">
-                    <nz-card [ngClass]="{'card-nonavailable': !card.available,'card-available':card.available}"
-                             (click)="selectCard(card)">
-                        <ng-template #body>
-                            <i class="anticon anticon-check-circle"
-                               style="color: blueviolet;font-size: 22px;position: absolute;right: 7px;top:4px;"
-                               *ngIf="card.selected"></i>
-                            <i class="anticon anticon-check-circle-o" *ngIf="!card.selected"
-                               style="position: absolute;right: 7px;top:4px"></i>
-                            <i style="font-size: 45px;" [ngClass]="['anticon','anticon-area-chart']"></i>
-                            <h2>
-                                {{card.name}}
-                            </h2>
-                            <p style="height: 50px;">{{card.describe}}</p>
-                        </ng-template>
-                    </nz-card>
+        <div class="masonry">
+            <div class="item" *ngFor="let card of alternatives;" (click)="selectCard(card)">
+                <div class="item__content"
+                     [ngClass]="{'card-nonavailable': !card.available,'card-available':card.available}">
+                    <i class="anticon anticon-check-circle"
+                       style="color: blueviolet;font-size: 22px;position: absolute;right: 7px;top:4px;"
+                       *ngIf="card.selected"></i>
+                    <i class="anticon anticon-check-circle-o" *ngIf="!card.selected"
+                       style="position: absolute;right: 7px;top:5px;"></i>
+                    <i style="font-size: 45px;" [ngClass]="['anticon','anticon-area-chart']"></i>
+                    <h3>
+                        {{card.name}}
+                    </h3>
+                    <p>
+                        {{card.describe}}
+                    </p>
                 </div>
-            </div>
-            <div nz-row>
-                <button nz-button (click)="save()">保存</button>
             </div>
         </div>
 
-    `,
-    styles: [
-            `
-            .card-available {
-                cursor: pointer;
-                background-color: #8bd22f;
-                margin-bottom: 5px;
-            }
+        <div nz-row>
+            <button nz-button (click)="save()" [nzSize]="'large'">保存</button>
+        </div>
 
-            .card-nonavailable {
-                cursor: pointer;
-                background-color: darkslategray;
-                margin-bottom: 5px;
-            }
-        `
-    ]
+    `,
+    styles: [`
+        .masonry {
+            column-count: 4;
+            column-gap: 0;
+            counter-reset: item-counter;
+            margin-top: 20px;
+            cursor: pointer;
+            background-color: #af82c259;
+        }
+
+        .item {
+            box-sizing: border-box;
+            break-inside: avoid;
+            padding: 10px;
+            counter-increment: item-counter;
+        }
+
+        .item__content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            box-sizing: border-box;
+            color: #720026;
+            background-color: #afd552a8;
+        }
+
+        .item__content.card-available:hover {
+            background: #aceb13b3;
+        }
+
+        .card-nonavailable {
+            background-color: darkslategray;
+        }
+
+    `]
 })
 export class CardAlternativesComponent implements OnInit {
 
