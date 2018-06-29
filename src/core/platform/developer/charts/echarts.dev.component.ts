@@ -1,8 +1,7 @@
 import {Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CHARTTYPEMAPPING} from './charts.config';
-import {NzMessageService} from 'ng-zorro-antd';
-import {NzModalRef} from 'ng-zorro-antd';
+import {NzMessageService, NzModalSubject} from 'ng-zorro-antd';
 
 import * as _ from 'lodash';
 
@@ -67,7 +66,7 @@ export class EchartsDevComponent implements OnInit {
     @ViewChild('aceJson') aceJson$: ElementRef;
 
     constructor(@Inject(CHARTDEVSERVICE) private chartService,
-                private nzModal: NzModalRef,
+                private nzModal: NzModalSubject,
                 private route: ActivatedRoute,
                 private message: NzMessageService) {
     }
@@ -146,7 +145,7 @@ export class EchartsDevComponent implements OnInit {
             measureList = this.payload.measureList,
             that = this;
         try {
-            // eval(this.aceConfig.text);
+            eval(this.aceConfig.text);
         } catch (e) {
             console.log(e);
             console.log(e.message);
