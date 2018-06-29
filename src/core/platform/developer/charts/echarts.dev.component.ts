@@ -1,8 +1,8 @@
-import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CHARTTYPEMAPPING} from './charts.config';
 import {NzMessageService} from 'ng-zorro-antd';
-import {NzModalSubject} from 'ng-zorro-antd';
+import {NzModalRef} from 'ng-zorro-antd';
 
 import * as _ from 'lodash';
 
@@ -10,8 +10,7 @@ import 'brace';
 import 'brace/mode/javascript';
 import 'brace/theme/clouds';
 import 'brace/mode/json';
-import {CHARTDEVSERVICE} from "./config";
-import {ReuseTabService} from "@delon/abc";
+import {CHARTDEVSERVICE} from './config';
 
 @Component({
     selector: 'zj-echarts-dev',
@@ -28,7 +27,8 @@ import {ReuseTabService} from "@delon/abc";
 export class EchartsDevComponent implements OnInit {
 
     @Input() chartType;
-    @Output() onSaveSuccess = new EventEmitter();
+    @Input() Modify = false;
+    @Input() chartId;
 
     formModel = {
         modelMsg: {
@@ -67,27 +67,49 @@ export class EchartsDevComponent implements OnInit {
     @ViewChild('aceJson') aceJson$: ElementRef;
 
     constructor(@Inject(CHARTDEVSERVICE) private chartService,
-                private nzModal: NzModalSubject,
+                private nzModal: NzModalRef,
                 private route: ActivatedRoute,
-                private message: NzMessageService,
-                private reuseTabService: ReuseTabService) {
+                private message: NzMessageService) {
     }
 
     ngOnInit() {
+        if (this.Modify) {
+            const params1 = {chartId: this.chartId};
+            const params2 = {id: this.chartId};
+            this.chartService.qryChartDataInfo(params1)
+                .subscribe(data => {
+                    if (data['retCode'] === '00000') {
+                        this.payload = data['retData']['dataMsg'];
+                        this.aceConfig.text = data['retData']['optionMsg'];
+                        this.preview();
+                    }
+                }, (error) => {
+                    this.message.error(error.body.retMsg);
+                });
+            this.chartService.qryChartFormInfo(params2)
+                .subscribe(data => {
+                    if (data['retCode'] === '00000') {
+                        this.formModel.componentMsg = data['retData']['componentMsg'];
+                        this.formModel.modelMsg.service = data['retData']['modelMsg']['service']['serviceName'];
+                        this.formModel.modelMsg.dimensionRows = data['retData']['modelMsg']['dimensionRows'];
+                        this.formModel.modelMsg.measureRows = data['retData']['modelMsg']['measureRows'];
+                    }
+                }, (error) => {
+                    this.message.error(error.body.retMsg);
+                });
+        } else {
+            this.payload = CHARTTYPEMAPPING[this.chartType].payload;
+            this.aceConfig.text = CHARTTYPEMAPPING[this.chartType].text;
+            this.preview();
 
-        this.reuseTabService.title = this.chartType;
-        this.payload = CHARTTYPEMAPPING[this.chartType].payload;
-        this.aceConfig.text = CHARTTYPEMAPPING[this.chartType].text;
-        this.preview();
-
-        this.chartService.qryAllServiceList()
-            .subscribe(dataList => {
-                console.log(dataList);
-                this.availableServices = dataList;
-            }, err => {
-                this.message.error(err.body.retMsg);
-            });
-
+            this.chartService.qryAllServiceList()
+                .subscribe(dataList => {
+                    console.log(dataList);
+                    this.availableServices = dataList;
+                }, err => {
+                    this.message.error(err.body.retMsg);
+                });
+        }
     }
 
     selectService(service) {
@@ -97,10 +119,8 @@ export class EchartsDevComponent implements OnInit {
         } else {
             this.availableFields = [];
         }
-
         this.formModel.modelMsg.dimensionRows.length = 0;
         this.formModel.modelMsg.measureRows.length = 0;
-
     }
 
     getJsonData() {
@@ -126,7 +146,7 @@ export class EchartsDevComponent implements OnInit {
             measureList = this.payload.measureList,
             that = this;
         try {
-            eval(this.aceConfig.text);
+            // eval(this.aceConfig.text);
         } catch (e) {
             console.log(e);
             console.log(e.message);
@@ -148,7 +168,6 @@ export class EchartsDevComponent implements OnInit {
             .subscribe(data => {
                 console.log(data);
                 this.message.success('图表保存成功！');
-                this.onSaveSuccess.emit('save success');
             }, err => {
                 this.message.error(err.body.retMsg);
                 console.log(err);
