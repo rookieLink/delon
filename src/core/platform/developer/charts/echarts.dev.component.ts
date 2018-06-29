@@ -1,8 +1,7 @@
-import {Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CHARTTYPEMAPPING} from './charts.config';
 import {NzMessageService, NzModalSubject} from 'ng-zorro-antd';
-
 import * as _ from 'lodash';
 
 import 'brace';
@@ -10,6 +9,7 @@ import 'brace/mode/javascript';
 import 'brace/theme/clouds';
 import 'brace/mode/json';
 import {CHARTDEVSERVICE} from './config';
+import {ReuseTabService} from '@delon/abc';
 
 @Component({
     selector: 'zj-echarts-dev',
@@ -26,6 +26,7 @@ import {CHARTDEVSERVICE} from './config';
 export class EchartsDevComponent implements OnInit {
 
     @Input() chartType;
+    @Output() onSaveSuccess = new EventEmitter();
     @Input() Modify = false;
     @Input() chartId;
 
@@ -68,7 +69,8 @@ export class EchartsDevComponent implements OnInit {
     constructor(@Inject(CHARTDEVSERVICE) private chartService,
                 private nzModal: NzModalSubject,
                 private route: ActivatedRoute,
-                private message: NzMessageService) {
+                private message: NzMessageService,
+                private reuseTabService: ReuseTabService) {
     }
 
     ngOnInit() {
@@ -97,10 +99,10 @@ export class EchartsDevComponent implements OnInit {
                     this.message.error(error.body.retMsg);
                 });
         } else {
+            this.reuseTabService.title = this.chartType;
             this.payload = CHARTTYPEMAPPING[this.chartType].payload;
             this.aceConfig.text = CHARTTYPEMAPPING[this.chartType].text;
             this.preview();
-
             this.chartService.qryAllServiceList()
                 .subscribe(dataList => {
                     console.log(dataList);
@@ -167,6 +169,7 @@ export class EchartsDevComponent implements OnInit {
             .subscribe(data => {
                 console.log(data);
                 this.message.success('图表保存成功！');
+                this.onSaveSuccess.emit('save success');
             }, err => {
                 this.message.error(err.body.retMsg);
                 console.log(err);
