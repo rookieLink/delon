@@ -89,6 +89,13 @@ export class EchartsDevComponent implements OnInit {
                 });
             this.chartService.qryChartFormInfo(params2)
                 .subscribe(data => {
+                    this.chartService.qryAllServiceList()
+                        .subscribe(dataList => {
+                            console.log(dataList);
+                            this.availableServices = dataList;
+                        }, err => {
+                            this.message.error(err.body.retMsg);
+                        });
                     if (data['retCode'] === '00000') {
                         this.formModel.componentMsg = data['retData']['componentMsg'];
                         this.formModel.modelMsg.service = data['retData']['modelMsg']['service']['serviceName'];
