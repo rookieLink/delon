@@ -149,21 +149,22 @@ export class ACLService {
         }
 
         let t: ACLType = {};
-        if (typeof roleOrAbility === 'number') {
+        if (typeof roleOrAbility === 'string') {
             t = { ability: [ roleOrAbility ] };
-        } else if (Array.isArray(roleOrAbility) && roleOrAbility.length > 0 && typeof roleOrAbility[0] === 'number') {
+        } else if (Array.isArray(roleOrAbility) && roleOrAbility.length > 0) {
             t = { ability: roleOrAbility };
-        } else {
-            t = this.parseACLType(roleOrAbility);
         }
+        // else {
+        //     t = this.parseACLType(roleOrAbility);
+        // }
 
-        if (t.role) {
-            for (const _r of t.role) {
-                if (this.roles.includes(_r)) {
-                    return true;
-                }
-            }
-        }
+        // if (t.role) {
+        //     for (const _r of t.role) {
+        //         if (this.roles.includes(_r)) {
+        //             return true;
+        //         }
+        //     }
+        // }
         if (t.ability) {
             for (const _p of t.ability) {
                 if (this.abilities.includes(_p)) {
