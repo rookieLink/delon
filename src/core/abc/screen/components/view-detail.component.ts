@@ -1,6 +1,7 @@
 import {Component, Inject, Input, OnChanges, OnInit, Optional} from '@angular/core';
 import {PANEL_ID} from '../../abc.options';
 import {HttpClient} from '@angular/common/http';
+import {SCREENSERVICE} from '../config';
 
 @Component({
     selector: 'view-detail',
@@ -44,17 +45,17 @@ export class ViewDetailComponent implements OnInit, OnChanges {
     };
 
     constructor(@Inject(PANEL_ID) @Optional() private id,
-                private http: HttpClient) {
+                private http: HttpClient,
+                @Inject(SCREENSERVICE) private screenService) {
     }
 
     ngOnInit(): void {
         if (this.id) {
-            this.http.get('system/v1/chart/' + this.id)
+            this.screenService.getOptionAndDataById(this.id)
                 .subscribe((data: any) => {
-                        this.meta = JSON.parse(data.element.optionMsg);
-                        this.payload = data.element.dataMsg.data[0];
-                    }
-                );
+                    this.meta = JSON.parse(data.element.optionMsg);
+                    this.payload = data.element.dataMsg.data[0] || {};
+                });
         }
 
         if (this.meta) {

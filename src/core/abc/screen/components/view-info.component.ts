@@ -1,20 +1,20 @@
-import {Component, Inject, Injector, Input, OnChanges, OnInit, Optional} from '@angular/core';
+import {Component, Inject, Input, OnChanges, OnInit, Optional} from '@angular/core';
 import {PANEL_ID} from '../../abc.options';
-import {HttpClient} from '@angular/common/http';
+import {SCREENSERVICE} from '../config';
 
 @Component({
     selector: 'view-info',
     template: `
-        <div *ngFor="let f of meta" [ngStyle]="f.lineStyle">
-            <span [ngStyle]="f.prefixStyle" *ngIf="f.prefix">
-                {{f.prefix}}
-            </span>
-            <span [ngStyle]="f.dataStyle" *ngIf="f.data">
-                {{payload[f.data]}}
-            </span>
-            <span [ngStyle]="f.suffixStyle" *ngIf="f.suffix">
-                {{f['suffix']}}
-            </span>
+         <div [ngStyle]="meta.style">
+            <ng-container *ngFor="let l of meta.lines">
+                <div [ngStyle]="l.style">
+                    <ng-container *ngFor="let d of l.data">
+                        <span [ngStyle]="d.style">
+                            {{payload[d.field] || d.literal}}
+                        </span>
+                    </ng-container>
+                </div>
+            </ng-container>
         </div>
     `
 })
@@ -24,17 +24,18 @@ export class ViewInfoComponent implements OnInit, OnChanges {
     @Input() payload;
 
     constructor(@Inject(PANEL_ID) @Optional() private id,
-                injector: Injector,
-                private http: HttpClient) {
+                @Inject(SCREENSERVICE) private screenService) {
     }
 
     ngOnInit(): void {
 
+        console.log(this.meta);
+
 
         if (this.meta) {
-            this.meta = [].concat(this.meta);
+            this.meta = {...this.meta};
         } else {
-            this.meta = [];
+            this.meta = {};
         }
 
         if (this.payload) {
@@ -45,7 +46,7 @@ export class ViewInfoComponent implements OnInit, OnChanges {
 
         // 根据组件的ID获取组件的定义与数据
         if (this.id) {
-            this.http.get('system/v1/chart/' + this.id)
+            this.screenService.getOptionAndDataById(this.id)
                 .subscribe((data: any) => {
                     this.meta = JSON.parse(data.element.optionMsg);
                     this.payload = data.element.dataMsg.data[0] || {};

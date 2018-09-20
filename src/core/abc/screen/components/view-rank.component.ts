@@ -1,5 +1,7 @@
 import {Component, Inject, Input, OnInit, Optional} from '@angular/core';
 import {PANEL_ID} from '../../abc.options';
+import {SCREENSERVICE} from '../config';
+
 
 @Component({
     selector: 'view-rank',
@@ -66,7 +68,9 @@ export class ViewRankComponent implements OnInit {
     @Input() meta;
     @Input() payload;
 
-    constructor(@Inject(PANEL_ID) @Optional() private id) {
+    constructor(@Inject(PANEL_ID) @Optional() private id,
+                @Inject(SCREENSERVICE) private screenService,
+                ) {
     }
 
     ngOnInit(): void {
@@ -90,12 +94,12 @@ export class ViewRankComponent implements OnInit {
         this.nzSpanLength = Math.floor(24 / (this.meta.fields.length + 1));
 
         if (this.id) {
-            // this.http.get('system/v1/chart/' + this.id)
-            //     .subscribe((data: any) => {
-            //         this.meta = JSON.parse(data.element.optionMsg);
-            //         this.payload = data.element.dataMsg.data;
-            //         this.nzSpanLength = Math.floor(24 / (this.meta.fields.length + 1));
-            //     });
+            this.screenService.getOptionAndDataById(this.id)
+                .subscribe((data: any) => {
+                    this.meta = JSON.parse(data.element.optionMsg);
+                    this.payload = data.element.dataMsg.data[0] || {};
+                    this.nzSpanLength = Math.floor(24 / (this.meta.fields.length + 1));
+                });
         }
 
     }

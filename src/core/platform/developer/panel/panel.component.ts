@@ -14,11 +14,6 @@ export class PanelComponent {
             single: true
         },
         {
-            name: '详细信息',
-            face: 'detail',
-            single: true
-        },
-        {
             name: '排名信息',
             face: 'rank',
             single: true

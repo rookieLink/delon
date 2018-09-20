@@ -1,34 +1,54 @@
 export const devInfo = {
-    optionMsg: [
-        {
-            prefix: '现金库存',
-            data: 'orgName',            // todo(ccliu): 需要适应多个聚合字段值，即一行有多个数据值需要展示
-            lineStyle: {
-                'font-size': '20px',
-                'background-color': 'green'
+    // optionMsg: [
+    //     {
+    //         prefix: '现金库存',
+    //         data: 'orgName',            // todo(ccliu): 需要适应多个聚合字段值，即一行有多个数据值需要展示
+    //         lineStyle: {
+    //             'font-size': '20px',
+    //             'background-color': 'green'
+    //         },
+    //         dataStyle: {
+    //             'font-size': '10px'
+    //         },
+    //     },
+    //     {
+    //         data: 'cashStock',
+    //         lineStyle: {},
+    //         dataStyle: {
+    //             display: 'block',
+    //             'font-size': '41px'
+    //         },
+    //     },
+    //     {
+    //         lineStyle: {},
+    //         prefix: '上个周期现金库存量: ',
+    //         prefixStyle: {},
+    //         data: 'cashStock',
+    //         dataStyle: {},
+    //         suffix: '万元',
+    //         suffixStyle: {}
+    //     }
+    // ],
+    optionMsg: {
+        lines: [
+            {
+                data: [
+                    {
+                        literal: '现金库存',
+                        style: {
+                            'font-size': '20px',
+                            'background-color': 'green'
+                        }
+                    }
+                ],
+                style: {}
+
             },
-            dataStyle: {
-                'font-size': '10px'
-            },
-        },
-        {
-            data: 'cashStock',
-            lineStyle: {},
-            dataStyle: {
-                display: 'block',
-                'font-size': '41px'
-            },
-        },
-        {
-            lineStyle: {},
-            prefix: '上个周期现金库存量: ',
-            prefixStyle: {},
-            data: 'cashStock',
-            dataStyle: {},
-            suffix: '万元',
-            suffixStyle: {}
+        ],
+        style: {
+            'font-size': '20px',
         }
-    ],
+    },
     payload: {
         orgNo: '0000',
         orgName: '总行',
@@ -38,6 +58,7 @@ export const devInfo = {
         account: 'tiny',
         userAgent: 'mac'
     }
+
 };
 export const devDetail = {
     optionMsg: {
