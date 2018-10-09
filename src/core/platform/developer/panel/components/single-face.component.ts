@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import {DevInit} from './init-consant';
 import {ActivatedRoute} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd';
-import {PANELDEVSERVICE} from "../config";
+import {PANELDEVSERVICE} from '../config';
 
 export const TypeCode: Map<string, any> = new Map<string, any>();
 TypeCode.set('info', 1);
@@ -14,7 +14,7 @@ TypeCode.set('rank', 3);
     selector: 'single-face',
     templateUrl: './single-face.html',
     styles: [
-            `
+        `
             :host {
                 padding: 0;
                 position: absolute;
@@ -110,6 +110,7 @@ export class SingleFaceComponent implements OnInit {
             try {
                 this.formModel.optionMsg = JSON.parse(this.aceConfig.text);
             } catch (e) {
+                this.message.error(e);
                 console.log(e);
             }
         }

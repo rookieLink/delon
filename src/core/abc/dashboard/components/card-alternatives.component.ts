@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {NzModalSubject} from 'ng-zorro-antd';
 import * as _ from 'lodash';
 
+/**
+ * 瀑布流布局方式，请参考https://www.w3cplus.com/css/pure-css-create-masonry-layout.html
+ */
+
 @Component({
     template: `
         <div class="masonry">
@@ -23,20 +27,18 @@ import * as _ from 'lodash';
                 </div>
             </div>
         </div>
-
-        <div nz-row>
-            <button nz-button (click)="save()" [nzSize]="'large'">保存</button>
+         <div nz-row style="margin-top: 15px;text-align: center;">
+            <button nz-button nzType="primary" [nzSize]="'large'" (click)="save()" style="width: 100px;">确定</button>
         </div>
-
     `,
     styles: [`
         .masonry {
             column-count: 4;
             column-gap: 0;
             counter-reset: item-counter;
-            margin-top: 20px;
+            margin-top: 10px;
             cursor: pointer;
-            background-color: #af82c259;
+            background-color:rgba(175, 130, 194, 0.35);
         }
 
         .item {
@@ -55,11 +57,11 @@ import * as _ from 'lodash';
             font-size: 20px;
             box-sizing: border-box;
             color: #720026;
-            background-color: #afd552a8;
+            background-color: rgba(175, 213, 82, 0.66);
         }
 
         .item__content.card-available:hover {
-            background: #aceb13b3;
+            background: rgba(172, 235, 19, 0.7);
         }
 
         .card-nonavailable {

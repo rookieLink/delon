@@ -97,7 +97,7 @@ export class ViewRankComponent implements OnInit {
             this.screenService.getOptionAndDataById(this.id)
                 .subscribe((data: any) => {
                     this.meta = JSON.parse(data.element.optionMsg);
-                    this.payload = data.element.dataMsg.data[0] || {};
+                    this.payload = data.element.dataMsg.data || [];
                     this.nzSpanLength = Math.floor(24 / (this.meta.fields.length + 1));
                 });
         }

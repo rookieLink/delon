@@ -2,7 +2,9 @@ import {Component, EventEmitter, Inject, Injector, Input, OnInit, Optional, Outp
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {CardAlternativesComponent} from './components/card-alternatives.component';
 import * as _ from 'lodash';
-import {DashboardService, DASHBOARDSERVICE} from './config';
+import {DASHBOARDSERVICE} from './config';
+import {zip} from 'rxjs/observable/zip';
+import {catchError} from 'rxjs/operators';
 
 @Component({
     selector: 'zj-single-dashboard',
@@ -43,8 +45,11 @@ export class DashboardComponent implements OnInit {
 
     cardModal(card) {
         this.modal.open({
-            content: CardAlternativesComponent,
+            closable: true,
+            title: '请选择图表',
+            maskClosable: false,
             footer: false,
+            content: CardAlternativesComponent,
             componentParams: {
                 card: card,
                 cards: this.cards,
@@ -55,7 +60,6 @@ export class DashboardComponent implements OnInit {
                 this.cards[this.cards.indexOf(card)] = value;
             }
         }, () => {
-
         });
     }
 
@@ -167,7 +171,7 @@ export class DashboardComponent implements OnInit {
         if (this.dashboardService.updatePageDefById) {
             this.dashboardService.updatePageDefById({
                 pageId: this.pageId, homeDef: homeDef
-            }).subscribe(data => {
+            }).subscribe(() => {
                 this.setting = false;
                 this.openSetting = false;
                 this._message.success('驾驶舱配置成功！');
@@ -190,34 +194,66 @@ export class DashboardComponent implements OnInit {
             return;
         }
 
-        if (this.dashboardService.getPageDefById) {
-            // 获取当前主页配置
-            this.dashboardService.getPageDefById(this.pageId)
-                .subscribe((data: any) => {
-                    this.cards = data.homeDef.cards;
-                    this.tabs = data.homeDef.tabs;
-                    this.name = data.themeName;
-                    this.description = data.themeDesc;
-                }, err => {
-                    this._message.error(err.body.retMsg);
+        if (this.dashboardService.getPageDefById && this.dashboardService.getChartsDef) {
+            this.openSetting = true;
+            // todo:没有办法预测这个请求将要执行多长时间,可以用NgZone来提供钩子吗？
+            zip(
+                this.dashboardService.getPageDefById(this.pageId),
+                this.dashboardService.getChartsDef()
+            ).pipe(
+                // 接收其他拦截器后产生的异常消息
+                catchError(([homeConf, cardsDef]) => {
+                    return [homeConf, cardsDef];
+                })
+            ).subscribe(([homeConf, cardsDef]) => {
+
+                this.openSetting = false;
+
+                this.cards = homeConf.homeDef.cards;
+                this.tabs = homeConf.homeDef.tabs;
+                this.name = homeConf.themeName;
+                this.description = homeConf.themeDesc;
+
+                this.alternatives = cardsDef.filter((value) => {
+                    return value.type === '0';
                 });
+            });
         } else {
-            this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其获取页面配置信息的服务名为"getPageDefById"');
+            this._message.error('您所传递驾驶舱配置服务有误,当前操作是获取当前主页配置与获取可选择内容');
         }
 
-        if (this.dashboardService.getChartsDef) {
-            // 获取可选择内容
-            this.dashboardService.getChartsDef()
-                .subscribe((data) => {
-                    this.alternatives = data.filter((value) => {
-                        return value.type === '0';
-                    });
-                }, err => {
-                    this._message.error(err.body.retMsg);
-                });
-        } else {
-            this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其获取所有图表配置信息的服务名为"getChartsDef"');
-        }
+        // if (this.dashboardService.getPageDefById) {
+        //
+        //     // 获取当前主页配置
+        //     this.dashboardService.getPageDefById(this.pageId)
+        //         .subscribe((data: any) => {
+        //             this.openSetting = false;
+        //             this.cards = data.homeDef.cards;
+        //             this.tabs = data.homeDef.tabs;
+        //             this.name = data.themeName;
+        //             this.description = data.themeDesc;
+        //
+        //
+        //         }, err => {
+        //             this._message.error(err.body.retMsg);
+        //         });
+        // } else {
+        //     this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其获取页面配置信息的服务名为"getPageDefById"');
+        // }
+        //
+        // if (this.dashboardService.getChartsDef) {
+        //     // 获取可选择内容
+        //     this.dashboardService.getChartsDef()
+        //         .subscribe((data) => {
+        //             this.alternatives = data.filter((value) => {
+        //                 return value.type === '0';
+        //             });
+        //         }, err => {
+        //             this._message.error(err.body.retMsg);
+        //         });
+        // } else {
+        //     this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其获取所有图表配置信息的服务名为"getChartsDef"');
+        // }
     }
 
     cancel() {
