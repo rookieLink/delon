@@ -42,18 +42,15 @@ import * as _ from 'lodash';
 
         .item__content {
             position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             font-size: 20px;
+            text-align:center;
             box-sizing: border-box;
-            color: #720026;
-            background-color: #afd552a8;
+            color: rgb(114, 0, 38);
+            background-color: rgba(175, 213, 82, 0.66);
         }
 
         .item__content:hover {
-            background: #aceb13b3;
+            background: rgba(172, 235, 19, 0.7);
         }
 
     `]
