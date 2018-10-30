@@ -23,12 +23,16 @@
         "serviceMethod": "GET",
         "requestParam": [
             {
-                "remark": "11",
-                "name": "text",
-                "value": "11",
-                "means": "11",
+                "name": "orgNO",
+                "means": "机构号",
                 "require": 1,
-                "type": "11"
+                "type": "String"
+            },
+            {
+                "name": "startDate",
+                "means": "开始日期",
+                "require": 0,
+                "type": "String"
             }
         ],
         "serviceURL": "/bi/v1/bds/zj1001",

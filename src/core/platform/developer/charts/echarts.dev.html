@@ -48,6 +48,21 @@
                     </nz-select>
                 </div>
             </div>
+
+            <div nz-form-item nz-row *ngFor="let d of requestParamFields">
+                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                    <div *ngIf="d.require === 1">
+                        <label [attr.for]="'measureRows'" nz-form-item-required> {{d.means}}</label>
+                    </div>
+                    <div *ngIf="d.require != 1">
+                        <label [attr.for]="'measureRows'"> {{d.means}}</label>
+                    </div>
+                </div>
+                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                    <nz-input [nzSize]="'large'" [(ngModel)]="d.data" [nzId]="d.name"
+                              [name]="d.name" [required]="d.require === 1"></nz-input>
+                </div>
+            </div>
             <div nz-form-item nz-row style="margin-bottom:8px;">
                 <div nz-form-control nz-col [nzSpan]="14" [nzOffset]="6">
                     <button nz-button [nzSize]="'large'" [nzType]="'primary'"

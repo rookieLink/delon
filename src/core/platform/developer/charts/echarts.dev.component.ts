@@ -34,7 +34,8 @@ export class EchartsDevComponent implements OnInit {
         modelMsg: {
             service: null,
             dimensionRows: [],  // 维度字段目前只可以选择一个
-            measureRows: []
+            measureRows: [],
+            paramsRows: []
         },
         componentMsg: {
             icon: '',
@@ -61,6 +62,7 @@ export class EchartsDevComponent implements OnInit {
     option;
     availableServices;  // 可供选择的服务
     availableFields;    // 可供选择的字段（度量/维度）
+    requestParamFields  // 服务所有参数集合
 
     public data: any;
 
@@ -71,6 +73,7 @@ export class EchartsDevComponent implements OnInit {
                 private route: ActivatedRoute,
                 private message: NzMessageService,
                 private reuseTabService: ReuseTabService) {
+        console.log(this.chartService);
     }
 
     ngOnInit() {
@@ -124,8 +127,10 @@ export class EchartsDevComponent implements OnInit {
         console.log(service);
         if (service) {
             this.availableFields = service.returnParam;
+            this.requestParamFields = service.requestParam;
         } else {
-            this.availableFields = [];
+            this.availableFields = []
+            this.requestParamFields = [];
         }
         this.formModel.modelMsg.dimensionRows.length = 0;
         this.formModel.modelMsg.measureRows.length = 0;
@@ -134,7 +139,8 @@ export class EchartsDevComponent implements OnInit {
     getJsonData() {
         const params = _.extend(
             _.omit(this.formModel.modelMsg, ['service']),
-            _.omit(this.formModel.modelMsg.service, ['returnParam'])
+            _.omit(this.formModel.modelMsg.service, ['returnParam'],),
+            {requestParam: JSON.stringify(this.requestParamFields)}
         );
         console.log(params);
         this.chartService.preview(params)
@@ -167,9 +173,11 @@ export class EchartsDevComponent implements OnInit {
         return JSON.stringify(this.payload, null, '  ');
     }
 
+
     save() {
         this.formModel.modelMsg.service = _.omit(this.formModel.modelMsg.service, 'requestParam', 'returnParam', 'serviceRspExp');
-        this.formModel.modelMsg = _.extend(this.formModel.modelMsg, this.formModel.modelMsg.service);
+        this.formModel.modelMsg = _.extend(this.formModel.modelMsg, this.formModel.modelMsg.service,
+            {requestParam: JSON.stringify(this.requestParamFields)});
         const params = _.extend({optionMsg: this.aceConfig.text}, this.formModel);
         console.log(params);
         this.chartService.save(params)
