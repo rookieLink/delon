@@ -140,7 +140,7 @@ export class EchartsDevComponent implements OnInit {
         const params = _.extend(
             _.omit(this.formModel.modelMsg, ['service']),
             _.omit(this.formModel.modelMsg.service, ['returnParam'],),
-            {requestParam: JSON.stringify(this.requestParamFields)}
+            {requestParam: this.requestParamToJson()}
         );
         console.log(params);
         this.chartService.preview(params)
@@ -153,6 +153,11 @@ export class EchartsDevComponent implements OnInit {
             });
     }
 
+    requestParamToJson() {
+        return this.requestParamFields.map((val) => {
+            return JSON.stringify(val)
+        })
+    }
 
     preview() {
         const legend = this.payload.legend,
@@ -177,7 +182,7 @@ export class EchartsDevComponent implements OnInit {
     save() {
         this.formModel.modelMsg.service = _.omit(this.formModel.modelMsg.service, 'requestParam', 'returnParam', 'serviceRspExp');
         this.formModel.modelMsg = _.extend(this.formModel.modelMsg, this.formModel.modelMsg.service,
-            {requestParam: JSON.stringify(this.requestParamFields)});
+            {requestParam: this.requestParamToJson()});
         const params = _.extend({optionMsg: this.aceConfig.text}, this.formModel);
         console.log(params);
         this.chartService.save(params)
