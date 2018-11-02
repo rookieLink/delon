@@ -35,6 +35,7 @@ export const devInfo = {
                 data: [
                     {
                         literal: '现金库存',
+                        field: 'orgNo',         // field值优先于literal
                         style: {
                             'font-size': '20px',
                             'background-color': 'green'

@@ -10,8 +10,8 @@ export const FUNNELCOMPPAYLOAD = {
 };
 
 export const FUNNELCOMP = `
-  let measureList = [];
-    that.payload.measureList.forEach(val=>{
+  var measureList = [];
+    that.payload.measureList.forEach(function(val){
       measureList.push({
         name:val.name,
         value:val.data[0]
