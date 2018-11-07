@@ -47,6 +47,7 @@ export class DashboardComponent implements OnInit {
         this.modal.open({
             closable: true,
             title: '请选择图表',
+            width: 700,
             maskClosable: false,
             footer: false,
             content: CardAlternativesComponent,

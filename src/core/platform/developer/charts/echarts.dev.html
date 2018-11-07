@@ -104,24 +104,24 @@
                     <nz-select [nzSize]="'large'" nzPlaceHolder="" required
                                [(ngModel)]="formModel.componentMsg.icon" name="icon">
 
-                        <nz-option [nzLabel]="'area-chart'" [nzValue]="'anticon anticon-area-chart'">
+                        <nz-option [nzLabel]="'area-chart'" [nzValue]="'anticon-area-chart'">
                             <ng-template #nzOptionTemplate>
-                                <i class="anticon anticon-area-chart"></i> area-chart
+                                <i class="anticon anticon-area-chart"></i> 折线图
                             </ng-template>
                         </nz-option>
-                        <nz-option [nzLabel]="'pie-chart'" [nzValue]="'anticon anticon-pie-chart'">
+                        <nz-option [nzLabel]="'pie-chart'" [nzValue]="'anticon-pie-chart'">
                             <ng-template #nzOptionTemplate>
-                                <i class="anticon anticon-pie-chart"></i> pie-chart
+                                <i class="anticon anticon-pie-chart"></i> 饼图
                             </ng-template>
                         </nz-option>
-                        <nz-option [nzLabel]="'bar-chart'" [nzValue]="'anticon anticon-bar-chart'">
+                        <nz-option [nzLabel]="'bar-chart'" [nzValue]="'anticon-bar-chart'">
                             <ng-template #nzOptionTemplate>
-                                <i class="anticon anticon-bar-chart"></i> bar-chart
+                                <i class="anticon anticon-bar-chart"></i> 柱状图
                             </ng-template>
                         </nz-option>
-                        <nz-option [nzLabel]="'dot-chart'" [nzValue]="'anticon anticon-dot-chart'">
+                        <nz-option [nzLabel]="'dot-chart'" [nzValue]="'anticon-dot-chart'">
                             <ng-template #nzOptionTemplate>
-                                <i class="anticon anticon-dot-chart"></i> dot-chart
+                                <i class="anticon anticon-dot-chart"></i> 散点图
                             </ng-template>
                         </nz-option>
                     </nz-select>
@@ -129,10 +129,10 @@
             </div>
             <div nz-form-item nz-row>
                 <div nz-form-label nz-col [nzSpan]="6">
-                    <label>组件描述</label>
+                    <label nz-form-item-required>组件描述</label>
                 </div>
                 <div nz-form-control nz-col [nzSpan]="14">
-                    <nz-input [nzSize]="'large'" name="describe"
+                    <nz-input [nzSize]="'large'" name="describe" required
                               [(ngModel)]="formModel.componentMsg.describe"></nz-input>
                 </div>
             </div>

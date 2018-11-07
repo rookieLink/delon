@@ -5,7 +5,8 @@ import {CardAlternativesComponent} from './components/card-alternatives.componen
 import * as _ from 'lodash';
 import * as screenfull from 'screenfull';
 import {panelAdapt} from '../componentTypeUtil';
-import {SCREENSERVICE} from './config';
+import {EXTENSION_COMPONENTS, SCREENSERVICE} from './config';
+import {ScreenLayoutDefault} from './screen-layout-default';
 
 @Component({
     selector: 'zj-screen',
@@ -33,15 +34,19 @@ export class ScreenComponent implements OnInit {
                 private modal: NzModalService,
                 private el: ElementRef,
                 @Inject(SCREENSERVICE) private screenService,
+                @Inject(EXTENSION_COMPONENTS) private extComp,
                 private message: NzMessageService) {
+        console.log('EXTENSION_COMPONENTS', this.extComp);
+        console.log('EXTENSION_COMPONENTS', this.extComp);
     }
 
     ngOnInit() {
 
         this.screenService.getScreenDef()
             .subscribe(screenConfig => {
+                console.log('screenConfig: ', screenConfig);
                 // 获取布局settings
-                this.splitConf = screenConfig.layout;
+                this.splitConf = screenConfig.layout || ScreenLayoutDefault;
 
                 // 获取Components
                 this.lCards = panelAdapt(screenConfig.lCards, this.injector);

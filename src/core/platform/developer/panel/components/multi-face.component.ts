@@ -2,8 +2,8 @@ import {Component, Inject, Injector, Input, OnInit, Optional} from '@angular/cor
 import {NzMessageService, NzModalService, NzModalSubject} from 'ng-zorro-antd';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PreviewMultiFaceComponent} from './preview-multi-face.component';
-import {PANELDEVSERVICE} from "../config";
-import {panelAdapt} from "../../../../abc/componentTypeUtil";
+import {PANELDEVSERVICE} from '../config';
+import {panelAdapt} from '../../../../abc/componentTypeUtil';
 
 // 该组件所包含的正反两面的组件没有交互关系
 @Component({
@@ -92,11 +92,20 @@ export class MultiFaceComponent implements OnInit {
         });
 
         const params = {
-            componetMsg: this.form.value,
+            componentMsg: this.form.value,
+            modelMsg: '',
             optionMsg: optionMsg
         };
 
         console.log(params);
+
+        this.panelService.save(params)
+            .subscribe(data => {
+                this.message.success(data.retMsg);
+                console.log(data);
+            }, err => {
+                this.message.error(err.body.retMsg);
+            });
 
 
     }

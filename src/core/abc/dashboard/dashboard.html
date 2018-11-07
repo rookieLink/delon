@@ -15,7 +15,6 @@
             <home-chart [id]="card.id" [dashboardService]="dashboardService"></home-chart>
         </div>
         <div class="overlay" *ngIf="setting">
-            <span class="title">name</span>
             <i class="anticon anticon-delete" (click)="deleteCard(i)"></i>
             <i class="anticon anticon-edit" (click)="cardModal(card)" style="padding-right: 8px;"></i>
         </div>
