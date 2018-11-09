@@ -43,7 +43,7 @@ export class ScreenComponent implements OnInit {
     //
     // iconClass = 'anticon-arrows-alt';
 
-    myModule: any;
+    layModule: any;
 
 
     constructor(private injector: Injector,
@@ -76,7 +76,7 @@ export class ScreenComponent implements OnInit {
                     .then((ngModuleFactory) => {
                         const module = ngModuleFactory.create(this._injector);
 
-                        this.myModule = ngModuleFactory;
+                        this.layModule = ngModuleFactory;
 
 
                         this.splitConf.lColumn.rows.forEach(row => {
@@ -154,78 +154,66 @@ export class ScreenComponent implements OnInit {
     //     }, 500);
     // }
     //
-    // saveSettings() {
-    //     this.openSetting = false;
-    //
-    //     this.setting = false;
-    //     this.splitConf.disabled = true;
-    //
-    //     this.screenService.updateScreenDef({
-    //         layout: _.omit(this.splitConf, ['disabled']),
-    //         lCards: this.transform(this.lCards),
-    //         rCards: this.transform(this.rCards),
-    //         cTCards: this.transform(this.cTCards),
-    //         cBCards: this.transform(this.cBCards),
-    //     }).subscribe(data => {
-    //         console.log(data);
-    //         this.setting = false;
-    //         this.splitConf.disabled = true;
-    //     }, err => {
-    //         this.message.error(err.body.retMsg);
-    //     });
-    //
-    //
-    // }
-    //
-    // onDragEnd(columnindex: number, e: { gutterNum: number, sizes: Array<number> }) {
-    //     console.log('columnindex', columnindex);
-    //     console.log('sizesArray', e.sizes);
-    //     if (columnindex === -1) { // Column dragged
-    //         // Set size for all visible columns
-    //         this.splitConf.lColumn.size = e.sizes[0];
-    //         this.splitConf.cColumn.size = e.sizes[1];
-    //         this.splitConf.rColumn.size = e.sizes[2];
-    //         // this.splitConf.columns.filter(c => c.visible === true).forEach((column, index) => column.size = e.sizes[index]);
-    //     } else if (columnindex === 1) { // Row dragged
-    //         // Set size for all visible rows from specified column
-    //         this.splitConf.lColumn.rows.filter(r => r.visible === true).forEach((row, index) => row.size = e.sizes[index]);
-    //     } else if (columnindex === 2) {
-    //         this.splitConf.cColumn.rows.filter(r => r.visible === true).forEach((row, index) => row.size = e.sizes[index]);
-    //     } else if (columnindex === 3) {
-    //         this.splitConf.rColumn.rows.filter(r => r.visible === true).forEach((row, index) => row.size = e.sizes[index]);
-    //
-    //     }
-    //
-    // }
-    //
-    // transform(arr: Array<any>) {
-    //     return _.transform(arr, (result, item: any) => {
-    //         console.log(item);
-    //         if (item.type >= 10) {
-    //             result.push({
-    //                 id: item.id,
-    //                 type: item.type,
-    //                 children: item.children
-    //             });
-    //         } else {
-    //             result.push({
-    //                 id: item.id,
-    //                 type: item.type,
-    //             });
-    //         }
-    //     }, []);
-    // }
-    //
-    // toggleFullScreen() {
-    //     if (screenfull.isFullscreen) {
-    //         screenfull.exit();
-    //     } else {
-    //         // screenfull.request();
-    //         screenfull.request(this.el.nativeElement);
-    //     }
-    // }
-    //
-    // trackByFn(index) {
-    //     return index;
-    // }
+    saveSettings() {
+        // this.openSetting = false;
+
+        // this.setting = false;
+        // this.splitConf.disabled = true;
+
+        console.log(this.splitConf);
+
+        // this.screenService.updateScreenDef({
+        //     layout: _.omit(this.splitConf, ['disabled']),
+        //     lCards: this.transform(this.lCards),
+        //     rCards: this.transform(this.rCards),
+        //     cTCards: this.transform(this.cTCards),
+        //     cBCards: this.transform(this.cBCards),
+        // }).subscribe(data => {
+        //     console.log(data);
+        //     this.setting = false;
+        //     this.splitConf.disabled = true;
+        // }, err => {
+        //     this.message.error(err.body.retMsg);
+        // });
+
+
+    }
+
+
+    onDragEnd(columnindex: number, e: { gutterNum: number, sizes: Array<number> }) {
+        console.log('columnindex', columnindex);
+        console.log('sizesArray', e.sizes);
+        if (columnindex === -1) { // Column dragged
+            // Set size for all visible columns
+            this.splitConf.lColumn.size = e.sizes[0];
+            this.splitConf.cColumn.size = e.sizes[1];
+            this.splitConf.rColumn.size = e.sizes[2];
+            // this.splitConf.columns.filter(c => c.visible === true).forEach((column, index) => column.size = e.sizes[index]);
+        } else if (columnindex === 1) { // Row dragged
+            // Set size for all visible rows from specified column
+            this.splitConf.lColumn.rows.forEach((row, index) => row.size = e.sizes[index]);
+        } else if (columnindex === 2) {
+            this.splitConf.cColumn.rows[0].size = e.sizes[0];
+            this.splitConf.cColumn.rows[2].size = e.sizes[1];
+            // this.splitConf.cColumn.rows.forEach((row, index) => row.size = e.sizes[index]);
+        } else if (columnindex === 3) {
+            this.splitConf.rColumn.rows.forEach((row, index) => row.size = e.sizes[index]);
+
+        }
+
+    }
+
+
+    toggleFullScreen() {
+        if (screenfull.isFullscreen) {
+            screenfull.exit();
+        } else {
+            // screenfull.request();
+            screenfull.request(this.el.nativeElement);
+        }
+    }
+
+    trackByFn(index) {
+        return index;
+    }
 }

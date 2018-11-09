@@ -1,44 +1,57 @@
 {
     "rColumn": {
-        "size": 25,
+        "visible": true,
         "rows": [
             {
+                "visible": true,
                 "size": 70,
                 "comp": {
+                    "id": "07ecb2ce-0a77-4759-8b1a-e46ee9360907",
+                    "type": "0"
                 }
             },
             {
+                "visible": true,
                 "size": 30,
                 "comp": {
+                    "c_Name": "cComponent"
                 }
             }
-        ]
+        ],
+        "size": 25
     },
     "lColumn": {
-        "size": 25,
+        "visible": true,
         "rows": [
             {
+                "visible": true,
                 "size": 33.333333333333333,
                 "comp": {
+                    "c_Name": "aComponent"
                 }
             },
             {
+                "visible": true,
                 "size": 33.333333333333333,
                 "comp": {
                     "c_Name": "bComponent"
                 }
             },
             {
+                "visible": true,
                 "size": 33.333333333333333,
                 "comp": {
+                    "c_Name": "cComponent"
                 }
             }
-        ]
+        ],
+        "size": 25
     },
     "cColumn": {
-        "size": 50,
+        "visible": true,
         "rows": [
             {
+                "visible": true,
                 "size": 38.2313831677214,
                 "comp": {
                     "id": "07ecb2ce-0a77-4759-8b1a-e46ee9360907",
@@ -46,11 +59,15 @@
                 }
             },
             {
+                "visible": true,
                 "size": 38.2313831677214,
                 "comp": {
+                    "id": "07ecb2ce-0a77-4759-8b1a-e46ee9360907",
+                    "type": "0"
                 }
             },
             {
+                "visible": true,
                 "size": 61.7686168322786,
                 "comp": {
                     "id": "a648c17b-5194-4cf9-b1a8-ff882294ac3e",
@@ -67,7 +84,7 @@
                     ]
                 }
             }
-        ]
-    },
-    "disabled": false
+        ],
+        "size": 50
+    }
 }

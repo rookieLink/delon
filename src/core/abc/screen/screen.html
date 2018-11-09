@@ -1,16 +1,30 @@
 <div class="screen-wrapper" *ngIf="splitConf">
+    <div class="screen-header">
+        <div class="screen-setting">
+            <ng-container>
+                <!--<i class="anticon anticon-setting" *ngIf="!setting" (click)="openSettings()"></i>-->
+                <!--<i class="anticon anticon-save" *ngIf="setting" (click)="saveSettings()"></i>-->
+                <i class="anticon anticon-save" (click)="saveSettings()"></i>
+            </ng-container>
+            <i class="anticon anticon-arrows-alt" *ngIf="!developer"  (click)="toggleFullScreen()"></i>
+        </div>
+        <a routerLink="/home">
+            <i class="anticon anticon-close"></i>
+        </a>
+    </div>
     <div class="screen-container">
         <split direction="horizontal" [disabled]="splitConf.disabled" gutterColor="transparent"
                (dragEnd)="onDragEnd(-1, $event)">
             <split-area [size]="splitConf.lColumn.size" class="screen-left">
-                <split direction="vertical" [disabled]="splitConf.disabled" gutterColor="transparent"
+                <split direction="vertical"
+                       [disabled]="splitConf.disabled"
+                       gutterColor="transparent"
                        (dragEnd)="onDragEnd(1, $event)">
-                    <split-area *ngFor="let row of splitConf.lColumn.rows;index as i;trackBy: trackByFn;"
-                                [size]="row.size">
+                    <split-area [size]="row.size"
+                                *ngFor="let row of splitConf.lColumn.rows;index as i;trackBy: trackByFn;">
                         <div class="card">
-                            <ng-container
-                                *ngComponentOutlet="row.comp.component;injector:row.comp.injector;ngModuleFactory: myModule;">
-                            </ng-container>
+                            <ng-container *ngComponentOutlet="row.comp.component;
+                                    injector:row.comp.injector;ngModuleFactory: layModule;"></ng-container>
                         </div>
                     </split-area>
                 </split>
@@ -20,15 +34,15 @@
                        [disabled]="splitConf.disabled"
                        gutterColor="transparent"
                        (dragEnd)="onDragEnd(2, $event)">
-                    <split-area [size]="splitConf.cColumn.rows[0].size">
-                        <div class="center-top">
-                            <div class="card" *ngFor="let row of splitConf.cColumn.rows.slice(0,3);index as i;trackBy: trackByFn;">
-                                <ng-container *ngComponentOutlet="row.comp.component;
+                    <split-area [size]="splitConf.cColumn.rows[0].size" class="card">
+                        <div *ngFor="let row of splitConf.cColumn.rows.slice(0,2);index as i;trackBy: trackByFn;"
+                             style="position: relative; height: 100%; width: 50%; float: left;">
+                            <ng-container *ngComponentOutlet="row.comp.component;
                                                 injector:row.comp.injector;
-                                                ngModuleFactory: myModule;">
-                                </ng-container>
-                                <div class="separator-bar"></div>
-                            </div>
+                                                ngModuleFactory: layModule;">
+                            </ng-container>
+                            <!-- 用伪元素实现分割 -->
+                            <div class="separator-bar"></div>
                         </div>
                     </split-area>
                     <split-area [size]="splitConf.cColumn.rows[2].size">
@@ -36,21 +50,23 @@
                             <ng-container
                                 *ngComponentOutlet="splitConf.cColumn.rows[2].comp.component;
                                 injector:splitConf.cColumn.rows[2].comp.injector;
-                                ngModuleFactory: myModule;">
+                                ngModuleFactory: layModule;">
                             </ng-container>
                         </div>
                     </split-area>
                 </split>
             </split-area>
             <split-area [size]="splitConf.rColumn.size">
-                <split direction="vertical" [disabled]="splitConf.disabled" gutterColor="transparent"
+                <split direction="vertical"
+                       [disabled]="splitConf.disabled"
+                       gutterColor="transparent"
                        (dragEnd)="onDragEnd(3, $event)">
                     <split-area [size]="row.size"
                                 *ngFor="let row of splitConf.rColumn.rows;index as i;trackBy: trackByFn;">
                         <div class="screen-right">
                             <div class="card">
                                 <ng-container *ngComponentOutlet="row.comp.component;
-                                        injector:row.comp.injector;ngModuleFactory: myModule;">
+                                        injector:row.comp.injector;ngModuleFactory: layModule;">
                                 </ng-container>
                                 <div class="overlay" *ngIf="setting">
                                 </div>
