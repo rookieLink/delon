@@ -21,9 +21,8 @@ import {provideRoutes} from '@angular/router';
 
 @Component({
     selector: 'zj-screen',
-    template: '<div #vc></div>',
-    // templateUrl: './screen.html',
-    // styleUrls: ['./screen.less'],
+    templateUrl: './screen.html',
+    styleUrls: ['./screen.less'],
     providers: [
         SystemJsNgModuleLoader,
         provideRoutes([
@@ -33,22 +32,27 @@ import {provideRoutes} from '@angular/router';
 })
 export class ScreenComponent implements OnInit {
 
-    @ViewChild('vc', {read: ViewContainerRef}) _viewContainer: ViewContainerRef;
+    // @ViewChild('lfc', {read: ViewContainerRef}) _lfcViewContainer: ViewContainerRef;
+    // @ViewChild('lsc', {read: ViewContainerRef}) _lscViewContainer: ViewContainerRef;
+    // @ViewChild('ltc', {read: ViewContainerRef}) _ltcViewContainer: ViewContainerRef;
 
     // @Input() headImg;
     // @Input() developer = false;
     //
-    // splitConf = null;
+    splitConf = null;
     // setting = false;
     // openSetting = false;
     // alternatives = []; // 图表选择项
     //
-    // lCards = [];
+    lCards = [];
     // rCards = [];
     // cTCards = [];
     // cBCards = [];
     //
     // iconClass = 'anticon-arrows-alt';
+
+    myModule: any;
+
 
     constructor(private injector: Injector,
                 private modal: NzModalService,
@@ -61,35 +65,57 @@ export class ScreenComponent implements OnInit {
     }
 
     ngOnInit() {
-        const componentName = 'aComponent';
 
-        this.loader.load('app/routes/lazy/nml-lazy.module#NMLLazyModule')
-            .then((factory) => {
-                const module = factory.create(this._injector);
-                console.log(module);
-                console.log(module.instance);
-                const componentClass = module.instance.paths[componentName];
-                console.log(componentClass);
-                const resolver = module.componentFactoryResolver;
-                console.log(resolver);
-                const cmpFactory = resolver.resolveComponentFactory(componentClass);
-                this._viewContainer.createComponent(cmpFactory);    // insert components.
+        // todo: 如何链式调用？
+        this.screenService.getScreenDef({})
+            .subscribe(sConf => {
+                console.log('screenConfig: ', sConf);
+                // 获取布局settings
+                this.splitConf = sConf;
+
+                console.log(panelAdapt(sConf.lColumn.rows, this.injector));
+                console.log(panelAdapt(sConf.cColumn.rows, this.injector));
+                console.log(sConf);
+
+
+                this.loader.load('app/routes/lazy/nml-lazy.module#NMLLazyModule')
+                    .then((ngModuleFactory) => {
+                        const module = ngModuleFactory.create(this._injector);
+
+                        this.myModule = ngModuleFactory;
+
+
+                        this.splitConf.lColumn.rows.forEach(row => {
+                            if (row.comp.c_Name) {
+                                row.comp.component = module.instance.paths[row.comp.c_Name];
+                                row.comp.injector = this._injector;
+                            }
+                        });
+
+                        // console.log(sConf);
+                        //
+                        // console.log(this.paddingComp);
+
+                        // if (this._lfcViewContainer) {
+                        //     const lfcCmpFactory = module.componentFactoryResolver.resolveComponentFactory(module.instance.paths[sConf.lColumn.rows[0].comp.c_Name]);
+                        //     this._lfcViewContainer.createComponent(lfcCmpFactory);
+                        // }
+                        //
+                        // if (this._lscViewContainer) {
+                        //     const lscCmpFactory = module.componentFactoryResolver.resolveComponentFactory(module.instance.paths[sConf.lColumn.rows[1].comp.c_Name]);
+                        //     this._lscViewContainer.createComponent(lscCmpFactory);
+                        // }
+                        //
+                        // if (this._ltcViewContainer) {
+                        //     const ltcCmpFactory = module.componentFactoryResolver.resolveComponentFactory(module.instance.paths[sConf.lColumn.rows[2].comp.c_Name]);
+                        //     this._ltcViewContainer.createComponent(ltcCmpFactory);
+                        // }
+                    });
+
+
+            }, err => {
+                this.message.error(err.body.retMsg);
             });
-
-        // this.screenService.getScreenDef()
-        //     .subscribe(screenConfig => {
-        //         console.log('screenConfig: ', screenConfig);
-        //         // 获取布局settings
-        //         this.splitConf = screenConfig.layout || ScreenLayoutDefault;
-        //
-        //         // 获取Components
-        //         this.lCards = panelAdapt(screenConfig.lCards, this.injector);
-        //         this.rCards = panelAdapt(screenConfig.rCards, this.injector);
-        //         this.cTCards = panelAdapt(screenConfig.cTCards, this.injector);
-        //         this.cBCards = panelAdapt(screenConfig.cBCards, this.injector);
-        //     }, err => {
-        //         this.message.error(err.body.retMsg);
-        //     });
         //
         // this.screenService.getSelfDefCharts()
         //     .subscribe((data) => {

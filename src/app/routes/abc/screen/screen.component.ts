@@ -10,13 +10,7 @@ import {provideRoutes} from '@angular/router';
         :host {
             height: 800px;
         }
-    `],
-    providers: [
-        SystemJsNgModuleLoader,
-        provideRoutes([
-            {loadChildren: 'app/routes/lazy/nml-lazy.module#NMLLazyModule'}
-        ])
-    ]
+    `]
 })
 export class DemoScreenComponent {
 

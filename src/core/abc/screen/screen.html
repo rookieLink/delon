@@ -1,82 +1,101 @@
 <div class="screen-wrapper" *ngIf="splitConf">
-    <div class="screen-header">
-        <div class="screen-setting">
-            <ng-container *ngIf="developer">
-                <i class="anticon anticon-setting" *ngIf="!setting" (click)="openSettings()"></i>
-                <i class="anticon anticon-save" *ngIf="setting" (click)="saveSettings()"></i>
-            </ng-container>
-            <i class="anticon" *ngIf="!developer" [ngClass]="iconClass" (click)="toggleFullScreen()"></i>
-        </div>
-        <img src={{headImg}} alt="">
-        <a routerLink="/home" *ngIf="!developer">
-            <i class="anticon anticon-close"></i>
-        </a>
-    </div>
     <div class="screen-container">
         <split direction="horizontal" [disabled]="splitConf.disabled" gutterColor="transparent"
                (dragEnd)="onDragEnd(-1, $event)">
-            <split-area [size]="splitConf.lColumn.size">
-                <div class="screen-left">
-                    <split direction="vertical" [disabled]="splitConf.disabled" gutterColor="transparent"
-                           (dragEnd)="onDragEnd(1, $event)">
-                        <split-area *ngFor="let card of lCards;index as i;trackBy: trackByFn;"
-                                    [size]="splitConf.lColumn.rows[i].size">
-                            <div class="card">
-                                <ng-container
-                                    *ngComponentOutlet="card.component;injector:card.injector;"></ng-container>
-                                <div class="overlay" *ngIf="setting">
-                                    <span class="title">{{card.desc}}</span>
-                                    <i class="anticon anticon-edit" (click)="cardModal(card)"></i>
-                                </div>
-                            </div>
-                        </split-area>
-                    </split>
-                </div>
+            <split-area [size]="splitConf.lColumn.size" class="screen-left">
+                <split direction="vertical" [disabled]="splitConf.disabled" gutterColor="transparent"
+                       (dragEnd)="onDragEnd(1, $event)">
+                    <split-area *ngFor="let row of splitConf.lColumn.rows;index as i;trackBy: trackByFn;"
+                                [size]="row.size">
+                        <div class="card">
+
+                            <ng-container *ngComponentOutlet="row.comp.component;injector:row.comp.injector;ngModuleFactory: myModule;">
+                            </ng-container>
+
+                            <!--<div *ngIf="row.comp.id">-->
+                                <!--<ng-container *ngComponentOutlet="row.component;injector:row.injector;">-->
+                                <!--</ng-container>-->
+                            <!--</div>-->
+
+                            <!--<ng-container *ngIf="!row.comp.id && row.comp.c_Name">-->
+                                <!--<ng-container *ngComponentOutlet="row.comp.c_clazz;ngModuleFactory: myModule;">-->
+                                <!--</ng-container>-->
+                                <!--<div #lfc *ngIf="i === 0"></div>-->
+                                <!--<div #lsc *ngIf="i === 1"></div>-->
+                                <!--<div #ltc *ngIf="i === 2"></div>-->
+                            <!--</ng-container>-->
+                        </div>
+                    </split-area>
+                </split>
             </split-area>
             <split-area [size]="splitConf.cColumn.size">
-                <div class="screen-center">
-                    <split direction="vertical" [disabled]="splitConf.disabled" gutterColor="transparent"
-                           (dragEnd)="onDragEnd(2, $event)">
-                        <split-area [size]="splitConf.cColumn.rows[0].size">
+                <split direction="vertical"
+                       [disabled]="splitConf.disabled"
+                       gutterColor="transparent"
+                       (dragEnd)="onDragEnd(2, $event)">
+                    <split-area [size]="splitConf.cColumn.rows[0].size">
+                        <div class="center-top">
                             <div class="card">
-                                <div class="center-top" *ngFor="let c of cTCards;">
-                                    <ng-container
-                                        *ngComponentOutlet="c.component;injector:c.injector;"></ng-container>
-                                    <div class="overlay" *ngIf="setting">
-                                        <span class="title">{{c.desc}}</span>
-                                        <i class="anticon anticon-edit" (click)="cardModal(c)"></i>
-                                    </div>
-                                </div>
-                                <div class="separator-bar"></div>
+                                <ng-container *ngComponentOutlet="splitConf.cColumn.rows[0].component;injector:splitConf.cColumn.rows[0]?.injector;ngModuleFactory: myModule;">
+                                </ng-container>
+                                <!--<div *ngIf="splitConf.cColumn.rows[0].comp.id">-->
+                                    <!--<ng-container-->
+                                        <!--*ngComponentOutlet="splitConf.cColumn.rows[0].component;injector:splitConf.cColumn.rows[0].injector;">-->
+                                    <!--</ng-container>-->
+                                <!--</div>-->
+                                <!--<ng-container-->
+                                    <!--*ngIf="!splitConf.cColumn.rows[0].comp.id && splitConf.cColumn.rows[0].comp.c_Name">-->
+                                    <!--&lt;!&ndash;<div #cfc *ngIf="i === 0"></div>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div #csc *ngIf="i === 1"></div>&ndash;&gt;-->
+                                <!--</ng-container>-->
                             </div>
-                        </split-area>
-                        <split-area [size]="splitConf.cColumn.rows[1].size">
+                            <div class="separator-bar"></div>
                             <div class="card">
-                                <div class="center-bottom" *ngFor="let c of cBCards;">
+                                <div *ngIf="splitConf.cColumn.rows[1].comp.id">
                                     <ng-container
-                                        *ngComponentOutlet="c.component;injector:c.injector;"></ng-container>
-                                    <div class="overlay" *ngIf="setting">
-                                        <span class="title">{{c.desc}}</span>
-                                        <i class="anticon anticon-edit" (click)="cardModal(c)"></i>
-                                    </div>
+                                        *ngComponentOutlet="splitConf.cColumn.rows[1].component;injector:splitConf.cColumn.rows[1].injector;">
+                                    </ng-container>
                                 </div>
+                                <ng-container
+                                    *ngIf="!splitConf.cColumn.rows[1].comp.id && splitConf.cColumn.rows[1].comp.c_Name">
+                                    <!--<div #cfc *ngIf="i === 0"></div>-->
+                                    <!--<div #csc *ngIf="i === 1"></div>-->
+                                </ng-container>
                             </div>
-                        </split-area>
-                    </split>
-                </div>
+                        </div>
+                    </split-area>
+                    <split-area [size]="splitConf.cColumn.rows[2].size">
+                        <div class="card">
+                            <div *ngIf="splitConf.cColumn.rows[2].comp.id">
+                                <ng-container
+                                    *ngComponentOutlet="splitConf.cColumn.rows[2].component;injector:splitConf.cColumn.rows[2].injector;">
+                                </ng-container>
+                            </div>
+                            <ng-container
+                                *ngIf="!splitConf.cColumn.rows[2].comp.id && splitConf.cColumn.rows[2].comp.c_Name">
+
+                                <!--<div #cfc *ngIf="i === 0"></div>-->
+                                <!--<div #csc *ngIf="i === 1"></div>-->
+                            </ng-container>
+                        </div>
+                    </split-area>
+                </split>
             </split-area>
             <split-area [size]="splitConf.rColumn.size">
                 <split direction="vertical" [disabled]="splitConf.disabled" gutterColor="transparent"
                        (dragEnd)="onDragEnd(3, $event)">
-                    <split-area *ngFor="let card of rCards;index as i;trackBy: trackByFn;"
-                                [size]="splitConf.rColumn.rows[i].size">
+                    <split-area [size]="splitConf.rColumn.rows[0].size">
                         <div class="screen-right">
                             <div class="card">
-                                <ng-container
-                                    *ngComponentOutlet="card.component;injector:card.injector;"></ng-container>
                                 <div class="overlay" *ngIf="setting">
-                                    <span class="title">{{card.desc}}</span>
-                                    <i class="anticon anticon-edit" (click)="cardModal(card)"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </split-area>
+                    <split-area [size]="splitConf.rColumn.rows[1].size">
+                        <div class="screen-right">
+                            <div class="card">
+                                <div class="overlay" *ngIf="setting">
                                 </div>
                             </div>
                         </div>
