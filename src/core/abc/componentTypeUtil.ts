@@ -23,7 +23,7 @@ export const panelAdapt = (arr: Array<any>, injector: Injector) => {
     arr.forEach(value => {
         switch (value.comp.type) {
             case '0':
-                results.push(_.extend(value, {
+                results.push(_.extend(value.comp, {
                     component: EchartsGraphComponent,
                     injector: Injector.create([{
                         provide: PANEL_ID,
@@ -32,7 +32,7 @@ export const panelAdapt = (arr: Array<any>, injector: Injector) => {
                 }));
                 break;
             case '1':
-                results.push(_.extend(value, {
+                results.push(_.extend(value.comp, {
                     component: ViewInfoComponent,
                     injector: Injector.create([{
                         provide: PANEL_ID,
@@ -41,7 +41,7 @@ export const panelAdapt = (arr: Array<any>, injector: Injector) => {
                 }));
                 break;
             case '2':
-                results.push(_.extend(value, {
+                results.push(_.extend(value.comp, {
                     component: ViewDetailComponent,
                     injector: Injector.create([{
                         provide: PANEL_ID,
@@ -50,7 +50,7 @@ export const panelAdapt = (arr: Array<any>, injector: Injector) => {
                 }));
                 break;
             case '3':
-                results.push(_.extend(value, {
+                results.push(_.extend(value.comp, {
                     component: ViewRankComponent,
                     injector: Injector.create([{
                         provide: PANEL_ID,
@@ -80,7 +80,7 @@ export const panelAdapt = (arr: Array<any>, injector: Injector) => {
                         });
                     }
                 });
-                results.push(_.extend(value, {
+                results.push(_.extend(value.comp, {
                     component: TurnOverComponent,
                     injector: Injector.create([...provides], injector)
                 }));
@@ -96,7 +96,7 @@ export const panelAdapt = (arr: Array<any>, injector: Injector) => {
                         }
                     });
                 });
-                results.push(_.extend(value, {
+                results.push(_.extend(value.comp, {
                     component: CarouselComponent,
                     injector: Injector.create([{
                         provide: PANEL_ITEM,

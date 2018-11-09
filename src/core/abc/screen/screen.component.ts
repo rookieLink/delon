@@ -32,9 +32,6 @@ import {provideRoutes} from '@angular/router';
 })
 export class ScreenComponent implements OnInit {
 
-    // @ViewChild('lfc', {read: ViewContainerRef}) _lfcViewContainer: ViewContainerRef;
-    // @ViewChild('lsc', {read: ViewContainerRef}) _lscViewContainer: ViewContainerRef;
-    // @ViewChild('ltc', {read: ViewContainerRef}) _ltcViewContainer: ViewContainerRef;
 
     // @Input() headImg;
     // @Input() developer = false;
@@ -43,11 +40,6 @@ export class ScreenComponent implements OnInit {
     // setting = false;
     // openSetting = false;
     // alternatives = []; // 图表选择项
-    //
-    lCards = [];
-    // rCards = [];
-    // cTCards = [];
-    // cBCards = [];
     //
     // iconClass = 'anticon-arrows-alt';
 
@@ -73,8 +65,10 @@ export class ScreenComponent implements OnInit {
                 // 获取布局settings
                 this.splitConf = sConf;
 
-                console.log(panelAdapt(sConf.lColumn.rows, this.injector));
-                console.log(panelAdapt(sConf.cColumn.rows, this.injector));
+                panelAdapt(sConf.lColumn.rows, this.injector);
+                panelAdapt(sConf.cColumn.rows, this.injector);
+                panelAdapt(sConf.rColumn.rows, this.injector);
+
                 console.log(sConf);
 
 
@@ -91,25 +85,19 @@ export class ScreenComponent implements OnInit {
                                 row.comp.injector = this._injector;
                             }
                         });
+                        this.splitConf.rColumn.rows.forEach(row => {
+                            if (row.comp.c_Name) {
+                                row.comp.component = module.instance.paths[row.comp.c_Name];
+                                row.comp.injector = this._injector;
+                            }
+                        });
+                        this.splitConf.cColumn.rows.forEach(row => {
+                            if (row.comp.c_Name) {
+                                row.comp.component = module.instance.paths[row.comp.c_Name];
+                                row.comp.injector = this._injector;
+                            }
+                        });
 
-                        // console.log(sConf);
-                        //
-                        // console.log(this.paddingComp);
-
-                        // if (this._lfcViewContainer) {
-                        //     const lfcCmpFactory = module.componentFactoryResolver.resolveComponentFactory(module.instance.paths[sConf.lColumn.rows[0].comp.c_Name]);
-                        //     this._lfcViewContainer.createComponent(lfcCmpFactory);
-                        // }
-                        //
-                        // if (this._lscViewContainer) {
-                        //     const lscCmpFactory = module.componentFactoryResolver.resolveComponentFactory(module.instance.paths[sConf.lColumn.rows[1].comp.c_Name]);
-                        //     this._lscViewContainer.createComponent(lscCmpFactory);
-                        // }
-                        //
-                        // if (this._ltcViewContainer) {
-                        //     const ltcCmpFactory = module.componentFactoryResolver.resolveComponentFactory(module.instance.paths[sConf.lColumn.rows[2].comp.c_Name]);
-                        //     this._ltcViewContainer.createComponent(ltcCmpFactory);
-                        // }
                     });
 
 

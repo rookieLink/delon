@@ -4,11 +4,18 @@
         "rows": [
             {
                 "visible": true,
-                "size": 70
+                "size": 70,
+                "comp": {
+                    "id": "07ecb2ce-0a77-4759-8b1a-e46ee9360907",
+                    "type": "0"
+                }
             },
             {
                 "visible": true,
-                "size": 30
+                "size": 30,
+                "comp": {
+                    "c_Name": "cComponent"
+                }
             }
         ],
         "size": 25

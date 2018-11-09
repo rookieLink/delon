@@ -8,22 +8,9 @@
                     <split-area *ngFor="let row of splitConf.lColumn.rows;index as i;trackBy: trackByFn;"
                                 [size]="row.size">
                         <div class="card">
-
-                            <ng-container *ngComponentOutlet="row.comp.component;injector:row.comp.injector;ngModuleFactory: myModule;">
+                            <ng-container
+                                *ngComponentOutlet="row.comp.component;injector:row.comp.injector;ngModuleFactory: myModule;">
                             </ng-container>
-
-                            <!--<div *ngIf="row.comp.id">-->
-                                <!--<ng-container *ngComponentOutlet="row.component;injector:row.injector;">-->
-                                <!--</ng-container>-->
-                            <!--</div>-->
-
-                            <!--<ng-container *ngIf="!row.comp.id && row.comp.c_Name">-->
-                                <!--<ng-container *ngComponentOutlet="row.comp.c_clazz;ngModuleFactory: myModule;">-->
-                                <!--</ng-container>-->
-                                <!--<div #lfc *ngIf="i === 0"></div>-->
-                                <!--<div #lsc *ngIf="i === 1"></div>-->
-                                <!--<div #ltc *ngIf="i === 2"></div>-->
-                            <!--</ng-container>-->
                         </div>
                     </split-area>
                 </split>
@@ -35,47 +22,21 @@
                        (dragEnd)="onDragEnd(2, $event)">
                     <split-area [size]="splitConf.cColumn.rows[0].size">
                         <div class="center-top">
-                            <div class="card">
-                                <ng-container *ngComponentOutlet="splitConf.cColumn.rows[0].component;injector:splitConf.cColumn.rows[0]?.injector;ngModuleFactory: myModule;">
+                            <div class="card" *ngFor="let row of splitConf.cColumn.rows.slice(0,3);index as i;trackBy: trackByFn;">
+                                <ng-container *ngComponentOutlet="row.comp.component;
+                                                injector:row.comp.injector;
+                                                ngModuleFactory: myModule;">
                                 </ng-container>
-                                <!--<div *ngIf="splitConf.cColumn.rows[0].comp.id">-->
-                                    <!--<ng-container-->
-                                        <!--*ngComponentOutlet="splitConf.cColumn.rows[0].component;injector:splitConf.cColumn.rows[0].injector;">-->
-                                    <!--</ng-container>-->
-                                <!--</div>-->
-                                <!--<ng-container-->
-                                    <!--*ngIf="!splitConf.cColumn.rows[0].comp.id && splitConf.cColumn.rows[0].comp.c_Name">-->
-                                    <!--&lt;!&ndash;<div #cfc *ngIf="i === 0"></div>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<div #csc *ngIf="i === 1"></div>&ndash;&gt;-->
-                                <!--</ng-container>-->
-                            </div>
-                            <div class="separator-bar"></div>
-                            <div class="card">
-                                <div *ngIf="splitConf.cColumn.rows[1].comp.id">
-                                    <ng-container
-                                        *ngComponentOutlet="splitConf.cColumn.rows[1].component;injector:splitConf.cColumn.rows[1].injector;">
-                                    </ng-container>
-                                </div>
-                                <ng-container
-                                    *ngIf="!splitConf.cColumn.rows[1].comp.id && splitConf.cColumn.rows[1].comp.c_Name">
-                                    <!--<div #cfc *ngIf="i === 0"></div>-->
-                                    <!--<div #csc *ngIf="i === 1"></div>-->
-                                </ng-container>
+                                <div class="separator-bar"></div>
                             </div>
                         </div>
                     </split-area>
                     <split-area [size]="splitConf.cColumn.rows[2].size">
                         <div class="card">
-                            <div *ngIf="splitConf.cColumn.rows[2].comp.id">
-                                <ng-container
-                                    *ngComponentOutlet="splitConf.cColumn.rows[2].component;injector:splitConf.cColumn.rows[2].injector;">
-                                </ng-container>
-                            </div>
                             <ng-container
-                                *ngIf="!splitConf.cColumn.rows[2].comp.id && splitConf.cColumn.rows[2].comp.c_Name">
-
-                                <!--<div #cfc *ngIf="i === 0"></div>-->
-                                <!--<div #csc *ngIf="i === 1"></div>-->
+                                *ngComponentOutlet="splitConf.cColumn.rows[2].comp.component;
+                                injector:splitConf.cColumn.rows[2].comp.injector;
+                                ngModuleFactory: myModule;">
                             </ng-container>
                         </div>
                     </split-area>
@@ -84,17 +45,13 @@
             <split-area [size]="splitConf.rColumn.size">
                 <split direction="vertical" [disabled]="splitConf.disabled" gutterColor="transparent"
                        (dragEnd)="onDragEnd(3, $event)">
-                    <split-area [size]="splitConf.rColumn.rows[0].size">
+                    <split-area [size]="row.size"
+                                *ngFor="let row of splitConf.rColumn.rows;index as i;trackBy: trackByFn;">
                         <div class="screen-right">
                             <div class="card">
-                                <div class="overlay" *ngIf="setting">
-                                </div>
-                            </div>
-                        </div>
-                    </split-area>
-                    <split-area [size]="splitConf.rColumn.rows[1].size">
-                        <div class="screen-right">
-                            <div class="card">
+                                <ng-container *ngComponentOutlet="row.comp.component;
+                                        injector:row.comp.injector;ngModuleFactory: myModule;">
+                                </ng-container>
                                 <div class="overlay" *ngIf="setting">
                                 </div>
                             </div>
