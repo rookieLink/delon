@@ -3,38 +3,44 @@
     display: block;
     height: 100%;
     width: 100%;
+    background-size: cover;
+    background-color: #999246;
 }
 
 .card {
-    color: #fff;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 0;
-    border-radius: 7px;
+    //color: #fff;
+    //background-color: rgba(255, 255, 255, 0.1);
+    //border: 0;
+    //border-radius: 7px;
+    padding: 2px;
     position: relative;
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+    //box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
     height: 100%;
     overflow: hidden;
+    background: linear-gradient(to left, #fff, #fff) left top no-repeat,
+    linear-gradient(to bottom, #fff, #fff) left top no-repeat,
+    linear-gradient(to left, #fff, #fff) right top no-repeat,
+    linear-gradient(to bottom, #fff, #fff) right top no-repeat,
+    linear-gradient(to left, #fff, #fff) left bottom no-repeat,
+    linear-gradient(to bottom, #fff, #fff) left bottom no-repeat,
+    linear-gradient(to left, #fff, #fff) right bottom no-repeat,
+    linear-gradient(to left, #fff, #fff) right bottom no-repeat;
+    background-size: 1px 10px, 10px 1px, 1px 10px, 10px 1px;
 }
 
 .screen-wrapper {
     position: relative;
-    background-size: cover;
     width: 100%;
     height: 100%;
-    background-color: rebeccapurple;
 
     .screen-header {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 75px;
-        z-index: 1;
+        padding-top: 10px;
+        height: 8%;
         img {
-            width: 34%;
-            display: block;
+            width: 100%;
             height: 100%;
-            margin: 20px auto 0;
+            display: block;
+            margin: auto auto;
         }
         .screen-setting {
             position: absolute;
@@ -63,11 +69,11 @@
 
     .screen-container {
         width: 100%;
-        height: 100%;
+        height: 92%;
         margin: 0;
         position: relative;
         overflow: hidden;
-        padding: 44px 15px 20px;
+        padding: 10px 15px 20px;
         .screen-left {
             float: left;
             width: 100%;

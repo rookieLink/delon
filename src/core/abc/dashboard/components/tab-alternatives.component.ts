@@ -10,7 +10,7 @@ import * as _ from 'lodash';
  <div style="background: #ECECEC;padding:30px;user-select:none;">
           <div nz-row [nzGutter]="8">
             <div nz-col [nzSpan]="8" *ngFor="let card of alternatives;" >
-              <nz-card style="width:150px;height: 150px;overflow: hidden;cursor: pointer;" (click)="selectTab(card)">
+              <nz-card (click)="selectTab(card)">
                   <ng-template #body>
                     <i class="anticon anticon-check-circle"
                        style="color: blueviolet;font-size: 22px;position: absolute;right: 7px;top:4px;"
@@ -29,6 +29,13 @@ import * as _ from 'lodash';
       
     `,
     styles: [`
+        nz-card{
+            width:99%;
+            height: 150px;
+            overflow: hidden;
+            cursor: pointer;
+             background-color: #8bd22f;
+        }
        
     `]
 })

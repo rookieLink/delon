@@ -26,7 +26,7 @@ import {BuiltInAddDashboardComponent} from './components/built-in-add-dashboard.
         <zj-carousel [panels]="panels" [zjArrows]="false" (onActive)="activatePage($event)"></zj-carousel>
     `,
     styles: [
-            `
+        `
             nz-dropdown {
                 position: absolute;
                 z-index: 1;
@@ -170,7 +170,10 @@ export class ZijinDashboardComponent implements OnInit {
                 this.pages = [];
                 data.forEach(val => {
                     this.panels.push({
-                        data: {pageId: val.pageId},
+                        data: {
+                            pageId: val.pageId,
+                            theme: val.theme || 'macarons'
+                        },
                         component: DashboardComponent
                     });
                     this.pages.push({pageId: val.pageId});

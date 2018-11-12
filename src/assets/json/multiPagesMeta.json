@@ -1,11 +1,13 @@
 [
     {
         "id": "meta-analysis1",
-        "pageId": "meta-analysis1"
+        "pageId": "meta-analysis1",
+        "theme": "macarons"
     },
     {
         "id": "meta-analysis2",
-        "pageId": "meta-analysis2"
+        "pageId": "meta-analysis2",
+        "theme": "dark"
     }
 ]
 

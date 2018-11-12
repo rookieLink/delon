@@ -9,17 +9,13 @@ import * as _ from 'lodash';
 @Component({
     template: `
 
-         <div style="background: #ECECEC;padding:30px;user-select:none;">
           <div nz-row [nzGutter]="8">
-            <div nz-col [nzSpan]="8" *ngFor="let card of alternatives;" >
+            <div nz-col [nzSpan]="8" *ngFor="let card of alternatives;" style="text-align: center;">
               <nz-card [ngClass]="{'card-nonavailable': !card.available,'card-available':card.available}" 
-                    style="width:200px;height: 200px;overflow: hidden;cursor: pointer;" (click)="selectCard(card)">
+                     (click)="selectCard(card)">
                   <ng-template #body>
-                    <i class="anticon anticon-check-circle"
-                       style="color: blueviolet;font-size: 22px;position: absolute;right: 7px;top:4px;"
-                       *ngIf="card.selected"></i>
-                    <i class="anticon anticon-check-circle-o" *ngIf="!card.selected"
-                       style="position: absolute;right: 7px;top:5px;"></i>
+                    <i class="anticon anticon-check-circle" *ngIf="card.selected"></i>
+                    <i class="anticon anticon-check-circle-o" *ngIf="!card.selected"></i>
                     <i style="font-size: 45px;" [ngClass]="['anticon',card.icon]"></i>
                     <div style="font-size: 18px;font-weight: bold;">{{card.name}}</div>
                     <p>{{card.describe}}</p>
@@ -27,16 +23,36 @@ import * as _ from 'lodash';
               </nz-card>
             </div>
           </div>
-        </div>
          <div nz-row style="margin-top: 15px;text-align: center;">
             <button nz-button nzType="primary" [nzSize]="'large'" (click)="save()" style="width: 100px;">确定</button>
         </div>
     `,
     styles: [`
 
+        .card-available {
+            height:160px;
+            cursor: pointer;
+            background-color: #8bd22f;
+            margin-bottom: 5px;
+        }
         .card-nonavailable {
+            height:160px;
             background-color: #5f8686
 ;
+        }
+        
+        .anticon.anticon-check-circle{
+            color: blueviolet;
+            font-size: 22px;
+            position: absolute;
+            right: 7px;
+            top:4px;
+        }
+        
+        .anticon.anticon-check-circle-o{
+            position: absolute;
+            right: 7px;
+            top:5px;
         }
 
     `]

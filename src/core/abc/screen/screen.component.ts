@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     Component,
     ElementRef,
     Inject,
@@ -30,10 +31,13 @@ import {provideRoutes} from '@angular/router';
         ])
     ]
 })
-export class ScreenComponent implements OnInit {
+export class ScreenComponent implements OnInit, AfterViewInit {
 
 
-    // @Input() headImg;
+    @Input() headImg = './assets/img/screen_header.png';
+    @Input() backgroundImage = './assets/img/screen_background.png';
+
+    @ViewChild('swrapper') swrapper: ElementRef;
     // @Input() developer = false;
     //
     splitConf = null;
@@ -53,6 +57,9 @@ export class ScreenComponent implements OnInit {
                 private loader: SystemJsNgModuleLoader,
                 private _injector: Injector,
                 private message: NzMessageService) {
+
+
+        console.log(`url(${'"' + this.backgroundImage + '"'})`);
         console.log('screen init.');
     }
 
@@ -65,9 +72,13 @@ export class ScreenComponent implements OnInit {
                 // 获取布局settings
                 this.splitConf = sConf;
 
-                panelAdapt(sConf.lColumn.rows, this.injector);
-                panelAdapt(sConf.cColumn.rows, this.injector);
-                panelAdapt(sConf.rColumn.rows, this.injector);
+                this.splitConf.columns.forEach((col) => {
+                    panelAdapt(col.rows, this.injector);
+                });
+                //
+                // panelAdapt(sConf.lColumn.rows, this.injector);
+                // panelAdapt(sConf.cColumn.rows, this.injector);
+                // panelAdapt(sConf.rColumn.rows, this.injector);
 
                 console.log(sConf);
 
@@ -78,28 +89,16 @@ export class ScreenComponent implements OnInit {
 
                         this.layModule = ngModuleFactory;
 
-
-                        this.splitConf.lColumn.rows.forEach(row => {
-                            if (row.comp.c_Name) {
-                                row.comp.component = module.instance.paths[row.comp.c_Name];
-                                row.comp.injector = this._injector;
-                            }
-                        });
-                        this.splitConf.rColumn.rows.forEach(row => {
-                            if (row.comp.c_Name) {
-                                row.comp.component = module.instance.paths[row.comp.c_Name];
-                                row.comp.injector = this._injector;
-                            }
-                        });
-                        this.splitConf.cColumn.rows.forEach(row => {
-                            if (row.comp.c_Name) {
-                                row.comp.component = module.instance.paths[row.comp.c_Name];
-                                row.comp.injector = this._injector;
-                            }
+                        this.splitConf.columns.forEach((col) => {
+                            col.rows.forEach(row => {
+                                if (row.comp.c_Name) {
+                                    row.comp.component = module.instance.paths[row.comp.c_Name];
+                                    row.comp.injector = this._injector;
+                                }
+                            });
                         });
 
                     });
-
 
             }, err => {
                 this.message.error(err.body.retMsg);
@@ -179,26 +178,26 @@ export class ScreenComponent implements OnInit {
 
     }
 
+    ngAfterViewInit() {
+        this.el.nativeElement.style.backgroundImage = `url(${'"' + this.backgroundImage + '"'})`;
+    }
 
     onDragEnd(columnindex: number, e: { gutterNum: number, sizes: Array<number> }) {
         console.log('columnindex', columnindex);
         console.log('sizesArray', e.sizes);
         if (columnindex === -1) { // Column dragged
             // Set size for all visible columns
-            this.splitConf.lColumn.size = e.sizes[0];
-            this.splitConf.cColumn.size = e.sizes[1];
-            this.splitConf.rColumn.size = e.sizes[2];
+            this.splitConf.columns.forEach((col, i) => {
+                col[i] = e.sizes[i];
+            });
+            // this.splitConf.columns[0] = e.sizes[0];
+            // this.splitConf.columns[1] = e.sizes[1];
+            // this.splitConf.columns[2] = e.sizes[2];
             // this.splitConf.columns.filter(c => c.visible === true).forEach((column, index) => column.size = e.sizes[index]);
-        } else if (columnindex === 1) { // Row dragged
+        } else { // Row dragged
             // Set size for all visible rows from specified column
-            this.splitConf.lColumn.rows.forEach((row, index) => row.size = e.sizes[index]);
-        } else if (columnindex === 2) {
-            this.splitConf.cColumn.rows[0].size = e.sizes[0];
-            this.splitConf.cColumn.rows[2].size = e.sizes[1];
-            // this.splitConf.cColumn.rows.forEach((row, index) => row.size = e.sizes[index]);
-        } else if (columnindex === 3) {
-            this.splitConf.rColumn.rows.forEach((row, index) => row.size = e.sizes[index]);
-
+            this.splitConf.columns[columnindex - 1].rows.forEach((row, index) => row.size = e.sizes[index]);
+            // this.splitConf.lColumn.rows.forEach((row, index) => row.size = e.sizes[index]);
         }
 
     }

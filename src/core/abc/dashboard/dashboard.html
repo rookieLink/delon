@@ -12,7 +12,7 @@
 <div nz-row [nzGutter]="16">
     <div nz-col class="gutter-row" [nzSpan]="6" *ngFor="let card of cards; index as i;">
         <div class="card-item">
-            <home-chart [id]="card.id" [dashboardService]="dashboardService"></home-chart>
+            <home-chart [id]="card.id" [theme]="echartsTheme"  [dashboardService]="dashboardService"></home-chart>
         </div>
         <div class="overlay" *ngIf="setting">
             <i class="anticon anticon-delete" (click)="deleteCard(i)"></i>
@@ -41,7 +41,7 @@
                 </ng-template>
                 <div style="height: 99%;overflow: auto;">
                     <ng-template [ngIf]="!tab.pending">
-                        <home-chart [id]="tab.id" [dashboardService]="dashboardService"></home-chart>
+                        <home-chart [id]="tab.id" [theme]="echartsTheme"  [dashboardService]="dashboardService"></home-chart>
                     </ng-template>
                     <ng-template [ngIf]="tab.pending">
                         <tab-alt [alts]="alternatives" [index]="[i,r]" (tabSelect)="selectTab($event)"></tab-alt>
