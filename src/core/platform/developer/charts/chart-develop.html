@@ -1,13 +1,4 @@
 <div nz-row [nzGutter]="24">
-    <div nz-col [nzSpan]="3" style="margin-top: 28px;">
-        <ul nz-menu [nzMode]="'vertical'">
-            <li nz-menu-item *ngFor="let chart of charts;">
-                <a>
-                    <i class="{{chart.icon}}"></i> {{chart.name}}
-                </a>
-            </li>
-        </ul>
-    </div>
     <div nz-col [nzSpan]="21">
         <div nz-row *ngFor="let chart of charts;">
             <div style="font-size: 24px;font-weight: 500;margin-bottom: 5px;margin-top: 20px;">

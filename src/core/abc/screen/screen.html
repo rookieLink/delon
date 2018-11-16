@@ -1,12 +1,9 @@
 <div class="screen-wrapper" *ngIf="splitConf" #swrapper>
     <div class="screen-header">
         <div class="screen-setting">
-            <ng-container>
-                <!--<i class="anticon anticon-setting" *ngIf="!setting" (click)="openSettings()"></i>-->
-                <!--<i class="anticon anticon-save" *ngIf="setting" (click)="saveSettings()"></i>-->
-                <i class="anticon anticon-save" (click)="saveSettings()"></i>
-            </ng-container>
-            <i class="anticon anticon-arrows-alt" *ngIf="!developer" (click)="toggleFullScreen()"></i>
+            <i class="anticon anticon-save" *ngIf="!splitDisabled" (click)="saveSettings()"></i>
+            <i [ngClass]="{'anticon':true,'anticon-arrows-alt':!fullScreen,'anticon-shrink':fullScreen}"
+               (click)="toggleFullScreen()"></i>
         </div>
         <img src={{headImg}} alt="">
         <a routerLink="/home">
@@ -15,18 +12,18 @@
     </div>
     <div class="screen-container">
         <split direction="horizontal"
-               [disabled]="splitConf.disabled"
+               [disabled]="splitDisabled"
                gutterColor="transparent"
                (dragEnd)="onDragEnd(-1, $event)">
             <split-area *ngFor="let column of splitConf.columns;index as i;trackBy: trackByFn;" [size]="column.size">
                 <split direction="vertical"
-                       [disabled]="splitConf.disabled"
+                       [disabled]="splitDisabled"
                        gutterColor="transparent"
-                       (dragEnd)="onDragEnd(1, $event)">
+                       (dragEnd)="onDragEnd(i, $event)">
                     <split-area *ngFor="let row of column.rows;index as i;trackBy: trackByFn;" [size]="row.size">
                         <div class="card">
                             <ng-container *ngComponentOutlet="row.comp.component;
-                                    injector:row.comp.injector;ngModuleFactory: layModule;">
+                                    injector:row.comp.injector;ngModuleFactory: lazyModule;">
                             </ng-container>
                         </div>
                     </split-area>
@@ -35,6 +32,6 @@
         </split>
     </div>
 </div>
-<div class="mask" *ngIf="openSetting === true || !splitConf">
+<div class="mask" *ngIf="!splitConf">
     <nz-spin [nzSize]="'large'"></nz-spin>
 </div>

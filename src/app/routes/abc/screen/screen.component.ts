@@ -4,7 +4,7 @@ import {provideRoutes} from '@angular/router';
 @Component({
     selector: 'app-demo-screen',
     template: `
-        <zj-screen></zj-screen>
+        <zj-screen [splitDisabled]="false"></zj-screen>
     `,
     styles: [`
         :host {
