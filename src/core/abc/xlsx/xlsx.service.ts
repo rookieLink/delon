@@ -18,7 +18,7 @@ export class XlsxService {
 
     private init(): Promise<void> {
         const config = Object.assign({
-            url: `//cdn.bootcss.com/xlsx/0.11.17/xlsx.full.min.js`,
+            url: `assets/js/xlsx.full.min.js`,
             modules: []
         }, this.config);
 
@@ -64,6 +64,7 @@ export class XlsxService {
             if (Array.isArray(options.sheets)) {
                 (<XlsxExportSheet[]>options.sheets).forEach((value: XlsxExportSheet, index: number) => {
                     const ws: any = XLSX.utils.aoa_to_sheet(value.data);
+                    ws['!merges'] = value['merges'];
                     XLSX.utils.book_append_sheet(wb, ws, value.name || `Sheet${index + 1}`);
                 });
             } else {

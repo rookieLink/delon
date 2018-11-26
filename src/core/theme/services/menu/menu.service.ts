@@ -291,14 +291,14 @@ export class MenuService implements OnDestroy {
      * */
     hasPermission(id: string) {
         const item = this._list.find((menu: Menu) => {
-            if (menu.id === id) return true;
+            if (menu.no === id) return true;
         });
         return item ? item._authorized : false;
     }
 
     getLink(id: string) {
         const result = this._list.find((item: Menu) => {
-            return id === item.id;
+            return id === item.link;
         });
         return result ? result.link : '';
     }

@@ -189,6 +189,7 @@ export class ReuseTabService implements OnDestroy {
             return i;
         }).reverse().join('/');
         console.log('getUrl', url);
+        this.menuService.currentMenu = url;
         return url;
     }
 
