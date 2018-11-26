@@ -25,7 +25,7 @@ import { NoticeItem } from './notice-item';
                 </nz-list-item>
             </ng-template>
         </nz-list>
-        <div class="clear" (click)="onClear()">清空{{data.title}}</div>
+        <div class="clear" (click)="onClear()">{{data.clearText}}</div>
     </ng-template>
     `
 })
