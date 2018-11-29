@@ -19,7 +19,11 @@ export class DemoDashboardService implements DashboardService {
 
     // 获取主题的配置信息
     getPageDefById(pageId) {
-        return this.http.get(this.api + '/homeDef/' + pageId);
+        return this.http.get(this.api + '/homeDef/' + pageId)
+            .map(data => {
+                console.log(data);
+                return data;
+            });
     }
 
     // 更新主题的配置信息

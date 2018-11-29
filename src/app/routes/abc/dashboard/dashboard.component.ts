@@ -2,8 +2,10 @@ import {Component} from '@angular/core';
 
 @Component({
     selector: 'app-demo-dashboard',
+    // language=HTML
     template: `
-        <zj-dashboard></zj-dashboard>
+        <zj-dashboard>
+        </zj-dashboard>
         <!--<zj-single-dashboard [pageId]="'meta-analysis'"></zj-single-dashboard>-->
     `,
     styles: [`

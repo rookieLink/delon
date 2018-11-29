@@ -102,20 +102,29 @@ export class CardAlternativesComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
         this.alts.forEach(val => {
             this.alternatives.push(_.extend({available: true, selected: false}, val));
         });
-
         this.cards.forEach(card => {
             this.alternatives.forEach(c => {
-                if (card.id === c.id) {
-                    c.selected = true;
-                    c.available = false;
+                if (card.id && c.id) {  // id为开发者模式下定义的图表
+                    if (card.id === c.id) {
+                        c.selected = true;
+                        c.available = false;
+                    }
+                    if (c.id === this.card.id) {
+                        c.available = true;
+                    }
+                } else if (card.c_Name && c.c_Name) {   // c_Name为应用定制加入的组件
+                    if (card.c_Name === c.c_Name) {
+                        c.selected = true;
+                        c.available = false;
+                    }
+                    if (c.c_Name === this.card.c_Name) {
+                        c.available = true;
+                    }
                 }
-                if (c.id === this.card.id) {
-                    c.available = true;
-                }
+
             });
         });
 

@@ -39,11 +39,19 @@ export class EchartsGraphComponent implements OnInit, OnChanges {
 
     chartInitFailed = false;
 
+    echartsRendered = false;
+
     constructor(private  message: NzMessageService) {
     }
 
     ngOnInit(): void {
-        this.renderView();
+        /**
+         * 如果是以modal层弹出来，组件的id设置的行为和@Input一样吗？
+         */
+
+        if (!this.echartsRendered) {
+            this.renderView();
+        }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -52,6 +60,7 @@ export class EchartsGraphComponent implements OnInit, OnChanges {
 
     renderView() {
         if (this.id) {
+            this.echartsRendered = true;
             if (this.dashboardService.getOptionAndDataById) {
                 this.dashboardService.getOptionAndDataById(this.id)
                     .subscribe(data => {

@@ -1,6 +1,5 @@
-import {RouterModule, RouteReuseStrategy} from '@angular/router';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {ApplicationRef, ComponentFactoryResolver, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
@@ -19,6 +18,7 @@ import {LayoutComponent} from 'app/layout.component';
 import {PassportComponent} from 'app/passport.component';
 import {DemoModalComponent} from './shared/components/modal/demo.component';
 
+
 // mock data
 import * as MOCKDATA from '../../_mock';
 import {environment} from '../environments/environment';
@@ -33,7 +33,9 @@ if (!environment.production) {
 
 @NgModule({
     declarations: [
-        AppComponent, LayoutComponent, PassportComponent,
+        AppComponent,
+        LayoutComponent,
+        PassportComponent,
         DemoModalComponent
     ],
     imports: [
@@ -54,8 +56,16 @@ if (!environment.production) {
         RoutesModule
     ],
     providers: [],
-    bootstrap: [AppComponent],
-    entryComponents: [DemoModalComponent]
+    entryComponents: [DemoModalComponent, AppComponent]
 })
 export class AppModule {
+
+    constructor(private resolver: ComponentFactoryResolver) {
+    }
+
+    ngDoBootstrap(appRef: ApplicationRef) {
+        const componentElement = document.createElement('app-root');
+        document.body.appendChild(componentElement);
+        appRef.bootstrap(this.resolver.resolveComponentFactory(AppComponent));
+    }
 }

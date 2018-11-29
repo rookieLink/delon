@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {DASHBOARDSERVICE} from './config';
 import {DashboardComponent} from './dashboard.component';
@@ -26,7 +26,7 @@ import {BuiltInAddDashboardComponent} from './components/built-in-add-dashboard.
         <zj-carousel [panels]="panels" [zjArrows]="false" (onActive)="activatePage($event)"></zj-carousel>
     `,
     styles: [
-            `
+        `
             nz-dropdown {
                 position: absolute;
                 z-index: 1;
@@ -47,13 +47,13 @@ export class ZijinDashboardComponent implements OnInit {
     pages = [];
     // 获取所有主题项
     pendingPages = [];
-
     pageActivating;
-
     pageSelected;
 
     panels = [];
     @Output() onDeletePage = new EventEmitter();
+    @Input() useExternalModule = false;
+    @Input() externalModulePath: any;
 
     constructor(private message: NzMessageService,
                 private modal: NzModalService,
@@ -170,7 +170,11 @@ export class ZijinDashboardComponent implements OnInit {
                 this.pages = [];
                 data.forEach(val => {
                     this.panels.push({
-                        data: {pageId: val.pageId},
+                        data: {
+                            pageId: val.pageId,
+                            useExternalModule: this.useExternalModule,
+                            externalModulePath: this.externalModulePath
+                        },
                         component: DashboardComponent
                     });
                     this.pages.push({pageId: val.pageId});

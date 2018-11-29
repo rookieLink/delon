@@ -1,9 +1,9 @@
 <div nz-row [nzGutter]="16">
     <div nz-col [nzSpan]="20">
-        <span style="font-size: 24px;font-weight: 500;">{{name}}</span>
+        <span style="font-size: 24px; font-weight: 500;">{{name}}</span>
         <span>{{description}}</span>
     </div>
-    <div nz-col [nzSpan]="4" style="text-align: right;font-size: 20px;">
+    <div nz-col [nzSpan]="4" style="text-align: right; font-size: 20px;">
         <i class="anticon anticon-edit" style="padding: 4px 27px 0 0;" *ngIf="!setting" (click)="openSettings()"></i>
         <i class="anticon anticon-save" style="padding: 4px 27px 0 0;" *ngIf="setting" (click)="saveSetting()"></i>
         <!--<i class="anticon anticon-close-square-o" style="padding: 4px 10px 0 0;" *ngIf="setting" (click)="cancel()"></i>-->
@@ -12,7 +12,12 @@
 <div nz-row [nzGutter]="16">
     <div nz-col class="gutter-row" [nzSpan]="6" *ngFor="let card of cards; index as i;">
         <div class="card-item">
-            <home-chart [id]="card.id" [dashboardService]="dashboardService"></home-chart>
+            <home-chart [id]="card.id" [dashboardService]="dashboardService"
+                        *ngIf="card.id; else cardBlock"></home-chart>
+            <ng-template #cardBlock>
+                <ng-container *ngComponentOutlet="card.component;injector:card.injector;ngModuleFactory: lazyModule;">
+                </ng-container>
+            </ng-template>
         </div>
         <div class="overlay" *ngIf="setting">
             <span class="title">name</span>
@@ -40,9 +45,15 @@
                       <i class="anticon anticon-check" *ngIf="tab.pending" (click)="swap(i,r)"></i>
                     </span>
                 </ng-template>
-                <div style="height: 99%;overflow: auto;">
+                <div style="height: 99%; overflow: auto;">
                     <ng-template [ngIf]="!tab.pending">
-                        <home-chart [id]="tab.id" [dashboardService]="dashboardService"></home-chart>
+                        <home-chart [id]="tab.id" [dashboardService]="dashboardService"
+                                    *ngIf="tab.id; else tabBlock"></home-chart>
+                        <ng-template #tabBlock>
+                            <ng-container
+                                *ngComponentOutlet="tab.component;injector:tab.injector;ngModuleFactory: lazyModule;">
+                            </ng-container>
+                        </ng-template>
                     </ng-template>
                     <ng-template [ngIf]="tab.pending">
                         <tab-alt [alts]="alternatives" [index]="[i,r]" (tabSelect)="selectTab($event)"></tab-alt>

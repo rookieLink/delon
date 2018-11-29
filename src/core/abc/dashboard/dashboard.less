@@ -28,20 +28,21 @@
 }
 
 div[nz-row] {
+    @offset: 13px;
     margin-left: 10px !important;
     margin-right: 10px !important;
     .gutter-row {
         height: 98%;
     }
     &:first-child {
-        height: 4%;
+        height: 26px;
     }
     &:nth-child(2) {
-        height: 26%;
+        height: calc(~"26% - @{offset}");
     }
-    &:last-child {
+    &:nth-child(3) {
         padding-top: 15px;
-        height: 70%;
+        height: calc(~"74% - @{offset}");
         nz-tabset {
             height: 99.99%;
             background-color: rgba(255, 255, 255, 0.1);
@@ -71,6 +72,14 @@ div[nz-row] {
     }
 }
 
+.anticon.anticon-check {
+    margin-left: 18px;
+}
+
+.anticon.anticon-swap {
+    margin-left: 10px;
+}
+
 .anticon.anticon-cross,
 .anticon.anticon-swap,
 .anticon.anticon-plus,
@@ -80,14 +89,6 @@ div[nz-row] {
     &:hover {
         background-color: #43b3f0;
     }
-}
-
-.anticon.anticon-check {
-    margin-left: 18px;
-}
-
-.anticon.anticon-swap {
-    margin-left: 10px;
 }
 
 .overlay {

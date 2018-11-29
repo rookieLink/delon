@@ -1,4 +1,14 @@
-import {Component, EventEmitter, Inject, Injector, Input, OnInit, Optional, Output} from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Inject,
+    Injector,
+    Input,
+    NgModuleFactory,
+    OnInit,
+    Optional,
+    Output, SystemJsNgModuleLoader
+} from '@angular/core';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {CardAlternativesComponent} from './components/card-alternatives.component';
 import * as _ from 'lodash';
@@ -6,37 +16,53 @@ import {DASHBOARDSERVICE} from './config';
 import {zip} from 'rxjs/observable/zip';
 import {catchError} from 'rxjs/operators';
 
+export function checkProperty(obj, prop) {
+    if (obj && obj[prop]) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 @Component({
     selector: 'zj-single-dashboard',
     templateUrl: './dashboard.html',
-    styleUrls: ['./dashboard.less']
+    styleUrls: ['./dashboard.less'],
+    providers: [
+        SystemJsNgModuleLoader,
+    ]
 })
 export class DashboardComponent implements OnInit {
 
-    data: any;   // dynamic created
+    data: any;   // dynamic created - 主页驾驶舱使用动态创建组件的方式
 
-    @Input() pageId;
-    @Input() dashboardService;
+    @Input() pageId;    // 开发者模式下直接以组件的selector使用该组件
+    @Input() dashboardService = <any>{};    // 外部传递进来的驾驶舱服务实例
+    @Input() useExternalModule = false; // 是否使用外部模块的Component
+    @Input() externalModulePath: string;
 
     @Output() onSuccess = new EventEmitter();
 
-    name;
-    description;
+    name;   // 组件名称
+    description;    // 组件描述
 
-    openSetting = false;
-    setting = false;
-    cards;
-    tabs;
-    alternatives;
+    openSetting = false; // 正在打开驾驶舱配置 - nzSpin
+    setting = false;    // 正在编辑驾驶舱
+    cards;  // 驾驶舱第一行的配置信息
+    tabs;   // 驾驶舱的tabs的配置信息
+    alternatives;   // 可供选择的组件
 
     // 当前驾驶舱配置项
     currentSettings: any;
 
-    pendingTabs = [];
+    pendingTabs = [];   // 所有正在选择的驾驶舱tabs
+
+    lazyModule: NgModuleFactory<any>;   // 外部加载的模块
 
     constructor(private modal: NzModalService,
                 @Inject(DASHBOARDSERVICE) @Optional() dashboardService,
                 private injector: Injector,
+                private loader: SystemJsNgModuleLoader,
                 private _message: NzMessageService) {
         if (dashboardService) {
             this.dashboardService = dashboardService;
@@ -57,6 +83,9 @@ export class DashboardComponent implements OnInit {
             }
         }).subscribe(value => {
             if (value.id) {
+                this.cards[this.cards.indexOf(card)] = value;
+            }
+            if (value.c_Name) {
                 this.cards[this.cards.indexOf(card)] = value;
             }
         }, () => {
@@ -108,7 +137,7 @@ export class DashboardComponent implements OnInit {
                 pending: true
             }
         );
-        // 需要调用nz-tabset的组件方法来激活新增的选项
+        // TODO(ccliu): 需要调用nz-tabset的组件方法来激活新增的选项
     }
 
     selectTab(evt) {
@@ -159,16 +188,24 @@ export class DashboardComponent implements OnInit {
         };
 
         this.cards.forEach(val => {
-            homeDef.cards.push({id: val.id});
+            if (val.id) {
+                homeDef.cards.push({id: val.id});
+            } else {
+                homeDef.cards.push({c_Name: val.c_Name});
+            }
         });
 
         this.tabs.forEach((tabSet, index) => {
             tabSet.forEach(val => {
-                homeDef.tabs[index].push({id: val.id, name: val.name});
+                if (val.id) {
+                    homeDef.tabs[index].push({id: val.id, name: val.name});
+                } else if (val.c_Name) {
+                    homeDef.tabs[index].push({c_Name: val.c_Name, name: val.name});
+                }
             });
         });
 
-        if (this.dashboardService.updatePageDefById) {
+        if (checkProperty(this.dashboardService, 'updatePageDefById')) {
             this.dashboardService.updatePageDefById({
                 pageId: this.pageId, homeDef: homeDef
             }).subscribe(() => {
@@ -187,14 +224,16 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.pageId = this.pageId || this.data.pageId;
+        this.pageId = this.pageId || (this.data && this.data.pageId);
 
         if (!this.pageId) {
             this._message.error('获取主页id失败！');
             return;
         }
 
-        if (this.dashboardService.getPageDefById && this.dashboardService.getChartsDef) {
+        if (checkProperty(this.dashboardService, 'getPageDefById')
+            && checkProperty(this.dashboardService, 'getChartsDef')) {
+
             this.openSetting = true;
             // todo:没有办法预测这个请求将要执行多长时间,可以用NgZone来提供钩子吗？
             zip(
@@ -215,45 +254,60 @@ export class DashboardComponent implements OnInit {
                 this.description = homeConf.themeDesc;
 
                 this.alternatives = cardsDef.filter((value) => {
-                    return value.type === '0';
+                    return value.type === '0';  // 过滤组件类型，echarts组件类型为'0'
                 });
+
+                this.useExternalModule = this.useExternalModule || (this.data && this.data.useExternalModule);
+                this.externalModulePath = this.externalModulePath || (this.data && this.data.externalModulePath);
+                console.log('是否使用外部模块：' + this.useExternalModule);
+                if (this.useExternalModule) {
+                    this.loadLazyModule()
+                        .then((ngModuleFactory) => {
+                            const module = ngModuleFactory.create(this.injector);
+                            this.lazyModule = ngModuleFactory;
+                            this.cards.forEach((card) => {
+                                if (card.c_Name) {
+                                    card.component = module.instance.paths[card.c_Name];
+                                    card.injector = this.injector;
+                                }
+                            });
+                            this.tabs.forEach((tabs) => {
+                                tabs.forEach(tab => {
+                                    if (tab.c_Name) {
+                                        tab.component = module.instance.paths[tab.c_Name];
+                                        tab.injector = this.injector;
+                                    }
+                                });
+                            });
+                            this.alternatives.forEach((alt) => {
+                                if (alt.c_Name) {
+                                    alt.component = module.instance.paths[alt.c_Name];
+                                    alt.injector = this.injector;
+                                }
+                            });
+                        }, (err) => {
+                            console.log('加载外部模块失败!', err);
+                            this._message.error('加载外部模块失败：', err);
+                        });
+                } else {  // 去除tabs与cards中可能保存的外部组件定义
+                    const cards = [], tabs = [], alters = [];
+                    this.cards.forEach(card => cards.push(card.id ? card : {}));
+                    this.tabs.forEach(tab => tabs.push(tab.filter(t => !!t.id)));
+                    this.alternatives.forEach(alt => alt.id ? alters.push(alt) : null);
+                    this.cards = cards;
+                    this.tabs = tabs;
+                    this.alternatives = alters;
+                }
+
             });
         } else {
             this._message.error('您所传递驾驶舱配置服务有误,当前操作是获取当前主页配置与获取可选择内容');
         }
 
-        // if (this.dashboardService.getPageDefById) {
-        //
-        //     // 获取当前主页配置
-        //     this.dashboardService.getPageDefById(this.pageId)
-        //         .subscribe((data: any) => {
-        //             this.openSetting = false;
-        //             this.cards = data.homeDef.cards;
-        //             this.tabs = data.homeDef.tabs;
-        //             this.name = data.themeName;
-        //             this.description = data.themeDesc;
-        //
-        //
-        //         }, err => {
-        //             this._message.error(err.body.retMsg);
-        //         });
-        // } else {
-        //     this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其获取页面配置信息的服务名为"getPageDefById"');
-        // }
-        //
-        // if (this.dashboardService.getChartsDef) {
-        //     // 获取可选择内容
-        //     this.dashboardService.getChartsDef()
-        //         .subscribe((data) => {
-        //             this.alternatives = data.filter((value) => {
-        //                 return value.type === '0';
-        //             });
-        //         }, err => {
-        //             this._message.error(err.body.retMsg);
-        //         });
-        // } else {
-        //     this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其获取所有图表配置信息的服务名为"getChartsDef"');
-        // }
+    }
+
+    loadLazyModule() {
+        return this.loader.load(this.externalModulePath);
     }
 
     cancel() {
@@ -262,6 +316,7 @@ export class DashboardComponent implements OnInit {
         this.setting = false;
         this.openSetting = false;
     }
+
 
     trackByFn(index) {
         return index;
