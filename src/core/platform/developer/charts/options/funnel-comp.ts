@@ -1,17 +1,17 @@
 export const FUNNELCOMPPAYLOAD = {
-  legend: ["展现", "点击", "访问", "咨询", "订单"],
-  measureList: [
-      {data: [60], name: "访问"},
-      {data: [40], name: "咨询"},
-      {data: [20], name: "订单"},
-      {data: [80], name: "点击"},
-      {data: [100], name: "展现"}
-  ]
+    legend: ['展现', '点击', '访问', '咨询', '订单'],
+    measureList: [
+        {data: [60], name: '访问'},
+        {data: [40], name: '咨询'},
+        {data: [20], name: '订单'},
+        {data: [80], name: '点击'},
+        {data: [100], name: '展现'}
+    ]
 };
 
 export const FUNNELCOMP = `
-  let measureList = [];
-    that.payload.measureList.forEach(val=>{
+  var measureList = [];
+    that.payload.measureList.forEach(function(val){
       measureList.push({
         name:val.name,
         value:val.data[0]

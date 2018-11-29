@@ -24,11 +24,11 @@ export const GAUGECARPAYLOAD = {
 };
 
 export const GAUGECAR = `
-  let dataList = [];
-    that.payload.dimensionList[0].data.forEach(val=>{
+  var dataList = [];
+    that.payload.dimensionList[0].data.forEach(function(val){
       dataList.push({name:val});
     });
-    that.payload.measureList[0].data.forEach((val,i)=>{
+    that.payload.measureList[0].data.forEach(function(val,i){
       dataList[i].value = val;
     });
  that.option = {
