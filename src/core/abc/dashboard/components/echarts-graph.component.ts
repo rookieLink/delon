@@ -4,7 +4,7 @@ import {NzMessageService} from 'ng-zorro-antd';
 @Component({
     selector: 'home-chart',
     template: `
-        <div echarts [options]="option" *ngIf="!chartInitFailed"></div>
+        <div echarts [options]="option"  [theme]="theme" *ngIf="!chartInitFailed"></div>
         <div class="echarts-init-failed" *ngIf="chartInitFailed"></div>
     `,
     styles: [`
@@ -33,6 +33,7 @@ export class EchartsGraphComponent implements OnInit {
 
     @Input() id;   // 图表的id值
     @Input() dashboardService;
+    @Input() theme = 'macarons';   // 图表主题;
 
     option: any;
     payload: any;

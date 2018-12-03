@@ -6,7 +6,7 @@ import {TestComponent} from './test.component';
 @Component({
     selector: 'app-demo-carousel',
     template: `
-        <zj-carousel [panels]="homeConfig" [zjArrows]="false"></zj-carousel>
+        <zj-carousel [panels]="homeConfig" [zjArrows]="true" [zjAutoPlay]="true"></zj-carousel>
     `,
     styles: [`
         :host {

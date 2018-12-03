@@ -23,7 +23,9 @@
             "../node_modules/@antv/g2/dist/g2.min.js",
             "../node_modules/@antv/data-set/dist/data-set.min.js",
             "../node_modules/@antv/g2-plugin-slider/dist/g2-plugin-slider.min.js",
-            "../node_modules/echarts/dist/echarts.min.js"
+            "../node_modules/echarts/dist/echarts.min.js",
+            "../node_modules/echarts/theme/dark.js",
+            "../node_modules/echarts/theme/macarons.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {

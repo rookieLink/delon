@@ -1,5 +1,5 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {NgModule, SystemJsNgModuleLoader} from '@angular/core';
+import {Routes, RouterModule, provideRoutes} from '@angular/router';
 
 import {SharedModule} from '../../shared/shared.module';
 
@@ -53,6 +53,12 @@ const routes: Routes = [
     ],
     entryComponents: [
         TestComponent
+    ],
+    providers: [
+        SystemJsNgModuleLoader,
+        provideRoutes([
+            {loadChildren: 'app/routes/lazy/nml-lazy.module#NMLLazyModule'}
+        ])
     ]
 })
 export class DEMOABCModule {

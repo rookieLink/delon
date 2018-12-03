@@ -1,5 +1,15 @@
 import {
-    Component, ComponentFactoryResolver, EventEmitter, Inject, Input, OnChanges, OnInit, Optional, Output,
+    Component,
+    ComponentFactoryResolver,
+    EventEmitter,
+    HostListener,
+    Inject,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Optional,
+    Output,
     SimpleChanges,
     ViewChild
 } from '@angular/core';
@@ -21,22 +31,24 @@ import {PANEL_ITEM} from '../abc.options';
                     <ng-template panel-host></ng-template>
                 </div>
             </div>
-            <a class="carousel-control-prev" (click)="prev()" *ngIf="panels.length>0 && zjArrows">
+            <a class="carousel-control-prev" (click)="prev()" *ngIf="panels.length>0 && zjArrows && mouseenter">
                 <span class="anticon anticon-left"></span>
             </a>
-            <a class="carousel-control-next" (click)="next()" *ngIf="panels.length>0 && zjArrows">
+            <a class="carousel-control-next" (click)="next()" *ngIf="panels.length>0 && zjArrows && mouseenter">
                 <span class="anticon anticon-right"></span>
             </a>
         </div>
     `,
     styleUrls: ['./carousel.component.less']
 })
-export class CarouselComponent implements OnInit, OnChanges {
+export class CarouselComponent implements OnInit, OnChanges, OnDestroy {
 
     currentPanelIndex = 0;
+    mouseenter = false;
     @Input() zjArrows = true;
     @Input() zjDots = true;
     @Input() zjAutoPlay = false;
+    @Input() zjAutoPlaySpeed = 5000;
 
     @Input() panels: PanelItem[] = [];
     @ViewChild(PanelDirective) panelHost: PanelDirective;
@@ -44,12 +56,24 @@ export class CarouselComponent implements OnInit, OnChanges {
     @Output() onActive = new EventEmitter();
 
     lightSpeedIn;
+    intervalId;
 
     constructor(private componentFactoryResolver: ComponentFactoryResolver,
                 @Inject(PANEL_ITEM) @Optional() panels: PanelItem[]) {
         if (panels) {
             this.panels = panels;
         }
+    }
+
+    @HostListener('mouseenter') showArrows() {
+        if (this.zjArrows) {
+            this.mouseenter = true;
+        }
+
+    }
+
+    @HostListener('mouseleave') hideArrows() {
+        this.mouseenter = false;
     }
 
     loadComponent() {
@@ -70,26 +94,24 @@ export class CarouselComponent implements OnInit, OnChanges {
 
 
     ngOnInit(): void {
-
-        if (!this.panels || this.panels.length === 0) {
-            return;
-        }
-        this.loadComponent();
-
-        if (this.zjAutoPlay) {
-            // todo(ccliu): 轮播内容
-        }
+        this.checkPanelsAndLoadComponent();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log('-----------');
+        this.checkPanelsAndLoadComponent();
+    }
+
+    checkPanelsAndLoadComponent() {
         if (!this.panels || this.panels.length === 0) {
             return;
         }
         this.loadComponent();
 
         if (this.zjAutoPlay) {
-            // todo(ccliu): 轮播内容
+            clearInterval(this.intervalId);
+            this.intervalId = setInterval(() => {
+                this.next();
+            }, this.zjAutoPlaySpeed);
         }
     }
 
@@ -128,6 +150,12 @@ export class CarouselComponent implements OnInit, OnChanges {
 
     trackByFn(index) {
         return index;
+    }
+
+    ngOnDestroy(): void {
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+        }
     }
 
 }

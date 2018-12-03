@@ -20,6 +20,8 @@ export class DashboardComponent implements OnInit {
 
     @Output() onSuccess = new EventEmitter();
 
+    echartsTheme;
+
     name;
     description;
 
@@ -189,6 +191,7 @@ export class DashboardComponent implements OnInit {
     ngOnInit(): void {
 
         this.pageId = this.pageId || this.data.pageId;
+        this.echartsTheme = this.data ? this.data.theme : 'vintage';
 
         if (!this.pageId) {
             this._message.error('获取主页id失败！');
@@ -223,38 +226,6 @@ export class DashboardComponent implements OnInit {
             this._message.error('您所传递驾驶舱配置服务有误,当前操作是获取当前主页配置与获取可选择内容');
         }
 
-        // if (this.dashboardService.getPageDefById) {
-        //
-        //     // 获取当前主页配置
-        //     this.dashboardService.getPageDefById(this.pageId)
-        //         .subscribe((data: any) => {
-        //             this.openSetting = false;
-        //             this.cards = data.homeDef.cards;
-        //             this.tabs = data.homeDef.tabs;
-        //             this.name = data.themeName;
-        //             this.description = data.themeDesc;
-        //
-        //
-        //         }, err => {
-        //             this._message.error(err.body.retMsg);
-        //         });
-        // } else {
-        //     this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其获取页面配置信息的服务名为"getPageDefById"');
-        // }
-        //
-        // if (this.dashboardService.getChartsDef) {
-        //     // 获取可选择内容
-        //     this.dashboardService.getChartsDef()
-        //         .subscribe((data) => {
-        //             this.alternatives = data.filter((value) => {
-        //                 return value.type === '0';
-        //             });
-        //         }, err => {
-        //             this._message.error(err.body.retMsg);
-        //         });
-        // } else {
-        //     this._message.error('您所传递驾驶舱配置服务有误，\n 请确定其获取所有图表配置信息的服务名为"getChartsDef"');
-        // }
     }
 
     cancel() {

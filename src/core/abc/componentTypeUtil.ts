@@ -21,46 +21,46 @@ ComponentTypeCode.set('11', CarouselComponent);
 export const panelAdapt = (arr: Array<any>, injector: Injector) => {
     const results = [];
     arr.forEach(value => {
-        switch (value.type) {
+        switch (value.comp.type) {
             case '0':
-                results.push(_.extend({
+                results.push(_.extend(value.comp, {
                     component: EchartsGraphComponent,
                     injector: Injector.create([{
                         provide: PANEL_ID,
-                        useValue: value.id
+                        useValue: value.comp.id
                     }], injector)
-                }, value));
+                }));
                 break;
             case '1':
-                results.push(_.extend({
+                results.push(_.extend(value.comp, {
                     component: ViewInfoComponent,
                     injector: Injector.create([{
                         provide: PANEL_ID,
-                        useValue: value.id
+                        useValue: value.comp.id
                     }], injector)
-                }, value));
+                }));
                 break;
             case '2':
-                results.push(_.extend({
+                results.push(_.extend(value.comp, {
                     component: ViewDetailComponent,
                     injector: Injector.create([{
                         provide: PANEL_ID,
-                        useValue: value.id
+                        useValue: value.comp.id
                     }], injector)
-                }, value));
+                }));
                 break;
             case '3':
-                results.push(_.extend({
+                results.push(_.extend(value.comp, {
                     component: ViewRankComponent,
                     injector: Injector.create([{
                         provide: PANEL_ID,
-                        useValue: value.id
+                        useValue: value.comp.id
                     }], injector)
-                }, value));
+                }));
                 break;
             case '10':
                 let provides = [];
-                let children = value.children;
+                let children = value.comp.children;
                 children.forEach((val, index) => {
                     if (index === 0) {
                         provides.push({
@@ -80,14 +80,14 @@ export const panelAdapt = (arr: Array<any>, injector: Injector) => {
                         });
                     }
                 });
-                results.push(_.extend({
+                results.push(_.extend(value.comp, {
                     component: TurnOverComponent,
                     injector: Injector.create([...provides], injector)
-                }, value));
+                }));
                 break;
             case '11':
                 provides = [];
-                children = value.children;
+                children = value.comp.children;
                 children.forEach(val => {
                     provides.push({
                         component: ComponentTypeCode.get(val.type),
@@ -96,13 +96,13 @@ export const panelAdapt = (arr: Array<any>, injector: Injector) => {
                         }
                     });
                 });
-                results.push(_.extend({
+                results.push(_.extend(value.comp, {
                     component: CarouselComponent,
                     injector: Injector.create([{
                         provide: PANEL_ITEM,
                         useValue: provides
                     }], injector)
-                }, value));
+                }));
                 break;
             default:
                 results.push(value);    // 空值
