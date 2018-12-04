@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {NzMessageService} from 'ng-zorro-antd';
 
 @Component({
@@ -29,7 +29,7 @@ import {NzMessageService} from 'ng-zorro-antd';
         }
     `]
 })
-export class EchartsGraphComponent implements OnInit {
+export class EchartsGraphComponent implements OnInit, OnChanges {
 
     @Input() id;   // 图表的id值
     @Input() dashboardService;
@@ -44,6 +44,18 @@ export class EchartsGraphComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.renderView();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+
+        if (changes.id && !changes.id.firstChange) {
+            this.renderView();
+        }
+
+    }
+
+    renderView() {
         if (this.id) {
             if (this.dashboardService.getOptionAndDataById) {
                 this.dashboardService.getOptionAndDataById(this.id)
