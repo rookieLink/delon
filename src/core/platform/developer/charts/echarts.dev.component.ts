@@ -1,4 +1,14 @@
-import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    Input,
+    OnInit,
+    Output,
+    ViewChild
+} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CHARTTYPEMAPPING} from './charts.config';
 import {NzMessageService, NzModalSubject} from 'ng-zorro-antd';
@@ -10,6 +20,7 @@ import 'brace/theme/clouds';
 import 'brace/mode/json';
 import {CHARTDEVSERVICE} from './config';
 import {ReuseTabService} from '@delon/abc';
+import {NgxEchartsDirective} from 'ngx-echarts';
 
 @Component({
     selector: 'zj-echarts-dev',
@@ -23,12 +34,14 @@ import {ReuseTabService} from '@delon/abc';
         }
     `]
 })
-export class EchartsDevComponent implements OnInit {
+export class EchartsDevComponent implements OnInit, AfterViewInit {
 
     @Input() chartType;
     @Output() onSaveSuccess = new EventEmitter();
     @Input() Modify = false;
     @Input() chartId;
+
+    divSize: any = {};
 
     formModel = {
         modelMsg: {
@@ -62,11 +75,13 @@ export class EchartsDevComponent implements OnInit {
     option;
     availableServices;  // 可供选择的服务
     availableFields;    // 可供选择的字段（度量/维度）
-    requestParamFields  // 服务所有参数集合
+    requestParamFields;  // 服务所有参数集合
 
     public data: any;
 
     @ViewChild('aceJson') aceJson$: ElementRef;
+
+    @ViewChild(NgxEchartsDirective) echarts: NgxEchartsDirective;
 
     constructor(@Inject(CHARTDEVSERVICE) private chartService,
                 private nzModal: NzModalSubject,
@@ -129,7 +144,7 @@ export class EchartsDevComponent implements OnInit {
             this.availableFields = service.returnParam;
             this.requestParamFields = service.requestParam;
         } else {
-            this.availableFields = []
+            this.availableFields = [];
             this.requestParamFields = [];
         }
         this.formModel.modelMsg.dimensionRows.length = 0;
@@ -139,7 +154,7 @@ export class EchartsDevComponent implements OnInit {
     getJsonData() {
         const params = _.extend(
             _.omit(this.formModel.modelMsg, ['service']),
-            _.omit(this.formModel.modelMsg.service, ['returnParam'],),
+            _.omit(this.formModel.modelMsg.service, ['returnParam']),
             {requestParam: this.requestParamToJson()}
         );
         console.log(params);
@@ -155,8 +170,8 @@ export class EchartsDevComponent implements OnInit {
 
     requestParamToJson() {
         return this.requestParamFields.map((val) => {
-            return JSON.stringify(val)
-        })
+            return JSON.stringify(val);
+        });
     }
 
     preview() {
@@ -195,5 +210,33 @@ export class EchartsDevComponent implements OnInit {
                 console.log(err);
             });
     }
+
+    onDragEnd(resize: boolean = false, e: { gutterNum: number, sizes: Array<number> }) {
+        console.log(e);
+        console.log('sizesArray', e.sizes);
+
+        if (resize || e.gutterNum === 3) {
+            this.bindEChartsContainerSize();
+            this.echarts['_chart'].resize();
+        }
+
+    }
+
+    ngAfterViewInit(): void {
+        setTimeout(() => this.bindEChartsContainerSize(), 500);
+    }
+
+
+    bindEChartsContainerSize() {
+        /**
+         * 由于NgxEchartsDirective指令的el属性是private类型，所以直接引用会有编译错误
+         */
+        setTimeout(() => {
+            this.divSize.height = this.echarts['el'].nativeElement.offsetHeight;
+            this.divSize.width = this.echarts['el'].nativeElement.offsetWidth;
+        }, 50);
+
+    }
+
 
 }

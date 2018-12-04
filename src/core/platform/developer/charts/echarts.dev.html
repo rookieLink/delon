@@ -1,4 +1,4 @@
-<split>
+<split (dragEnd)="onDragEnd(null,$event)">
     <split-area>
         <form nz-form #form="ngForm">
             <div nz-form-item nz-row>
@@ -177,7 +177,23 @@
              style="height:calc(100% - 32px);"></div>
     </split-area>
     <split-area>
-        <div nz-row style="font-size:20px; font-weight:bold;margin-left: 10px;height: 35px ">预览效果图：</div>
-        <div echarts [options]="option" style="background-color: rgba(169, 169, 169, 0.4);"></div>
+        <div nz-row style="font-size:20px; font-weight:bold; margin-left: 10px;height: 35px ">
+            预览图
+        </div>
+        <split direction="vertical" (dragEnd)="onDragEnd(true,$event)">
+            <split-area>
+                <p style="background-color: #70ec45; color: #e21313; margin-top: 10px;">
+                    容器宽度：{{divSize.width + 'px'}}, 高度：{{divSize.height + 'px'}}
+                </p>
+            </split-area>
+            <split-area>
+                <div echarts [options]="option" style="background-color: rgba(169, 169, 169, 0.4); height: 99%;"></div>
+            </split-area>
+            <split-area>
+                <p style="background-color: #ecf90e; color: #e21313; margin-top: 30px;">
+                    注：可以拖拽分隔条来改变ECharts容器的大小
+                </p>
+            </split-area>
+        </split>
     </split-area>
 </split>
