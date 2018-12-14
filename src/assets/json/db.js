@@ -6,6 +6,7 @@ module.exports = function () {
         multiPagesMeta: require('./multiPagesMeta'),
         allPagesMeta: require('./allPagesMeta'),
         screenDef: require('./screenDef'),
-        serviceList: require('./services')
+        serviceList: require('./services'),
+        echartPreview: require('./chartsPreview')
     }
 };

@@ -1,6 +1,6 @@
 import {
     AfterViewInit,
-    Component,
+    Component, ContentChild,
     ElementRef,
     EventEmitter,
     Inject,
@@ -21,6 +21,8 @@ import 'brace/mode/json';
 import {CHARTDEVSERVICE} from './config';
 import {ReuseTabService} from '@delon/abc';
 import {NgxEchartsDirective} from 'ngx-echarts';
+import {FormGroupDirective} from '@angular/forms';
+import {ZjEchartsDevContentDirective} from './zj-echarts-dev-content.directive';
 
 @Component({
     selector: 'zj-echarts-dev',
@@ -38,26 +40,13 @@ export class EchartsDevComponent implements OnInit, AfterViewInit {
 
     @Input() chartType;
     @Output() onSaveSuccess = new EventEmitter();
-    @Input() Modify = false;
     @Input() chartId;
+    @ContentChild(ZjEchartsDevContentDirective) content: ZjEchartsDevContentDirective;
 
-    divSize: any = {};
+    divSize: any = {};  // 记录绘制Echarts图表容器的宽高
+    remoteJsonDataLoaded = false;
+    payload;    // JSOn 数据
 
-    formModel = {
-        modelMsg: {
-            service: null,
-            dimensionRows: [],  // 维度字段目前只可以选择一个
-            measureRows: [],
-            paramsRows: []
-        },
-        componentMsg: {
-            icon: '',
-            subject: '',  // 组件主题
-            name: '',  // 组件名称
-            describe: '', // 组件描述
-            type: 0,
-        }
-    };
     aceConfig = {
         text: '',
         mode: 'javascript',
@@ -71,11 +60,7 @@ export class EchartsDevComponent implements OnInit, AfterViewInit {
         }
     };
 
-    payload;
-    option;
-    availableServices;  // 可供选择的服务
-    availableFields;    // 可供选择的字段（度量/维度）
-    requestParamFields;  // 服务所有参数集合
+
 
     public data: any;
 
@@ -86,91 +71,17 @@ export class EchartsDevComponent implements OnInit, AfterViewInit {
     constructor(@Inject(CHARTDEVSERVICE) private chartService,
                 private nzModal: NzModalSubject,
                 private route: ActivatedRoute,
-                private message: NzMessageService,
-                private reuseTabService: ReuseTabService) {
-        console.log(this.chartService);
+                private message: NzMessageService) {
     }
 
     ngOnInit() {
-        if (this.Modify) {
-            const params1 = {chartId: this.chartId};
-            const params2 = {id: this.chartId};
-            this.chartService.qryChartDataInfo(params1)
-                .subscribe(data => {
-                    if (data['retCode'] === '00000') {
-                        this.payload = data['retData']['dataMsg'];
-                        this.aceConfig.text = data['retData']['optionMsg'];
-                        this.preview();
-                    }
-                }, (error) => {
-                    this.message.error(error.body.retMsg);
-                });
-            this.chartService.qryChartFormInfo(params2)
-                .subscribe(data => {
-                    this.chartService.qryAllServiceList()
-                        .subscribe(dataList => {
-                            console.log(dataList);
-                            this.availableServices = dataList;
-                        }, err => {
-                            this.message.error(err.body.retMsg);
-                        });
-                    if (data['retCode'] === '00000') {
-                        this.formModel.componentMsg = data['retData']['componentMsg'];
-                        this.formModel.modelMsg.service = data['retData']['modelMsg']['service']['serviceName'];
-                        this.formModel.modelMsg.dimensionRows = data['retData']['modelMsg']['dimensionRows'];
-                        this.formModel.modelMsg.measureRows = data['retData']['modelMsg']['measureRows'];
-                    }
-                }, (error) => {
-                    this.message.error(error.body.retMsg);
-                });
-        } else {
-            this.reuseTabService.title = this.chartType;
-            this.payload = CHARTTYPEMAPPING[this.chartType].payload;
-            this.aceConfig.text = CHARTTYPEMAPPING[this.chartType].text;
-            this.preview();
-            this.chartService.qryAllServiceList()
-                .subscribe(dataList => {
-                    console.log(dataList);
-                    this.availableServices = dataList;
-                }, err => {
-                    this.message.error(err.body.retMsg);
-                });
-        }
-    }
+        this.payload = CHARTTYPEMAPPING[this.chartType].payload;
+        this.aceConfig.text = CHARTTYPEMAPPING[this.chartType].text;
+        this.preview();
 
-    selectService(service) {
-        console.log(service);
-        if (service) {
-            this.availableFields = service.returnParam;
-            this.requestParamFields = service.requestParam;
-        } else {
-            this.availableFields = [];
-            this.requestParamFields = [];
-        }
-        this.formModel.modelMsg.dimensionRows.length = 0;
-        this.formModel.modelMsg.measureRows.length = 0;
-    }
-
-    getJsonData() {
-        const params = _.extend(
-            _.omit(this.formModel.modelMsg, ['service']),
-            _.omit(this.formModel.modelMsg.service, ['returnParam']),
-            {requestParam: this.requestParamToJson()}
-        );
-        console.log(params);
-        this.chartService.preview(params)
-            .subscribe(data => {
-                console.log(data);
-                this.payload = data;
-            }, err => {
-                this.message.error(err.body.retMsg);
-                console.log(err);
-            });
-    }
-
-    requestParamToJson() {
-        return this.requestParamFields.map((val) => {
-            return JSON.stringify(val);
+        this.content.jsonData.subscribe(data => {
+            this.payload = data;
+            this.remoteJsonDataLoaded = true;
         });
     }
 
@@ -181,7 +92,12 @@ export class EchartsDevComponent implements OnInit, AfterViewInit {
             that = this;
         try {
             eval(this.aceConfig.text);
+
+            if (this.remoteJsonDataLoaded) {
+                this.content.optionData.emit(this.aceConfig.text);
+            }
         } catch (e) {
+            this.content.optionData.emit(false);
             console.log(e);
             console.log(e.message);
             console.log(e.name);
@@ -194,22 +110,6 @@ export class EchartsDevComponent implements OnInit, AfterViewInit {
     }
 
 
-    save() {
-        this.formModel.modelMsg.service = _.omit(this.formModel.modelMsg.service, 'requestParam', 'returnParam', 'serviceRspExp');
-        this.formModel.modelMsg = _.extend(this.formModel.modelMsg, this.formModel.modelMsg.service,
-            {requestParam: this.requestParamToJson()});
-        const params = _.extend({optionMsg: this.aceConfig.text}, this.formModel);
-        console.log(params);
-        this.chartService.save(params)
-            .subscribe(data => {
-                console.log(data);
-                this.message.success('图表保存成功！');
-                this.onSaveSuccess.emit('save success');
-            }, err => {
-                this.message.error(err.body.retMsg);
-                console.log(err);
-            });
-    }
 
     onDragEnd(resize: boolean = false, e: { gutterNum: number, sizes: Array<number> }) {
         console.log(e);

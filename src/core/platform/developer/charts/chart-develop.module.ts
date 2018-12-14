@@ -1,9 +1,10 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import {SharedModule} from "../shared/shared.module";
+import {SharedModule} from '../shared/shared.module';
 
 import {ChartDevelopComponent} from './chart-develop.component';
 import {EchartsDevComponent} from './echarts.dev.component';
-import {CHARTDEVSERVICE} from "./config";
+import {CHARTDEVSERVICE} from './config';
+import {ZjEchartsDevContentDirective} from './zj-echarts-dev-content.directive';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import {CHARTDEVSERVICE} from "./config";
     declarations: [
         ChartDevelopComponent,
         EchartsDevComponent,
+        ZjEchartsDevContentDirective
     ],
     providers: [
     ],
@@ -21,7 +23,8 @@ import {CHARTDEVSERVICE} from "./config";
     ],
     exports: [
         EchartsDevComponent,
-        ChartDevelopComponent
+        ChartDevelopComponent,
+        ZjEchartsDevContentDirective
     ]
 })
 export class ChartDevelopModule {

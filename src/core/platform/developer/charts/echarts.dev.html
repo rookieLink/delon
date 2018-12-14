@@ -1,154 +1,11 @@
 <split (dragEnd)="onDragEnd(null,$event)">
     <split-area>
-        <form nz-form #form="ngForm">
-            <div nz-form-item nz-row>
-                <div nz-row style="font-size:20px; font-weight:bold ;margin-left: 10px;height: 35px ">图表组件基本信息：</div>
-                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                    <label [attr.for]="'service'" nz-form-item-required>服务</label>
-                </div>
-                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
-                    <nz-select [nzSize]="'large'" name="service"
-                               nzPlaceHolder=""
-                               nzAllowClear
-                               required
-                               [(ngModel)]="formModel.modelMsg.service"
-                               (ngModelChange)="selectService(formModel.modelMsg.service)">
-                        <nz-option *ngFor="let s of availableServices" [nzLabel]="s.serviceName"
-                                   [nzValue]="s"></nz-option>
-                    </nz-select>
-                </div>
-            </div>
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSpan]="6">
-                    <label nz-form-item-required>维度字段</label>
-                </div>
-                <div nz-form-control nz-col [nzSpan]="14">
-                    <nz-select [nzSize]="'large'" name="dimensionRows" [nzMode]="'multiple'"
-                               nzPlaceHolder=""
-                               nzAllowClear
-                               required
-                               [(ngModel)]="formModel.modelMsg.dimensionRows">
-                        <nz-option *ngFor="let f of availableFields" [nzLabel]="f.name"
-                                   [nzValue]="f.name"></nz-option>
-                    </nz-select>
-                </div>
-            </div>
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                    <label [attr.for]="'measureRows'" nz-form-item-required>度量字段</label>
-                </div>
-                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
-                    <nz-select name="measureRows" [nzMode]="'multiple'"
-                               nzPlaceHolder=""
-                               nzAllowClear
-                               required
-                               [(ngModel)]="formModel.modelMsg.measureRows">
-                        <nz-option *ngFor="let option of availableFields" [nzLabel]="option.name"
-                                   [nzValue]="option.name"></nz-option>
-                    </nz-select>
-                </div>
-            </div>
+        <div nz-row style="font-size:20px; font-weight:bold ;margin-left: 10px;height: 35px ">Form表单</div>
+        <ng-content select="form"></ng-content>
 
-            <div nz-form-item nz-row *ngFor="let d of requestParamFields">
-                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                    <div *ngIf="d.require === 1">
-                        <label [attr.for]="'measureRows'" nz-form-item-required> {{d.means}}</label>
-                    </div>
-                    <div *ngIf="d.require != 1">
-                        <label [attr.for]="'measureRows'"> {{d.means}}</label>
-                    </div>
-                </div>
-                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
-                    <nz-input [nzSize]="'large'" [(ngModel)]="d.value" [nzId]="d.name"
-                              [name]="d.name" [required]="d.require === 1"></nz-input>
-                </div>
-            </div>
-            <div nz-form-item nz-row style="margin-bottom:8px;">
-                <div nz-form-control nz-col [nzSpan]="14" [nzOffset]="6">
-                    <button nz-button [nzSize]="'large'" [nzType]="'primary'"
-                            [disabled]="form.invalid"
-                            (click)="getJsonData()">
-                        获取Json
-                    </button>
-                </div>
-            </div>
-        </form>
-        <form nz-form #form1="ngForm">
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                    <label [attr.for]="'name'" nz-form-item-required>组件名称</label>
-                </div>
-                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
-                    <nz-input [nzSize]="'large'" [(ngModel)]="formModel.componentMsg.name" [nzId]="'name'"
-                              name="name" required></nz-input>
-                </div>
-            </div>
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSpan]="6">
-                    <label nz-form-item-required>组件主题</label>
-                </div>
-                <div nz-form-control nz-col [nzSpan]="14">
-                    <nz-select [nzSize]="'large'" nzPlaceHolder="" required
-                               [(ngModel)]="formModel.componentMsg.subject" name="subject">
-                        <nz-option [nzLabel]="'综合分析'" [nzValue]="'0'"></nz-option>
-                        <nz-option [nzLabel]="'交易分析'" [nzValue]="'1'"></nz-option>
-                        <nz-option [nzLabel]="'故障分析'" [nzValue]="'2'"></nz-option>
-                    </nz-select>
-                </div>
-            </div>
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSpan]="6">
-                    <label nz-form-item-required>组件图标</label>
-                </div>
-                <div nz-form-control nz-col [nzSpan]="14">
-                    <nz-select [nzSize]="'large'" nzPlaceHolder="" required
-                               [(ngModel)]="formModel.componentMsg.icon" name="icon">
-
-                        <nz-option [nzLabel]="'area-chart'" [nzValue]="'anticon-area-chart'">
-                            <ng-template #nzOptionTemplate>
-                                <i class="anticon anticon-area-chart"></i> 折线图
-                            </ng-template>
-                        </nz-option>
-                        <nz-option [nzLabel]="'pie-chart'" [nzValue]="'anticon-pie-chart'">
-                            <ng-template #nzOptionTemplate>
-                                <i class="anticon anticon-pie-chart"></i> 饼图
-                            </ng-template>
-                        </nz-option>
-                        <nz-option [nzLabel]="'bar-chart'" [nzValue]="'anticon-bar-chart'">
-                            <ng-template #nzOptionTemplate>
-                                <i class="anticon anticon-bar-chart"></i> 柱状图
-                            </ng-template>
-                        </nz-option>
-                        <nz-option [nzLabel]="'dot-chart'" [nzValue]="'anticon-dot-chart'">
-                            <ng-template #nzOptionTemplate>
-                                <i class="anticon anticon-dot-chart"></i> 散点图
-                            </ng-template>
-                        </nz-option>
-                    </nz-select>
-                </div>
-            </div>
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSpan]="6">
-                    <label nz-form-item-required>组件描述</label>
-                </div>
-                <div nz-form-control nz-col [nzSpan]="14">
-                    <nz-input [nzSize]="'large'" name="describe" required
-                              [(ngModel)]="formModel.componentMsg.describe"></nz-input>
-                </div>
-            </div>
-            <div nz-form-item nz-row style="margin-bottom:8px;">
-                <div nz-form-control nz-col [nzSpan]="14" [nzOffset]="6">
-                    <button nz-button [nzSize]="'large'" [nzType]="'primary'"
-                            [disabled]="form.invalid || form1.invalid"
-                            (click)="save()"
-                            style="width: 40%;">保存
-                    </button>
-                </div>
-            </div>
-        </form>
     </split-area>
     <split-area>
-        <div nz-row style="font-size:20px; font-weight:bold ;margin-left: 10px;height: 35px ">JSON数据：</div>
+        <div nz-row style="font-size:20px; font-weight:bold ;margin-left: 10px;height: 35px ">JSON数据</div>
         <div ace-editor
              [text]="_payload"
              [mode]="'json'"
@@ -157,15 +14,13 @@
              style="height:calc(100% - 35px);"></div>
     </split-area>
     <split-area>
-        <div nz-row>
-            <div nz-col [nzSpan]="12">
-                <span style="font-size: 20px; font-weight:bold;margin-left: 10px;">HTML页面：</span>
-            </div>
-            <div nz-col [nzSpan]="12" style="text-align: right;">
-                <button nz-button [nzType]="'primary'" (click)="preview()" style="width: 40%;">
-                    预览
-                </button>
-            </div>
+        <div style="padding-left: 10px; position: relative;">
+            <span style="font-size: 20px; font-weight:bold;">
+                Echarts Option
+            </span>
+            <button nz-button [nzType]="'primary'" (click)="preview()" style="position: absolute; right: 0;">
+                预览
+            </button>
         </div>
         <div ace-editor
              [text]="aceConfig.text"
@@ -177,13 +32,13 @@
              style="height:calc(100% - 32px);"></div>
     </split-area>
     <split-area>
-        <div nz-row style="font-size:20px; font-weight:bold; margin-left: 10px;height: 35px ">
-            预览图
-        </div>
         <split direction="vertical" (dragEnd)="onDragEnd(true,$event)">
             <split-area>
-                <p style="background-color: #70ec45; color: #e21313; margin-top: 10px;">
-                    容器宽度：{{divSize.width + 'px'}}, 高度：{{divSize.height + 'px'}}
+                <p style="font-size:20px; font-weight:600; margin-left: 10px; height: 35px; ">
+                    预览图
+                </p>
+                <p style="color: #e21313; margin-top: 10px;">
+                    <i>容器宽度：{{divSize.width + 'px'}}, 高度：{{divSize.height + 'px'}}</i>
                 </p>
             </split-area>
             <split-area>

@@ -22,11 +22,10 @@ export class EchartsDevService {
         // });
     }
 
-    preview(params: any) {
-        params.chartType = '0';
-        console.log({...params})
-        return this.http.post(this.SERVERAPI + 'visible/chartsDevelop/chartModel/preview', {...params})
-            .map(data => data['retData']);
+    preview() {
+
+        return this.http.get(this.SERVERAPI + '/echartPreview', {})
+            .map(data => data[0]);
     }
 
     save(params: any) {
