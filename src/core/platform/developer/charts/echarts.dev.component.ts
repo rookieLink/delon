@@ -12,16 +12,13 @@ import {
 import {ActivatedRoute} from '@angular/router';
 import {CHARTTYPEMAPPING} from './charts.config';
 import {NzMessageService, NzModalSubject} from 'ng-zorro-antd';
-import * as _ from 'lodash';
 
 import 'brace';
 import 'brace/mode/javascript';
 import 'brace/theme/clouds';
 import 'brace/mode/json';
 import {CHARTDEVSERVICE} from './config';
-import {ReuseTabService} from '@delon/abc';
 import {NgxEchartsDirective} from 'ngx-echarts';
-import {FormGroupDirective} from '@angular/forms';
 import {ZjEchartsDevContentDirective} from './zj-echarts-dev-content.directive';
 
 @Component({
@@ -39,13 +36,14 @@ import {ZjEchartsDevContentDirective} from './zj-echarts-dev-content.directive';
 export class EchartsDevComponent implements OnInit, AfterViewInit {
 
     @Input() chartType;
-    @Output() onSaveSuccess = new EventEmitter();
     @Input() chartId;
+    @Output() onSaveSuccess = new EventEmitter();
     @ContentChild(ZjEchartsDevContentDirective) content: ZjEchartsDevContentDirective;
 
     divSize: any = {};  // 记录绘制Echarts图表容器的宽高
-    remoteJsonDataLoaded = false;
-    payload;    // JSOn 数据
+    remoteJsonDataLoaded = false;   // 当前页面显示的JSON内容是否从后台获取
+    payload;    // JSON 数据
+    option: any;    // Echarts option
 
     aceConfig = {
         text: '',
@@ -60,12 +58,6 @@ export class EchartsDevComponent implements OnInit, AfterViewInit {
         }
     };
 
-
-
-    public data: any;
-
-    @ViewChild('aceJson') aceJson$: ElementRef;
-
     @ViewChild(NgxEchartsDirective) echarts: NgxEchartsDirective;
 
     constructor(@Inject(CHARTDEVSERVICE) private chartService,
@@ -75,9 +67,19 @@ export class EchartsDevComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.payload = CHARTTYPEMAPPING[this.chartType].payload;
-        this.aceConfig.text = CHARTTYPEMAPPING[this.chartType].text;
-        this.preview();
+        if (this.chartType) {
+            this.payload = CHARTTYPEMAPPING[this.chartType].payload;
+            this.aceConfig.text = CHARTTYPEMAPPING[this.chartType].text;
+            this.preview();
+        } else if (this.chartId) {
+            this.chartService.getOptionAndDataById(this.chartId)
+                .subscribe((data: any) => {
+                    this.payload = data.dataMsg;
+                    this.aceConfig.text = data.optionMsg;
+                    this.preview();
+                });
+        }
+
 
         this.content.jsonData.subscribe(data => {
             this.payload = data;
@@ -108,7 +110,6 @@ export class EchartsDevComponent implements OnInit, AfterViewInit {
     get _payload() {
         return JSON.stringify(this.payload, null, '  ');
     }
-
 
 
     onDragEnd(resize: boolean = false, e: { gutterNum: number, sizes: Array<number> }) {

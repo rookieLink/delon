@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
-import {DASHBOARDSERVICE} from './config';
+import {DashboardService, DASHBOARDSERVICE} from './config';
 import {DashboardComponent} from './dashboard.component';
 import {UserAddDashboardComponent} from './components/user-add-dashboard.component';
 import {BuiltInAddDashboardComponent} from './components/built-in-add-dashboard.component';
@@ -57,7 +57,7 @@ export class ZijinDashboardComponent implements OnInit {
 
     constructor(private message: NzMessageService,
                 private modal: NzModalService,
-                @Inject(DASHBOARDSERVICE) private dashboardService) {
+                @Inject(DASHBOARDSERVICE) private dashboardService: DashboardService) {
 
     }
 
